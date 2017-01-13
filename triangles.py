@@ -1,4 +1,5 @@
 from __future__ import division
+import os
 from os import system
 import math
 import numpy
@@ -21,7 +22,6 @@ Using PyAudio for sound. I'm still having a problem with
     something out. 
     http://stackoverflow.com/questions/36438850/how-to-remove-pops-from-concatented-sound-data-in-pyaudio
 """
-
 
 sample_rate = 44100
 
@@ -70,7 +70,7 @@ def check_for_relationship(frequency1, frequency2, relationship):
     print round((frequency1) / (frequency2), 3)
     if round((frequency1/frequency2), 2) == relationship or round((frequency2/frequency1), 2) == relationship:
         print frequency1, frequency2
-        play_frequencies(stream, 1, 0.5, frequency1, frequency2)
+        play_frequencies(stream, 1, .25, frequency1, frequency2)
 
 def generate_test_array():
     "Randomized test array"
@@ -89,7 +89,18 @@ if __name__ == '__main__':
     test_freqs = generate_test_array()
 
     for frequency1, frequency2 in test_freqs:
-        time.sleep(.01)
+        time.sleep(.001)
+        """
+        might have to round to 3 didgets in line 71 to get this to work. 
+        """
         check_for_relationship(frequency1, frequency2, (3/2))
-        
+        # check_for_relationship(frequency1, frequency2, (5/3))
+        # check_for_relationship(frequency1, frequency2, (6/5))
+        # check_for_relationship(frequency1, frequency2, (9/8))
+        # check_for_relationship(frequency1, frequency2, (15/8))
+        # check_for_relationship(frequency1, frequency2, (11/8))
+    # cmd = 'python triangles.py'
+    # os.system(cmd)    
+
+
 p.close
