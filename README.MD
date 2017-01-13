@@ -1,6 +1,7 @@
 ##Synopsis
 
-"triangles.py"
+triangles.py
+
 Given two vector lengths, if the two lengths are in
     the desired ratio, generate two tones at with 
     frequencies corresponding to vector length. 
@@ -22,4 +23,5 @@ install with:
   python -m pip install pyaudio
 
 ## Use
-  To run, simply type python triangles.py
+  To run, type:
+     python triangles.py
