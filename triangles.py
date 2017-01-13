@@ -91,7 +91,8 @@ if __name__ == '__main__':
     for frequency1, frequency2 in test_freqs:
         time.sleep(.001)
         """
-        might have to round to 3 didgets in line 71 to get this to work. 
+        You will need to round to 3 didgets in line 71 to get some 
+            ratios below to work.  
         """
         check_for_relationship(frequency1, frequency2, (3/2))
         # check_for_relationship(frequency1, frequency2, (5/3))
