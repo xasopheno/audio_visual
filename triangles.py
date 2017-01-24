@@ -1,11 +1,12 @@
 from __future__ import division
 import os
 from os import system
-import math
+from math import pi
 import numpy
 import pyaudio
-import random
+from random import shuffle, randint
 import time
+from fractions import Fraction
 
 """
 "triangles.py"
@@ -33,7 +34,7 @@ def sine(frequency, length, rate):
     rate: sample rate
     """
     length = int(length * rate)
-    factor = float(frequency) * (math.pi * 2) / rate
+    factor = float(frequency) * (pi * 2) / rate
     return numpy.sin(numpy.arange(length) * factor)
 
 def play_frequencies(stream, length, volume, *freqs):
@@ -60,7 +61,7 @@ def play_frequencies(stream, length, volume, *freqs):
 
     stream.write(chunk.astype(numpy.float32).tostring())
 
-def check_for_relationship(frequency1, frequency2, relationship):
+def check_for_relationship(frequency1, frequency2, relationship, duration):
     "Checks for given ratio."
     """
     Frequency relationships are rounded to two decimal places. 
@@ -68,17 +69,25 @@ def check_for_relationship(frequency1, frequency2, relationship):
     preferable in the context of video.
     """ 
     print round((frequency1) / (frequency2), 3)
-    if round((frequency1/frequency2), 2) == relationship or round((frequency2/frequency1), 2) == relationship:
-        print frequency1, frequency2
-        play_frequencies(stream, 1, .25, frequency1, frequency2)
+    if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
+        print frequency1, frequency2, abs(frequency1-frequency2), frequency1+frequency2, Fraction(relationship)
+        play_frequencies(
+                        stream, 
+                        duration, 
+                        .085, 
+                        frequency1, 
+                        frequency2, 
+                        abs(frequency1-frequency2),
+                        (frequency1+frequency2)/2,
+                        )
 
 def generate_test_array():
     "Randomized test array"
     freqs = []
-    for frequency1 in range(200, 800):
-        for frequency2 in range (200, 800):
+    for frequency1 in range(300, 800):
+        for frequency2 in range (300, 800):
             freqs.append((frequency1, frequency2))
-    random.shuffle(freqs)
+    shuffle(freqs)
     return freqs
 
 if __name__ == '__main__':
@@ -89,19 +98,19 @@ if __name__ == '__main__':
     test_freqs = generate_test_array()
 
     for frequency1, frequency2 in test_freqs:
-        time.sleep(.001)
+        # time.sleep(.001)
         """
-        You will need to round to 3 didgets in line 71 to get some 
-            ratios below to work.  
+        You may need to round to 3 didgets in check_for_relationships
+            to get some ratios to work.  
         """
-        check_for_relationship(frequency1, frequency2, (3/2))
-        # check_for_relationship(frequency1, frequency2, (5/3))
-        # check_for_relationship(frequency1, frequency2, (6/5))
-        # check_for_relationship(frequency1, frequency2, (9/8))
-        # check_for_relationship(frequency1, frequency2, (15/8))
-        # check_for_relationship(frequency1, frequency2, (11/8))
+        # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
+        check_for_relationship(frequency1, frequency2, (5/4), 1.6)
+        check_for_relationship(frequency1, frequency2, (7/6), 3.2)
+        check_for_relationship(frequency1, frequency2, (7/4), 1.6)
+        # check_for_relationship(frequency1, frequency2, (9/8), 3.2)
+        check_for_relationship(frequency1, frequency2, (15/8), 3.2)
+        check_for_relationship(frequency1, frequency2, (11/8), 3.2)
     # cmd = 'python triangles.py'
     # os.system(cmd)    
-
 
 p.close
