@@ -1,27 +1,17 @@
-##Synopsis
+# Game of Life and Video
 
-triangles.py
+Renders a video where alive pixels in Conway's Game of Life are the pixels that are visible in the video. 
 
-Given two vector lengths, if the two lengths are in
-    the desired ratio, generate two tones at with 
-    frequencies corresponding to vector length. 
-    Currently set up to detect Perfect 5ths or the ratio 3/2
-Vector lengths should probably be scaled to 
-    the range(30, 2000)
-A time.sleep() function is slowing down the execution 
-    of this script for viewability. 
-Using PyAudio for sound. I'm still having a problem with 
-    pops due to concantenated audio. Perhaps you can figure
-    something out. 
-    http://stackoverflow.com/questions/36438850/how-to-remove-pops-from-concatented-sound-data-in-pyaudio
+Imagine a Conway's Game of Life filter on a video. 
 
-## Dependencies
+## Installation
 
-PyAudio - Python Bindings for PortAudio
+brew install ffmpeg
+pip install -r requirements.txt
 
-install with:
-  python -m pip install pyaudio
+## Run
+- create 'video/' folder in the visual directory. 
+use this command to separate a video into frames:
+ffmpeg -i name_of_video.mp4 -r 30/1 $filename%04d.png
 
-## Use
-  To run, type:
-     python triangles.py
+- python golvideo.py
