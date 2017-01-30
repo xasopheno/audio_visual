@@ -20,6 +20,7 @@ Using PyAudio for sound. I'm still having a problem with
 PyAudio - Python Bindings for PortAudio
 
 install with:
+  brew install portaudio
   python -m pip install pyaudio
 
 ## Use
