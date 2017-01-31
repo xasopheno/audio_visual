@@ -6,14 +6,14 @@ import math
 import os
 # from multiprocessing import Pool
 
-from npgol import iterate 
+from npgol import iterate
 
 totaltimestart = time.time()
 width = 1920
 height = 1080
 framesToProduce = 1150 
-finalDirectory = 'cvart/'
-videoDirectory = 'video/'
+finalDirectory = 'cvart2/'
+videoDirectory = 'reversed/'
 
 def check_or_create_directory(directory):
   pathNeeded = os.path.isdir(os.getcwd() + '/' + directory)
@@ -26,18 +26,17 @@ def write_frame(frame):
   
   print 'printing frame:', frame
   
-  
   past_image = finalDirectory + str('%04d') % (frame - 1) + '.png'
   current_image = finalDirectory + str('%04d') % frame + '.png'
   video_image = videoDirectory + str('%04d') % frame + '.png'
 
   if os.path.exists(past_image):
     print 'comparing ', past_image, ' to, ', current_image
-    img = iterate_gol(past_image, img, video_image)
+    img = iterate_gol(past_image, img, video_image, frame)
 
   print_image(img, frame, start) 
 
-def iterate_gol(past_image, current_image, video_image):
+def iterate_gol(past_image, current_image, video_image, frame):
   past_image = cv2.imread(past_image)
   video_image = cv2.imread(video_image)
   
@@ -71,7 +70,7 @@ if __name__ == '__main__':
       write_frame(frame)
 
     os.chdir(os.getcwd() + '/' + finalDirectory)
-    cmdBuild = 'ffmpeg -f image2 -r 30 -i %04d.png -c:v libx264 -pix_fmt yuv420p out.mp4'
+    cmdBuild = 'ffmpeg -f image2 -r 10 -i %04d.png -c:v libx264 -pix_fmt yuv420p out.mp4'
     os.system(cmdBuild)
 
 print 'It took', time.time()-totaltimestart, 'seconds.'
