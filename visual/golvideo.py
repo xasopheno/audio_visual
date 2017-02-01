@@ -7,6 +7,7 @@ import os
 # from multiprocessing import Pool
 
 from npgol import iterate
+from pygol import slow_iterate
 
 totaltimestart = time.time()
 width = 1920
@@ -45,7 +46,12 @@ def iterate_gol(past_image, current_image, video_image, frame):
         if any(val > 1 for val in past_image[yPos, xPos]):
           past_image[yPos, xPos] = 1  
 
-  newImg = iterate(past_image)
+  if frame < 100:
+    newImg = slow_iterate(past_image, frame)
+  else:
+    newImg = iterate(past_image)
+
+
   blankImg = np.zeros(past_image.shape, dtype=int)
   video_image
 
