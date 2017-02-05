@@ -13,7 +13,7 @@ totaltimestart = time.time()
 width = 1920
 height = 1080
 framesToProduce = 1150 
-finalDirectory = 'cvart2/'
+finalDirectory = 'cvart3/'
 videoDirectory = 'reversed/'
 
 def check_or_create_directory(directory):
@@ -23,7 +23,7 @@ def check_or_create_directory(directory):
 
 def write_frame(frame):
   start = time.time()
-  img = np.random.randint(0,2,(1080,1920))
+  img = np.random.randint(0,9,(1080,1920))
   
   print 'printing frame:', frame
   
@@ -46,14 +46,8 @@ def iterate_gol(past_image, current_image, video_image, frame):
         if any(val > 1 for val in past_image[yPos, xPos]):
           past_image[yPos, xPos] = 1  
 
-  if frame < 100:
-    newImg = slow_iterate(past_image, frame)
-  else:
-    newImg = iterate(past_image)
-
-
+  newImg = iterate(past_image, frame)
   blankImg = np.zeros(past_image.shape, dtype=int)
-  video_image
 
   for yPos in range(0, height):
     for xPos in range(0, width):      
@@ -72,7 +66,8 @@ if __name__ == '__main__':
     check_or_create_directory(finalDirectory) #check if directory exists, if not create
     # pool = Pool(6)  # Create a multiprocessing Pool
     # pool.map(write_frame, xrange(framesToProduce))  # process write_frame iterable with pool
-    for frame in range (1, framesToProduce):
+    # for frame in range (1, framesToProduce):
+    for frame in range (55, 1150):
       write_frame(frame)
 
     os.chdir(os.getcwd() + '/' + finalDirectory)
