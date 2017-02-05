@@ -1,6 +1,7 @@
 from __future__ import division
 import os
 from os import system
+import math
 from math import pi
 import numpy
 import pyaudio
@@ -69,7 +70,7 @@ def check_for_relationship(frequency1, frequency2, relationship, duration):
     preferable in the context of video.
     """ 
     print round((frequency1) / (frequency2), 3)
-    if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
+    if round((frequency1/frequency2), 4) == relationship or round((frequency2/frequency1), 3) == relationship:
         print frequency1, frequency2, abs(frequency1-frequency2), frequency1+frequency2, Fraction(relationship)
         play_frequencies(
                         stream, 
@@ -77,15 +78,15 @@ def check_for_relationship(frequency1, frequency2, relationship, duration):
                         .085, 
                         frequency1, 
                         frequency2, 
-                        abs(frequency1-frequency2),
-                        (frequency1+frequency2)/2,
+                        # abs(frequency1-frequency2),
+                        # (frequency1+frequency2),
                         )
 
 def generate_test_array():
     "Randomized test array"
     freqs = []
-    for frequency1 in range(200, 1000):
-        for frequency2 in range (200, 1000):
+    for frequency1 in range(500, 1000):
+        for frequency2 in range (500, 1000):
             freqs.append((frequency1, frequency2))
     shuffle(freqs)
     return freqs
@@ -103,13 +104,13 @@ if __name__ == '__main__':
         You may need to round to 3 didgets in check_for_relationships
             to get some ratios to work.  
         """
-        # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
-        check_for_relationship(frequency1, frequency2, (5/4), 3.2)
-        check_for_relationship(frequency1, frequency2, (7/6), 3.2)
-        check_for_relationship(frequency1, frequency2, (7/4), 3.2)
-        # check_for_relationship(frequency1, frequency2, (9/8), 3.2)
-        check_for_relationship(frequency1, frequency2, (15/8), 3.2)
-        check_for_relationship(frequency1, frequency2, (11/8), 3.2)
+        check_for_relationship(frequency1, frequency2, (3/2), 3)
+        check_for_relationship(frequency1, frequency2, (5/4), 3)
+        # check_for_relationship(frequency1, frequency2, (6/5), 3)
+        # check_for_relationship(frequency1, frequency2, (5/3), 3)
+        check_for_relationship(frequency1, frequency2, (9/8), 3)
+        # check_for_relationship(frequency1, frequency2, (15/8), 3)
+        # check_for_relationship(frequency1, frequency2, (11/8), 3)
     # cmd = 'python triangles.py'
     # os.system(cmd)    
 
