@@ -15,3 +15,5 @@ ffmpeg -r 1/5 -i *.bmp -c:v libx264 -vf "fps=25,format=yuv420p" out.mp4
 # ffmpeg -f image2 -r 30 -i %04d.png -c:v libx264 -pix_fmt yuv420p out.mp4
 ffmpeg -f image2 -r 30 -i %04d.png -c:v libx264 -crf 18  -pix_fmt yuv420p out.mp4
                                                                      444
+# REVERSE
+ffmpeg -i inputfile.mp4 -vf reverse reversed.mp4
