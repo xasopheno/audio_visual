@@ -78,15 +78,15 @@ def check_for_relationship(frequency1, frequency2, relationship, duration):
                         .085, 
                         frequency1, 
                         frequency2, 
-                        # abs(frequency1-frequency2),
-                        # (frequency1+frequency2),
+                        abs(frequency1-frequency2),
+                        (frequency1+frequency2)/2,
                         )
 
 def generate_test_array():
     "Randomized test array"
     freqs = []
-    for frequency1 in range(500, 1000):
-        for frequency2 in range (500, 1000):
+    for frequency1 in range(200, 800):
+        for frequency2 in range (200, 800):
             freqs.append((frequency1, frequency2))
     shuffle(freqs)
     return freqs
@@ -104,13 +104,13 @@ if __name__ == '__main__':
         You may need to round to 3 didgets in check_for_relationships
             to get some ratios to work.  
         """
-        check_for_relationship(frequency1, frequency2, (3/2), 3)
-        check_for_relationship(frequency1, frequency2, (5/4), 3)
+        check_for_relationship(frequency1, frequency2, (3/2), .5)
+        check_for_relationship(frequency1, frequency2, (5/4), .4)
         # check_for_relationship(frequency1, frequency2, (6/5), 3)
         # check_for_relationship(frequency1, frequency2, (5/3), 3)
-        check_for_relationship(frequency1, frequency2, (9/8), 3)
-        # check_for_relationship(frequency1, frequency2, (15/8), 3)
-        # check_for_relationship(frequency1, frequency2, (11/8), 3)
+        check_for_relationship(frequency1, frequency2, (9/8), .7)
+        check_for_relationship(frequency1, frequency2, (15/8), .3)
+        check_for_relationship(frequency1, frequency2, (11/8), .5)
     # cmd = 'python triangles.py'
     # os.system(cmd)    
 
