@@ -9,9 +9,9 @@ import random
 #               [0,0,0,0,0,0],
 #               [0,0,0,0,0,0]])
 
-def inspect_array(array):
-  print array + '.dtype : ', array.dtype
-  print array + '.shape : ', array.shape
+# def inspect_array(array):
+#   print array + '.dtype : ', array.dtype
+#   print array + '.shape : ', array.shape
 
 def iterate(Z, frame):
     # Count neighbours
