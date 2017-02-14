@@ -1,12 +1,9 @@
 from __future__ import division
-import os
-from os import system
-from math import pi
-import numpy
 import pyaudio
-from random import shuffle, randint
-import time
+from random import shuffle
 from fractions import Fraction
+
+from oscillator import play_frequencies
 
 """
 "triangles.py"
@@ -25,41 +22,6 @@ Using PyAudio for sound. I'm still having a problem with
 """
 
 sample_rate = 44100
-
-def sine(frequency, length, rate):
-    "produces sine accross np array"
-    """
-    frequency: frequency in hertz
-    length: length of tone in seconds,
-    rate: sample rate
-    """
-    length = int(length * rate)
-    factor = float(frequency) * (pi * 2) / rate
-    return numpy.sin(numpy.arange(length) * factor)
-
-def play_frequencies(stream, length, volume, *freqs):
-    "Plays a group of frequencies"
-    """
-    stream: PyAudio stream
-    length: tone length in seconds
-    volume: 0.5 is good starting place
-    *freq: any number of frequencies
-
-    example: 
-    play_frequencies(stream, 2, 300, 400, 500)
-    will play the tones 300hz, 400hz, 500hz simultaneously 
-        for two seconds. A major triad. 
-    """
-    allTones = []
-    x = 1
-    for freq in freqs:
-        chunks = []
-        chunks.append(sine(freq, length, 44100)) 
-        chunks = numpy.concatenate(chunks) * volume
-        allTones.append(chunks)
-    chunk = sum(allTones)
-
-    stream.write(chunk.astype(numpy.float32).tostring())
 
 def check_for_relationship(frequency1, frequency2, relationship, duration):
     "Checks for given ratio."
