@@ -13,14 +13,15 @@ def bassline():
             .15,
             volume,
             frequency,
-            random.choice([frequency * 2/1, frequency, frequency, frequency, frequency, frequency * 3/2]))
+            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2]))
         change = random.choice([-75, -75, -7, 7, 1, 2, 3, 4, 100, -125])
 
-        print (frequency)
-        if frequency > 100 and frequency < 40:
+        print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
+        if frequency > 150 or not frequency < 40:
             volume = random.choice([.25, .25, .25, .3, .3, .5, 0, 0])
         else:
-            volume = random.choice([.9, .8, .7])
+            volume = random.choice([.4, .5])
+
         if frequency < 0:
             frequency = random.choice([50, 100, 200, 300])
         else:
