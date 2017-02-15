@@ -2,15 +2,12 @@
 import math
 import numpy
 import pyaudio
-from os import system
-import random
-import time
+import matplotlib.pyplot as plt
 
 global PHASE
 PHASE = 0
 
 def sine(frequency, length, rate):
-    global PHASE
     length = int(length * rate)
     factor = (float(frequency) * (math.pi * 2) / rate)
     waveform = numpy.sin(numpy.arange(length) * factor)
@@ -22,6 +19,8 @@ def play_tone(stream, frequency, length, rate=44100):
     chunks.append(sine(frequency, length, rate))
 
     chunk = numpy.concatenate(chunks) * 0.25
+    plt.plot(chunk)
+    plt.show()
     print 'start ', chunk[0:1]
     print 'end ', chunk[-1:]
     PHASE = chunk[-1:]
@@ -29,16 +28,11 @@ def play_tone(stream, frequency, length, rate=44100):
     stream.write(chunk.astype(numpy.float32).tostring()) 
 
 def doit():
-    global PHASE
-    frequency = 100
+    frequency1 = 700
+    frequency2 = 250
     for i in range (1000000):
-        play_tone(stream, frequency, 1)
-        change = -100
-        print frequency
-        if frequency < 200:
-            frequency = 200
-        else:
-            frequency = frequency + change
+        play_tone(stream, frequency1, 1)
+        play_tone(stream, frequency2, 1)
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()
