@@ -13,7 +13,8 @@ def bassline():
             .15,
             volume,
             frequency,
-            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2]))
+            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
+        )
         change = random.choice([-75, -75, -7, 7, 1, 2, 3, 4, 100, -125])
 
         print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
