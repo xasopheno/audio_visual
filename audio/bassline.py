@@ -5,7 +5,7 @@ from oscillator import play_frequencies
 # numpy.set_printoptions(threshold=numpy.nan)
 
 def bassline():
-    frequency = 300
+    frequency = 200
     volume = .25
     for i in range(1000000):
         play_frequencies(

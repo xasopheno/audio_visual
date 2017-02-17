@@ -71,9 +71,9 @@ if __name__ == '__main__':
             to get some ratios to work.  
         """
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
-        check_for_relationship(frequency1, frequency2, (5/4), 10)
-        check_for_relationship(frequency1, frequency2, (6/5), 10)
-        check_for_relationship(frequency1, frequency2, (7/4), 10)
+        check_for_relationship(frequency1, frequency2, (5/4), 25)
+        check_for_relationship(frequency1, frequency2, (6/5), 25)
+        check_for_relationship(frequency1, frequency2, (7/4), 25)
         # check_for_relationship(frequency1, frequency2, (9/8), 3.2)
         # check_for_relationship(frequency1, frequency2, (15/8), 5)
         # check_for_relationship(frequency1, frequency2, (11/8), 3)
