@@ -79,7 +79,5 @@ if __name__ == '__main__':
         # check_for_relationship(frequency1, frequency2, (9/8), 3.2)
         # check_for_relationship(frequency1, frequency2, (15/8), 5)
         # check_for_relationship(frequency1, frequency2, (11/8), 3)
-    # cmd = 'python triangles.py'
-    # os.system(cmd)    
 
-p.close
+    p.close
