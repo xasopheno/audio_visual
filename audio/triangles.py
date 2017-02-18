@@ -24,20 +24,22 @@ Using PyAudio for sound. I'm still having a problem with
 sample_rate = 44100
 
 def check_for_relationship(frequency1, frequency2, relationship, duration):
-    "Checks for given ratio."
+    """Checks for given ratio."""
     """
     Frequency relationships are rounded to two decimal places. 
     Increased accuracy of three decimals places might be
     preferable in the context of video.
     """ 
     print round((frequency1) / (frequency2), 3)
+    print frequency1, frequency2, Fraction(relationship)
+
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
-        print frequency1, frequency2, Fraction(relationship)
+
         play_frequencies(
-                        stream, 
-                        duration, 
+                        stream,
+                        duration,
                         .1,
-                        frequency1, 
+                        frequency1,
                         frequency2,
                         frequency1 + 5,
                         frequency1 - 5,
@@ -45,11 +47,12 @@ def check_for_relationship(frequency1, frequency2, relationship, duration):
                         frequency2 - 3,
                         # 2 * frequency1 / 3,
                         abs(frequency1-frequency2),
-                        (frequency1+frequency2)
+                        (frequency1+frequency2),
+                        3 * (frequency1+frequency2)/2/2 + 5
                         )
 
 def generate_test_array():
-    "Randomized test array"
+    """"Randomized test array"""
     freqs = []
     for frequency1 in range(250, 400):
         for frequency2 in range(250, 400):
@@ -65,15 +68,14 @@ if __name__ == '__main__':
     test_freqs = generate_test_array()
 
     for frequency1, frequency2 in test_freqs:
-        # time.sleep(.001)
         """
         You may need to round to 3 didgets in check_for_relationships
             to get some ratios to work.  
         """
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
-        check_for_relationship(frequency1, frequency2, (5/4), 25)
-        check_for_relationship(frequency1, frequency2, (6/5), 25)
-        check_for_relationship(frequency1, frequency2, (7/4), 25)
+        check_for_relationship(frequency1, frequency2, (5/4), 5)
+        check_for_relationship(frequency1, frequency2, (6/5), 5)
+        check_for_relationship(frequency1, frequency2, (7/4), 5)
         # check_for_relationship(frequency1, frequency2, (9/8), 3.2)
         # check_for_relationship(frequency1, frequency2, (15/8), 5)
         # check_for_relationship(frequency1, frequency2, (11/8), 3)

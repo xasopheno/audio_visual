@@ -15,12 +15,23 @@ def play_frequencies(stream, length, volume, *freqs):
     """Plays a group of frequencies"""
 
     allTones = []
-    x = 1
+
     for freq in freqs:
         chunks = []
         chunks.append(sine(freq, length, 44100))
-        chunks = numpy.concatenate(chunks) * volume
-        allTones.append(chunks)
+        chunk = numpy.concatenate(chunks) * volume
+
+        fade = 10000.
+
+        fade_in = numpy.arange(0., 1., 1/fade)
+        fade_out = numpy.arange(1., 0., -1/fade)
+
+        chunk[:fade] = numpy.multiply(chunk[:fade], fade_in)
+        chunk[-fade:] = numpy.multiply(chunk[-fade:], fade_out)
+
+        allTones.append(chunk)
+
     chunk = sum(allTones)
 
     stream.write(chunk.astype(numpy.float32).tostring())
+
