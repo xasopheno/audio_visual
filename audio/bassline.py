@@ -4,8 +4,6 @@ import numpy
 import pyaudio
 import matplotlib.pyplot as plt
 
-global PHASE
-PHASE = 0
 
 def sine(frequency, length, rate):
     length = int(length * rate)
@@ -13,26 +11,31 @@ def sine(frequency, length, rate):
     waveform = numpy.sin(numpy.arange(length) * factor)
     return waveform
 
+
 def play_tone(stream, frequency, length, rate=44100):
-    global PHASE
     chunks = []
     chunks.append(sine(frequency, length, rate))
 
-    chunk = numpy.concatenate(chunks) * 0.25
-    plt.plot(chunk)
-    plt.show()
-    print 'start ', chunk[0:1]
-    print 'end ', chunk[-1:]
-    PHASE = chunk[-1:]
+    fade = 250.
 
-    stream.write(chunk.astype(numpy.float32).tostring()) 
+    fade_in = numpy.arange(0., 1., 1/fade)
+    fade_out = numpy.arange(1., 0., -1/fade)
+
+    chunk = numpy.concatenate(chunks) * 0.25
+    chunk[:fade] = numpy.multiply(chunk[:fade], fade_in)
+    chunk[-fade:] = numpy.multiply(chunk[-fade:], fade_out)
+
+    rampOut = chunk[-1000:]
+    print rampOut.shape
+
+    stream.write(chunk.astype(numpy.float32).tostring())
 
 def doit():
     frequency1 = 700
     frequency2 = 250
-    for i in range (1000000):
-        play_tone(stream, frequency1, 1)
-        play_tone(stream, frequency2, 1)
+    for i in range(2):
+        play_tone(stream, frequency1, 2)
+        play_tone(stream, frequency2, 2)
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()
