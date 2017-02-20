@@ -2,6 +2,7 @@ from __future__ import division
 from math import pi
 import numpy as np
 
+
 def wave(frequency, length, rate):
     """produces sine across np array"""
 
@@ -15,6 +16,7 @@ def wave(frequency, length, rate):
 
     # return waveform2
     return np.add(waveform, waveform2)
+
 
 def play_frequencies(stream, length, volume, attack, decay, *freqs):
     """Plays a group of frequencies"""
