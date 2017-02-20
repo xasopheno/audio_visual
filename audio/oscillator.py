@@ -2,44 +2,51 @@ from __future__ import division
 from math import pi
 import numpy as np
 
-def wave(frequency, length, rate):
-    """produces sine across np array"""
+class Oscillator:
 
-    length = int(length * rate)
-    factor = float(frequency) * (pi * 2) / rate
-    waveform = np.sin(np.arange(length) * factor)
+    def __init__(self):
+        self.sample_rate = 44100
 
-    # waveform = np.round(waveform)
+    def wave(self, frequency, length, rate):
+        """produces sine across np array"""
 
-    waveform2 = np.power(waveform, 3)
 
-    # return waveform2
-    return np.add(waveform, waveform2)
+        length = int(length * rate)
+        factor = float(frequency) * (pi * 2) / rate
+        waveform = np.sin(np.arange(length) * factor)
 
-def play_frequencies(stream, length, volume, attack, decay, *freqs):
-    """Plays a group of frequencies"""
+        # waveform = np.round(waveform)
 
-    allTones = []
+        waveform2 = np.power(waveform, 3)
 
-    for freq in freqs:
-        chunks = []
-        chunks.append(wave(freq, length, 44100))
-        chunk = np.concatenate(chunks) * volume
+        # return waveform2
+        return np.add(waveform, waveform2)
 
-        attack = attack
-        decay = attack
+    def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
+        """Plays a group of frequencies"""
 
-        fade_in = np.arange(0., 1., 1./attack)
-        fade_out = np.arange(1., 0., -1./decay)
+        allTones = []
 
-        chunk[:attack] = np.multiply(chunk[:attack], fade_in)
-        chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
+        for freq in freqs:
+            chunks = []
+            chunks.append(self.wave(freq, length, self.sample_rate))
+            chunk = np.concatenate(chunks) * volume
 
-        allTones.append(chunk)
+            attack = attack
+            decay = decay
 
-    chunk = sum(allTones)
+            fade_in = np.arange(0., 1., 1./attack)
+            fade_out = np.arange(1., 0., -1./decay)
 
-    stream.write(chunk.astype(np.float32).tostring())
+            chunk[:attack] = np.multiply(chunk[:attack], fade_in)
+            chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
+
+            allTones.append(chunk)
+
+        chunk = sum(allTones)
+
+        stream.write(chunk.astype(np.float32).tostring())
+
 
 
 # propertysOfATone = [

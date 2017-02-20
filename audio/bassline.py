@@ -3,6 +3,8 @@ import random
 from oscillator import play_frequencies
 
 # numpy.set_printoptions(threshold=numpy.nan)
+square = Oscillator
+sine = Oscillator2
 
 def bassline():
     frequency = 200
