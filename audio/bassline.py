@@ -5,19 +5,19 @@ from oscillator import play_frequencies
 # numpy.set_printoptions(threshold=numpy.nan)
 
 def bassline():
-    frequency = 200
+    frequency = 100
     volume = .25
     for i in range(1000000):
         play_frequencies(
             stream,
-            .15,
+            .5,
             volume,
             300,
             300,
             frequency,
-            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
+            # random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
         )
-        change = random.choice([-75, -75, -7, 7, 1, 2, 3, 4, 100, -125])
+        change = random.choice([-75, -75, -7, 7, 3, 4, 5, 6, 100, -125])
 
         print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
         if frequency > 150 or not frequency < 40:
@@ -26,7 +26,7 @@ def bassline():
             volume = random.choice([.4, .5])
 
         if frequency < 0:
-            frequency = random.choice([50, 100, 200, 300])
+            frequency = random.choice([50, 100, 75])
         else:
             frequency = frequency + change
 

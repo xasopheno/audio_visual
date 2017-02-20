@@ -39,8 +39,8 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
                         stream,
                         length,
                         .1,
-                        10000,
-                        1000,
+                        100000,
+                        100000,
                         frequency1,
                         frequency2,
                         frequency1 + 5,
@@ -77,9 +77,9 @@ if __name__ == '__main__':
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
         # check_for_relationship(frequency1, frequency2, (5/4), 5)
         # check_for_relationship(frequency1, frequency2, (6/5), 5)
-        check_for_relationship(frequency1, frequency2, (7/4), 5)
-        check_for_relationship(frequency1, frequency2, (9/8), 5)
-        check_for_relationship(frequency1, frequency2, (15/8), 5)
+        check_for_relationship(frequency1, frequency2, (7/4), 7)
+        check_for_relationship(frequency1, frequency2, (9/8), 7)
+        check_for_relationship(frequency1, frequency2, (15/8), 7)
         # check_for_relationship(frequency1, frequency2, (11/8), 5)
 
     p.close
