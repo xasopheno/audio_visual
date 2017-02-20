@@ -12,6 +12,8 @@ def bassline():
             stream,
             .15,
             volume,
+            300,
+            300,
             frequency,
             random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
         )
