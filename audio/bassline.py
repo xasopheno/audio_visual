@@ -1,43 +1,42 @@
-#!/usr/bin/python
-import math
 import numpy
 import pyaudio
+import random
+from oscillator import play_frequencies
+# numpy.set_printoptions(threshold=numpy.nan)
 
+def bassline():
+    frequency = 200
+    volume = .25
+    for i in range(1000000):
+        play_frequencies(
+            stream,
+            .15,
+            volume,
+            frequency,
+            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
+        )
+        change = random.choice([-75, -75, -7, 7, 1, 2, 3, 4, 100, -125])
 
-def sine(frequency, length, rate):
-    length = int(length * rate)
-    factor = (float(frequency) * (math.pi * 2) / rate)
-    return numpy.sin(numpy.arange(length) * factor)
+        print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
+        if frequency > 150 or not frequency < 40:
+            volume = random.choice([.25, .25, .25, .3, .3, .5, 0, 0])
+        else:
+            volume = random.choice([.4, .5])
 
-
-def play_tone(stream, frequency, length, rate=44100):
-    chunks = [sine(frequency, length, rate)]
-
-    chunk = numpy.concatenate(chunks) * 0.25
-
-    fade = 200.
-
-    fade_in = numpy.arange(0., 1., 1/fade)
-    fade_out = numpy.arange(1., 0., -1/fade)
-
-    chunk[:fade] = numpy.multiply(chunk[:fade], fade_in)
-    chunk[-fade:] = numpy.multiply(chunk[-fade:], fade_out)
-
-    stream.write(chunk.astype(numpy.float32).tostring())
-
-
-def test():
-    test_freqs = [50, 100, 200, 400, 800, 1200, 2000, 3200]
-
-    for i in range(2):
-        for freq in test_freqs:
-            play_tone(stream, freq, 1)
-
+        if frequency < 0:
+            frequency = random.choice([50, 100, 200, 300])
+        else:
+            frequency = frequency + change
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32,
-                    channels=1, rate=44100, output=1)
+                    channels=1,
+                    rate=44100,
+                    output=1,
+                    frames_per_buffer=6615)
+
+bassline()
 
 
-test()
+
