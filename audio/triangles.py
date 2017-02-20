@@ -23,7 +23,7 @@ Using PyAudio for sound. I'm still having a problem with
 
 sample_rate = 44100
 
-def check_for_relationship(frequency1, frequency2, relationship, duration):
+def check_for_relationship(frequency1, frequency2, relationship, length):
     """Checks for given ratio."""
     """
     Frequency relationships are rounded to two decimal places. 
@@ -37,8 +37,10 @@ def check_for_relationship(frequency1, frequency2, relationship, duration):
 
         play_frequencies(
                         stream,
-                        duration,
+                        length,
                         .1,
+                        10000,
+                        1000,
                         frequency1,
                         frequency2,
                         frequency1 + 5,
@@ -75,9 +77,9 @@ if __name__ == '__main__':
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
         # check_for_relationship(frequency1, frequency2, (5/4), 5)
         # check_for_relationship(frequency1, frequency2, (6/5), 5)
-        check_for_relationship(frequency1, frequency2, (7/4), 10)
-        check_for_relationship(frequency1, frequency2, (9/8), 10)
-        check_for_relationship(frequency1, frequency2, (15/8), 10)
+        check_for_relationship(frequency1, frequency2, (7/4), 5)
+        check_for_relationship(frequency1, frequency2, (9/8), 5)
+        check_for_relationship(frequency1, frequency2, (15/8), 5)
         # check_for_relationship(frequency1, frequency2, (11/8), 5)
 
     p.close

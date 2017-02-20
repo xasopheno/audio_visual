@@ -1,0 +1,10 @@
+visual/cvart/*
+visual/cvart2/*
+visual/cvart3/*
+visual/cvart4/*
+visual/cvart5/*
+visual/success/*
+visual/video/*
+venv/*
+*.pyc
+visual/reversed/*

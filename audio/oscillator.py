@@ -16,7 +16,7 @@ def wave(frequency, length, rate):
     # return waveform2
     return np.add(waveform, waveform2)
 
-def play_frequencies(stream, length, volume, *freqs):
+def play_frequencies(stream, length, volume, attack, decay, *freqs):
     """Plays a group of frequencies"""
 
     allTones = []
@@ -26,11 +26,11 @@ def play_frequencies(stream, length, volume, *freqs):
         chunks.append(wave(freq, length, 44100))
         chunk = np.concatenate(chunks) * volume
 
-        attack = 150.
-        decay = 100.
+        attack = attack
+        decay = attack
 
-        fade_in = np.arange(0., 1., 1/attack)
-        fade_out = np.arange(1., 0., -1/decay)
+        fade_in = np.arange(0., 1., 1./attack)
+        fade_out = np.arange(1., 0., -1./decay)
 
         chunk[:attack] = np.multiply(chunk[:attack], fade_in)
         chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
