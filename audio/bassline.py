@@ -10,7 +10,7 @@ def bassline():
     for i in range(1000000):
         play_frequencies(
             stream,
-            .15,
+            .01,
             volume,
             frequency,
             random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
