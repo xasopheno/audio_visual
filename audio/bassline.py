@@ -1,34 +1,34 @@
 import pyaudio
 import random
-from oscillator import play_frequencies
+from oscillator import Oscillator
 
 # numpy.set_printoptions(threshold=numpy.nan)
-square = Oscillator
-sine = Oscillator2
+
+osc = Oscillator()
 
 def bassline():
     frequency = 200
     volume = .25
     for i in range(1000000):
-        play_frequencies(
+        osc.play_frequencies(
             stream,
-            .15,
+            random.choice([.10, .10, .10, .10, .10, .10, .10, .2, .2, .2, .2]),
             volume,
             300,
             300,
             frequency,
-            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
+            random.choice([frequency * 2/1, frequency, frequency * 3/2])
         )
-        change = random.choice([-75, -75, -7, 7, 1, 2, 3, 4, 100, -125])
+        change = random.choice([-75, -7, 7, 1, 2, 3, 4, 100, -125])
 
         print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
         if frequency > 150 or not frequency < 40:
-            volume = random.choice([.25, .25, .25, .3, .3, .5, 0, 0])
+            volume = random.choice([.25, .25, .25, .3, .3, .5, 0, 0, 0])
         else:
             volume = random.choice([.4, .5])
 
-        if frequency < 0:
-            frequency = random.choice([50, 100, 200, 300])
+        if frequency < 60:
+            frequency = random.choice([100, 200, 300])
         else:
             frequency = frequency + change
 

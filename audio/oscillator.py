@@ -13,7 +13,12 @@ class Oscillator:
 
         length = int(length * rate)
         factor = float(frequency) * (pi * 2) / rate
-        waveform = np.sin(np.arange(length) * factor)
+        form = np.arange(length) * factor
+
+        waveform = np.sin(form)
+
+        for i in range(3, 25, 2):
+            waveform += np.sin(i*form)/i
 
         # waveform = np.round(waveform)
 
