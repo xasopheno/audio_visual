@@ -26,8 +26,8 @@ def play_frequencies(stream, length, volume, *freqs):
         chunks.append(wave(freq, length, 44100))
         chunk = np.concatenate(chunks) * volume
 
-        attack = 150000.
-        decay = 10000.
+        attack = 150.
+        decay = 100.
 
         fade_in = np.arange(0., 1., 1/attack)
         fade_out = np.arange(1., 0., -1/decay)

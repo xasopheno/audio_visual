@@ -1,7 +1,7 @@
-import numpy
 import pyaudio
 import random
 from oscillator import play_frequencies
+
 # numpy.set_printoptions(threshold=numpy.nan)
 
 def bassline():
