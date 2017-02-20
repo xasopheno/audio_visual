@@ -3,7 +3,9 @@ import pyaudio
 from random import shuffle
 from fractions import Fraction
 
-from oscillator import play_frequencies
+from oscillator import Oscillator
+
+osc = Oscillator()
 
 """
 "triangles.py"
@@ -35,7 +37,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
 
-        play_frequencies(
+        osc.play_frequencies(
                         stream,
                         length,
                         .1,
