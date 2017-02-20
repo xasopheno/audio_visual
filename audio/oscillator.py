@@ -46,12 +46,3 @@ class Oscillator:
         chunk = sum(allTones)
 
         stream.write(chunk.astype(np.float32).tostring())
-
-
-
-# propertysOfATone = [
-#         length: 1,
-#         volume: 10,
-#         attack: 1000,
-#         decay:
-#     ]
