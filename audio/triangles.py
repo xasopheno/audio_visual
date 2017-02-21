@@ -1,11 +1,14 @@
 from __future__ import division
 import pyaudio
+import random
 from random import shuffle
 from fractions import Fraction
 
-from oscillator import Oscillator
+from Oscillators.SquareOsc import SquareOsc
+from Oscillators.SineOsc import SineOsc
 
-osc = Oscillator()
+osc = SquareOsc()
+osc2 = SineOsc()
 
 """
 "triangles.py"
@@ -37,23 +40,41 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
 
-        osc.play_frequencies(
+        # osc.play_frequencies(
+        #                 stream,
+        #                 .25,
+        #                 .2,
+        #                 50,
+        #                 200,
+        #                 frequency1,
+        #                 frequency2,
+        #                 frequency1 + 5,
+        #                 frequency1 - 5,
+        #                 frequency2 + 3,
+        #                 frequency2 - 3,
+        #                 # # 2 * frequency1 / 3,
+        #                 abs(frequency1-frequency2),
+        #                 frequency1+frequency2,
+        #                 3 * (frequency1+frequency2)/2/2 + 5
+        #                 )
+
+        osc2.play_frequencies(
                         stream,
                         length,
-                        .1,
+                        .5,
+                        200,
                         100000,
-                        10000,
                         frequency1,
                         frequency2,
-                        frequency1 + 5,
-                        frequency1 - 5,
-                        frequency2 + 3,
-                        frequency2 - 3,
-                        # # 2 * frequency1 / 3,
+                        frequency1 + random.choice([13, 7, 5, 2]),
+                        frequency1 - random.choice([13, 7, 5, 2]),
+                        frequency2 + random.choice([13, 7, 5, 2]),
+                        frequency2 - random.choice([13, 7, 5, 2]),
+                        # 2 * frequency1 / 3,
                         abs(frequency1-frequency2),
                         frequency1+frequency2,
                         3 * (frequency1+frequency2)/2/2 + 5
-                        )
+                    )
 
 def generate_test_array():
     """"Randomized test array"""
@@ -79,9 +100,9 @@ if __name__ == '__main__':
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
         # check_for_relationship(frequency1, frequency2, (5/4), 5)
         # check_for_relationship(frequency1, frequency2, (6/5), 5)
-        check_for_relationship(frequency1, frequency2, (7/4), 5)
-        check_for_relationship(frequency1, frequency2, (9/8), 5)
-        check_for_relationship(frequency1, frequency2, (15/8), 5)
+        check_for_relationship(frequency1, frequency2, (7/4), 3)
+        check_for_relationship(frequency1, frequency2, (9/8), 3)
+        check_for_relationship(frequency1, frequency2, (15/8), 3)
         # check_for_relationship(frequency1, frequency2, (11/8), 5)
 
     p.close

@@ -1,10 +1,10 @@
 import pyaudio
 import random
-from oscillator import Oscillator
+from Oscillators.SquareOsc import SquareOsc
 
 # numpy.set_printoptions(threshold=numpy.nan)
 
-osc = Oscillator()
+osc = SquareOsc()
 
 def bassline():
     frequency = 200

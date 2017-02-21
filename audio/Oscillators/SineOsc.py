@@ -2,30 +2,29 @@ from __future__ import division
 from math import pi
 import numpy as np
 
-class Oscillator:
 
+class SineOsc:
     def __init__(self):
         self.sample_rate = 44100
+        self.waveform = None
+        self.length = None
+        self.frequency = None
+        self.form = None
+        self.factor = None
 
     def wave(self, frequency, length, rate):
         """produces sine across np array"""
 
-
-        length = int(length * rate)
-        factor = float(frequency) * (pi * 2) / rate
-        form = np.arange(length) * factor
-
-        waveform = np.sin(form)
-
-        for i in range(3, 25, 2):
-            waveform += np.sin(i*form)/i
-
+        self.length = int(length * rate)
+        self.factor = float(frequency) * (pi * 2) / self.sample_rate
+        self.form = np.arange(self.length) * self.factor
+        self.waveform = np.sin(self.form)
         # waveform = np.round(waveform)
-
-        waveform2 = np.power(waveform, 3)
+        # waveform2 = np.power(self.waveform, 3)
+        # self.waveform = abs(self.waveform)
 
         # return waveform2
-        return np.add(waveform, waveform2)
+        return self.waveform
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
