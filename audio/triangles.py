@@ -38,7 +38,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
         play_frequencies(
                         stream,
                         length,
-                        .1,
+                        .05,
                         100000,
                         100000,
                         frequency1,
