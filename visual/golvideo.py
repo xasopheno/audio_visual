@@ -15,10 +15,12 @@ framesToProduce = 1150
 finalDirectory = 'cvart/'
 videoDirectory = 'video/'
 
+
 def check_or_create_directory(directory):
   pathNeeded = os.path.isdir(os.getcwd() + '/' + directory)
   if pathNeeded == False:
     os.mkdir(os.getcwd() + '/' + directory)
+
 
 def write_frame(frame):
   start = time.time()
@@ -36,6 +38,7 @@ def write_frame(frame):
     img = iterate_gol(past_image, img, video_image)
 
   print_image(img, frame, start) 
+
 
 def iterate_gol(past_image, current_image, video_image):
   past_image = cv2.imread(past_image)
@@ -56,6 +59,7 @@ def iterate_gol(past_image, current_image, video_image):
         blankImg[yPos, xPos] = video_image[yPos, xPos]  
           
   return blankImg
+
 
 def print_image(img, frame, start):
   file_name = finalDirectory + str('%04d') % frame + '.png'
