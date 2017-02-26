@@ -7,7 +7,6 @@ from fractions import Fraction
 from Oscillators.SquareOsc import SquareOsc
 from Oscillators.SineOsc import SineOsc
 
-osc = SquareOsc()
 osc2 = SineOsc()
 
 """
@@ -40,41 +39,25 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
 
-        # osc.play_frequencies(
-        #                 stream,
-        #                 .25,
-        #                 .2,
-        #                 50,
-        #                 200,
-        #                 frequency1,
-        #                 frequency2,
-        #                 frequency1 + 5,
-        #                 frequency1 - 5,
-        #                 frequency2 + 3,
-        #                 frequency2 - 3,
-        #                 # # 2 * frequency1 / 3,
-        #                 abs(frequency1-frequency2),
-        #                 frequency1+frequency2,
-        #                 3 * (frequency1+frequency2)/2/2 + 5
-        #                 )
 
-        osc2.play_frequencies(
-                        stream,
-                        length,
-                        .5,
-                        200,
-                        100000,
-                        frequency1,
-                        frequency2,
-                        frequency1 + random.choice([13, 7, 5, 2]),
-                        frequency1 - random.choice([13, 7, 5, 2]),
-                        frequency2 + random.choice([13, 7, 5, 2]),
-                        frequency2 - random.choice([13, 7, 5, 2]),
-                        # 2 * frequency1 / 3,
-                        abs(frequency1-frequency2),
-                        frequency1+frequency2,
-                        3 * (frequency1+frequency2)/2/2 + 5
-                    )
+        waveform = osc2.play_frequencies(
+            stream,
+            length,
+            .5,
+            200,
+            100000,
+            frequency1,
+            frequency2,
+            frequency1 + random.choice([13, 7, 5]),
+            frequency1 - random.choice([13, 7, 5]),
+            frequency2 + random.choice([13, 7, 5]),
+            frequency2 - random.choice([13, 7, 5]),
+            abs(frequency1-frequency2),
+            frequency1+frequency2,
+            3 * (frequency1+frequency2)/2/2 + 5
+        )
+
+        stream.write(waveform)
 
 def generate_test_array():
     """"Randomized test array"""

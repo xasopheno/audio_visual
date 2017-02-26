@@ -12,8 +12,8 @@ def bassline():
     for i in range(1000000):
         osc.play_frequencies(
             stream,
-            random.choice([.10, .10, .10, .10, .10, .10, .10, .2, .2, .2, .2]),
-            volume,
+            random.choice([.10, .10, .10, .10, .10, .10, .10, .2, .2, .2, .2]) *3/2,
+            volume /4,
             300,
             300,
             frequency,
