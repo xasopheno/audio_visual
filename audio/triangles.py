@@ -3,29 +3,12 @@ import pyaudio
 import random
 from random import shuffle
 from fractions import Fraction
+import numpy as np
 
-from Oscillators.SquareOsc import SquareOsc
-from Oscillators.SineOsc import SineOsc
+from Oscillators.Generator import Generator
 
-osc2 = SineOsc()
+osc2 = Generator()
 
-"""
-"triangles.py"
-Given two vector lengths, if the two lengths are in
-    the desired ratio, generate two tones at with 
-    frequencies corresponding to vector length. 
-    Currently set up to detect Perfect 5ths or the ratio 3/2
-Vector lengths should probably be scaled to 
-    the range(30, 2000)
-A time.sleep() function is slowing down the execution 
-    of this script for viewability. 
-Using PyAudio for sound. I'm still having a problem with 
-    pops due to concantenated audio. Perhaps you can figure
-    something out. 
-    http://stackoverflow.com/questions/36438850/how-to-remove-pops-from-concatented-sound-data-in-pyaudio
-"""
-
-sample_rate = 44100
 
 def check_for_relationship(frequency1, frequency2, relationship, length):
     """Checks for given ratio."""
@@ -34,24 +17,22 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
     Increased accuracy of three decimals places might be
     preferable in the context of video.
     """ 
-    print round((frequency1) / (frequency2), 3)
-    print frequency1, frequency2, Fraction(relationship)
+    print(round(frequency1 / frequency2, 3))
+    print (frequency1, frequency2, Fraction(relationship))
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
 
-
         waveform = osc2.play_frequencies(
-            stream,
             length,
-            .5,
-            200,
-            100000,
+            .5/15,
+            100,
+            110000,
             frequency1,
             frequency2,
-            frequency1 + random.choice([13, 7, 5]),
-            frequency1 - random.choice([13, 7, 5]),
-            frequency2 + random.choice([13, 7, 5]),
-            frequency2 - random.choice([13, 7, 5]),
+            frequency1 + 5,
+            frequency1 - 5,
+            frequency2 + 3,
+            frequency2 - 3,
             abs(frequency1-frequency2),
             frequency1+frequency2,
             3 * (frequency1+frequency2)/2/2 + 5
@@ -59,19 +40,20 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
 
         stream.write(waveform)
 
+
 def generate_test_array():
     """"Randomized test array"""
     freqs = []
-    for frequency1 in range(250, 400):
-        for frequency2 in range(250, 400):
-            freqs.append((frequency1, frequency2))
+    for vector1 in range(250, 400):
+        for vector2 in range(250, 400):
+            freqs.append((vector1, vector2))
     shuffle(freqs)
     return freqs
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32,
-                channels=1, rate=sample_rate, output=1)
+                    channels=1, rate=48000, output=1)
 
     test_freqs = generate_test_array()
 

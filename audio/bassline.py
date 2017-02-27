@@ -1,36 +1,37 @@
 import pyaudio
 import random
-from Oscillators.SquareOsc import SquareOsc
+from Oscillators.Generator import Generator
 
 # numpy.set_printoptions(threshold=numpy.nan)
 
-osc = SquareOsc()
+osc = Generator()
 
 def bassline():
     frequency = 200
     volume = .25
     for i in range(1000000):
-        osc.play_frequencies(
-            stream,
-            random.choice([.10, .10, .10, .10, .10, .10, .10, .2, .2, .2, .2]) *3/2,
-            volume /4,
+        if frequency < 60:
+            frequency = random.choice([150, 200, 300])
+        waveform = osc.play_frequencies(
+            random.choice([.1, .1, .1, .1, .1, .1, .1, .2, .2, .2, .2, .2, .3, .3, .3]),
+            volume / 4,
             300,
-            300,
+            4000,
             frequency,
-            random.choice([frequency * 2/1, frequency, frequency * 3/2])
+            random.choice([frequency * 3/1, frequency * 3/1])
         )
-        change = random.choice([-75, -7, 7, 1, 2, 3, 4, 100, -125])
+        change = random.choice([-75, -7, 7, 1, 2, 3, 4, 60, -75, -50])
+
+        stream.write(waveform)
 
         print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
         if frequency > 150 or not frequency < 40:
-            volume = random.choice([.25, .25, .25, .3, .3, .5, 0, 0, 0])
+
+            volume = random.choice([.25, .25, .25, .3, .3, .5, 0])
         else:
             volume = random.choice([.4, .5])
 
-        if frequency < 60:
-            frequency = random.choice([100, 200, 300])
-        else:
-            frequency = frequency + change
+        frequency = frequency + change
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()

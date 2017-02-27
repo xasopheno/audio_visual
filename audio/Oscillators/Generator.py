@@ -1,27 +1,25 @@
 from __future__ import division
 import numpy as np
-from SineWave import SineWave
 
-sine = SineWave()
+from .Bassdrum import WaveForm
 
-class SineOsc:
+w = WaveForm()
+
+class Generator:
     def __init__(self):
         pass
 
-    def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
+    @staticmethod
+    def play_frequencies(length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
-
-        allTones = []
+        all_tones = []
 
         for freq in freqs:
-            waveform = sine.wave(freq, length)
+            waveform = w.sine_wave(freq, length)
 
-            chunks = [waveform]
+            chunk = np.concatenate([waveform])
 
-            chunk = np.concatenate(chunks) * volume
-
-            attack = attack
-            decay = decay
+            chunk = np.multiply(chunk, volume)
 
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)
@@ -29,8 +27,8 @@ class SineOsc:
             chunk[:attack] = np.multiply(chunk[:attack], fade_in)
             chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
 
-            allTones.append(chunk)
+            all_tones.append(chunk)
 
-        sum_all_tones = sum(allTones)
+        sum_all_tones = sum(all_tones)
 
         return sum_all_tones.astype(np.float32).tostring()
