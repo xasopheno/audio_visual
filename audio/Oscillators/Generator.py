@@ -23,20 +23,15 @@ class Generator:
             waveform = w.sine_wave(freq, length)
 
             chunk = np.concatenate([waveform])
+            chunk = np.multiply(chunk, volume) /2
+            # chunk += np.power(chunk, 2)
+            # chunk += np.round(chunk, 10)
 
-            chunk = np.multiply(chunk, volume)
-
-            # fade_in = np.arange(0., 1., 1./attack)
-            # fade_out = np.arange(1., 0., -1./decay)
-            #
-            # chunk[:attack] = np.multiply(chunk[:attack], fade_in)
-            # chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
-            #
             all_tones.append(chunk)
 
         sum_all_tones = sum(all_tones)
 
-        # plt.plot(sum_all_tones)
-        # plt.show()
+        plt.plot(sum_all_tones)
+        plt.show()
 
         return sum_all_tones.astype(np.float32).tostring()

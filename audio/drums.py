@@ -7,7 +7,7 @@ import time
 osc = Generator()
 
 def bass_drum():
-    for i in range(10000):
+    for i in range(10):
         frequency = random.choice([31.75, 32, 31, 31.5, 30.75])
 
         waveform = osc.play_frequencies(
