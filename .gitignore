@@ -8,3 +8,4 @@ visual/video/*
 venv/*
 *.pyc
 visual/reversed/*
+out/
