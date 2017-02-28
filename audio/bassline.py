@@ -13,12 +13,11 @@ def bassline():
         if frequency < 60:
             frequency = random.choice([150, 200, 300])
         waveform = osc.play_frequencies(
-            random.choice([.1, .1, .1, .1, .1, .1, .1, .2, .2, .2, .2, .2, .3, .3, .3]),
+            .2,
             volume / 4,
             300,
             4000,
             frequency,
-            random.choice([frequency * 3/1, frequency * 3/1])
         )
         change = random.choice([-75, -7, 7, 1, 2, 3, 4, 60, -75, -50])
 
