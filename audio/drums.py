@@ -8,13 +8,13 @@ osc = Generator()
 
 
 def bass_drum():
-    frequency = random.choice([24, 25.5, 27., 28.5, 30, 32, 50, 54, 44, 48])
+    frequency = random.choice([24, 25.5, 27., 28.5, 30, 26, 34, 38, 50, 54, 44, 48])
 
     waveform = osc.play_frequencies(
         random.choice([.55]) / 1.3,
         random.choice([1, 1, 1.25, .75]),
         frequency,
-        frequency + random.choice([.1, .3]),
+        frequency - random.choice([.1, .3]),
         frequency + .1,
         frequency,
         frequency,
