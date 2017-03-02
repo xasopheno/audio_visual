@@ -27,7 +27,8 @@ class Generator:
 
         sum_all_tones = sum_all_tones / [random.choice([1.1, 1.12, 1.13, 1.3, 1.25, 1.2, 1.1, 1.4])]
         #
-        # plt.plot(sum_all_tones)
+        # print len(sum_all_tones)
+        # plt.plot(sum_all_tones[:1020])
         # plt.show()
 
         return sum_all_tones.astype(np.float32).tostring()
