@@ -40,18 +40,20 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
         osc.play_frequencies(
                         stream,
                         length,
-                        .1,
+                        .05,
                         500,
                         11500,
                         frequency1,
                         frequency2,
-                        frequency1 + 7,
+                        frequency1 * 11/8,
+                        frequency2 * 7/4,
+                        frequency1 + 11,
                         frequency1 - 11,
-                        frequency1 + 13,
-                        frequency2 + 5,
-                        frequency2 - 3,
+                        frequency2 + 7,
+                        frequency2 - 7,
+                        frequency1 * 3/2,
                         # # 2 * frequency1 / 3,
-                        abs(frequency1-frequency2),
+                        # abs(frequency1-frequency2),
                         frequency1+frequency2,
                         3 * (frequency1+frequency2)/2/2 + 5
                         )
@@ -59,8 +61,8 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
 def generate_test_array():
     """"Randomized test array"""
     freqs = []
-    for frequency1 in range(250, 400):
-        for frequency2 in range(250, 400):
+    for frequency1 in range(300, 550):
+        for frequency2 in range(300, 550):
             freqs.append((frequency1, frequency2))
     shuffle(freqs)
     return freqs
@@ -68,7 +70,7 @@ def generate_test_array():
 if __name__ == '__main__':
     p = pyaudio.PyAudio()
     stream = p.open(format=pyaudio.paFloat32,
-                channels=1, rate=sample_rate, output=1)
+                channels=1, rate=sample_rate, output=2)
 
     test_freqs = generate_test_array()
 

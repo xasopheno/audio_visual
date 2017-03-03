@@ -1,6 +1,7 @@
 from __future__ import division
 from math import pi
 import numpy as np
+import matplotlib.pyplot as plt
 
 class Oscillator:
 
@@ -18,10 +19,12 @@ class Oscillator:
         # waveform = np.round(waveform)
 
         waveform2 = np.power(waveform, 3)
-        waveform2 += np.power(waveform, 4)/4
+        waveform3 = np.power(waveform, 4)/4
 
-        # return waveform2
-        return np.add(waveform, waveform2)
+
+        # return waveform
+        # waveform = np.round(waveform, 0)
+        return np.add(waveform, waveform2, waveform3)
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
@@ -45,5 +48,8 @@ class Oscillator:
             allTones.append(chunk)
 
         chunk = sum(allTones)
+        # plt.plot(chunk[1200:3000])
+        # plt.show()
+
 
         stream.write(chunk.astype(np.float32).tostring())
