@@ -16,14 +16,14 @@ class Oscillator:
         factor = float(frequency) * (pi * 2) / rate
         waveform = np.sin(np.arange(length) * factor)
 
-        # waveform = np.round(waveform)
+        rounded_waveform = np.round(waveform, 2)
 
         waveform2 = np.power(waveform, 3)
         waveform3 = np.power(waveform, 4)/4
 
 
         # return waveform
-        # waveform = np.round(waveform, 0)
+        # waveform = np.add(rounded_waveform, waveform)
         return np.add(waveform, waveform2, waveform3)
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
@@ -32,6 +32,8 @@ class Oscillator:
         allTones = []
 
         for freq in freqs:
+            if freq > 1000:
+                volume = volume * .80902
             chunks = []
             chunks.append(self.wave(freq, length, self.sample_rate))
             chunk = np.concatenate(chunks) * volume

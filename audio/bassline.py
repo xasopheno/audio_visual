@@ -1,36 +1,40 @@
 import pyaudio
 import random
-from oscillator import play_frequencies
+import time
 
-# numpy.set_printoptions(threshold=numpy.nan)
-square = Oscillator
-sine = Oscillator2
+from oscillator import Oscillator
+
+osc = Oscillator()
 
 def bassline():
-    frequency = 200
+    frequency = random.choice([70, 70, 62, 74])
     volume = .25
+    length = random.choice([4, 6.472, 6.472, 6.427, 10.472, 10.472,])
     for i in range(1000000):
-        play_frequencies(
+        osc.play_frequencies(
             stream,
-            .15,
+            length,
             volume,
-            300,
-            300,
+            random.choice([170000, 14000, 10000]),
+            random.choice([2000, 10000]),
             frequency,
-            random.choice([frequency * 2/1, frequency + 5, frequency - 5, frequency, frequency * 3/2])
+            random.choice([frequency * 2,
+                           frequency * 3/2 * 2,
+                           frequency * 9/8 * 2,
+                           frequency * 5/2 * 2,
+                           frequency * 7 / 6 * 2,
+                           frequency * 11/8 * 2,
+                           frequency * 15/8 * 2]),
+
+                           random.choice([frequency * 2,
+                           frequency * 3/2 * 3,
+                           frequency * 9/8 * 3,
+                           frequency * 5/2 * 3,
+                           frequency * 7 / 6 * 3,
+                           frequency * 11/8 * 3,
+                           frequency * 15/8 * 3])
         )
-        change = random.choice([-75, -75, -7, 7, 1, 2, 3, 4, 100, -125])
-
-        print ('frequency: ', frequency, 'change: ', change, 'volume: ', volume)
-        if frequency > 150 or not frequency < 40:
-            volume = random.choice([.25, .25, .25, .3, .3, .5, 0, 0])
-        else:
-            volume = random.choice([.4, .5])
-
-        if frequency < 0:
-            frequency = random.choice([50, 100, 200, 300])
-        else:
-            frequency = frequency + change
+        time.sleep(1)
 
 if __name__ == '__main__':
     p = pyaudio.PyAudio()

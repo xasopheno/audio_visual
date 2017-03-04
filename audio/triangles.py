@@ -1,6 +1,7 @@
 from __future__ import division
 import pyaudio
 from random import shuffle
+import time
 from fractions import Fraction
 
 from oscillator import Oscillator
@@ -40,22 +41,22 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
         osc.play_frequencies(
                         stream,
                         length,
-                        .05,
+                        .03,
                         500,
-                        11500,
+                        20000,
                         frequency1,
                         frequency2,
                         frequency1 * 11/8,
                         frequency2 * 7/4,
-                        frequency1 + 11,
-                        frequency1 - 11,
-                        frequency2 + 7,
-                        frequency2 - 7,
+                        frequency1 + 3,
+                        frequency1 - 3,
+                        frequency2 + 5,
+                        frequency2 - 5,
                         frequency1 * 3/2,
                         # # 2 * frequency1 / 3,
                         # abs(frequency1-frequency2),
-                        frequency1+frequency2,
-                        3 * (frequency1+frequency2)/2/2 + 5
+                        # frequency1+frequency2,
+                        # 3 * (frequency1+frequency2)/2/2 + 5
                         )
 
 def generate_test_array():
@@ -87,4 +88,5 @@ if __name__ == '__main__':
         check_for_relationship(frequency1, frequency2, (15/8), 3.2)
         # check_for_relationship(frequency1, frequency2, (11/8), 5)
 
+        time.sleep(.02618)
     p.close
