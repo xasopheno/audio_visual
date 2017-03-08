@@ -8,8 +8,9 @@ osc = Oscillator()
 
 def bassline():
     frequency = random.choice([70, 70, 62, 74])
-    volume = .25
-    length = random.choice([4, 6.472, 6.472, 6.427, 10.472, 10.472,])
+    melody = frequency * 5 * random.choice([3/2, 5/4, 7/6, 9/8, 4/3]) 
+    volume = .05
+    length = random.choice([4, 6.472, 6.472, 6.427, 10.472, 10.472,]) * 1.2
     for i in range(1000000):
         osc.play_frequencies(
             stream,
@@ -26,13 +27,19 @@ def bassline():
                            frequency * 11/8 * 2,
                            frequency * 15/8 * 2]),
 
-                           random.choice([frequency * 2,
+            random.choice([frequency * 3,
                            frequency * 3/2 * 3,
                            frequency * 9/8 * 3,
                            frequency * 5/2 * 3,
                            frequency * 7 / 6 * 3,
                            frequency * 11/8 * 3,
-                           frequency * 15/8 * 3])
+                           frequency * 15/8 * 3]),
+
+            melody,
+            melody,
+
+            melody + random.choice([0, 1, 1, 2, 3, 5, 8, 11, 19]),
+            melody + random.choice([0, 1, 1, 2, 3, 5, 8, 11, 19]),
         )
         time.sleep(1)
 

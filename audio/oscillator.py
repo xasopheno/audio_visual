@@ -16,7 +16,7 @@ class Oscillator:
         factor = float(frequency) * (pi * 2) / rate
         waveform = np.sin(np.arange(length) * factor)
 
-        rounded_waveform = np.round(waveform, 2)
+        rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
         waveform3 = np.power(waveform, 4)/4
