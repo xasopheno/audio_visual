@@ -3,7 +3,6 @@ from math import pi, floor
 import numpy as np
 import cv2
 import numpy.fft as fft
-import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 import os
 
@@ -15,6 +14,7 @@ class GenerateVideo:
         self.frame = 1
         self.final_frame = 1
 
+
     def wave(self, frequency, length, rate):
         """produces sine across np array"""
 
@@ -22,12 +22,7 @@ class GenerateVideo:
         factor = float(frequency) * (pi * 2) / rate
         waveform = np.sin(np.arange(length) * factor)
 
-        # waveform = np.round(waveform)
-
-        waveform2 = np.power(waveform, 3)
-
-        # return waveform2
-        return np.add(waveform, waveform2)
+        return waveform
 
     def print_image(self, img):
         file_name = './out/' + str('%04d') % self.frame + '.png'
@@ -35,10 +30,23 @@ class GenerateVideo:
         cv2.imwrite(file_name, img)
         print 'I made ', str(file_name)
 
-    def print_audio(self, chunk):
+    @staticmethod
+    def print_audio(chunk):
         scaled = np.int16(chunk/np.max(np.abs(chunk)) * 32767)
         write('./out/' + 'out.wav', 44100, scaled)
 
+    def get_cycle_length(self, data, length):
+        temporal_window = 3 #seconds
+
+        T = self.sample_rate * 60/(temporal_window) #Cycles per minute
+
+        a = np.abs(fft.rfft(data, n=data.size))[1:]
+        freqs = fft.rfftfreq(data.size, d=1./T)[1:]
+        freqs = np.divide(1, freqs)
+
+        max_cycle_length = freqs[np.argmax(a)]
+        print "Peak found at %s second period (%s minutes)" % (format(max_cycle_length, '.12f' ), format(max_cycle_length*60, '.12f'))
+        return max_cycle_length
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
@@ -49,8 +57,7 @@ class GenerateVideo:
         self.frame = 1
 
         for freq in freqs:
-            chunks = []
-            chunks.append(self.wave(freq, length, self.sample_rate))
+            chunks = [ self.wave(freq, length, self.sample_rate) ]
             chunk = np.concatenate(chunks) * volume
 
             attack = attack
@@ -69,21 +76,9 @@ class GenerateVideo:
         stream.write(chunk.astype(np.float32).tostring())
 
         self.print_audio(chunk)
+        cycle_length = self.get_cycle_length(chunk, length)
 
-        data = chunk
-        temporal_window = 3 #seconds
-
-        T = 44100 * 60/(temporal_window) #Cycles per minute
-
-        a = np.abs(fft.rfft(data, n=data.size))[1:]
-        freqs = fft.rfftfreq(data.size, d=1./T)[1:]
-        freqs = np.divide(1, freqs)
-
-        max_freq = freqs[np.argmax(a)]
-
-        print "Peak found at %s second period (%s minutes)" % (format(max_freq, '.12f' ), format(max_freq*60, '.12f'))
-
-        period_in_samples = (max_freq * 60 * 44100) / 3
+        period_in_samples = (cycle_length * 60 * self.sample_rate) / length
         leftover = 1920 - period_in_samples
         num_images_to_print = floor((4 * 44100 - period_in_samples) / 1920)
 
