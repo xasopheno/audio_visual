@@ -18,12 +18,12 @@ class Oscillator:
         factor = float(frequency) * (pi * 2) / rate
         waveform = np.sin(np.arange(length) * factor)
 
-        # waveform = np.round(waveform)
+        waveform = np.round(waveform)
 
-        waveform2 = np.power(waveform, 3)
+        waveform2 = np.power(waveform, 4)
 
-        # return waveform2
-        return np.add(waveform, waveform2)
+        return waveform2
+        # return np.add(waveform, waveform2)
 
     def print_image(self, img):
         file_name = './images/' + str('%04d') % self.frame + '.png'

@@ -45,13 +45,13 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
                         1000,
                         frequency1,
                         frequency2,
-                        # frequency1 + 5,
-                        # frequency1 - 5,
-                        # frequency2 + 3,
-                        # frequency2 - 3,
+                        frequency1 + 5,
+                        frequency1 - 5,
+                        frequency2 + 3,
+                        frequency2 - 3,
                         # # 2 * frequency1 / 3,
-                        abs(frequency1-frequency2),
-                        frequency1+frequency2,
+                        # abs(frequency1-frequency2),
+                        # frequency1+frequency2,
                         3 * (frequency1+frequency2)/2/2 + 5
                         )
 
@@ -77,11 +77,11 @@ if __name__ == '__main__':
             to get some ratios to work.  
         """
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
-        # check_for_relationship(frequency1, frequency2, (5/4), 5)
-        # check_for_relationship(frequency1, frequency2, (6/5), 5)
-        check_for_relationship(frequency1, frequency2, (7/4), 3)
-        check_for_relationship(frequency1, frequency2, (9/8), 3)
-        check_for_relationship(frequency1, frequency2, (15/8), 3)
-        # check_for_relationship(frequency1, frequency2, (11/8), 5)
+        check_for_relationship(frequency1, frequency2, (5/4), 5)
+        check_for_relationship(frequency1, frequency2, (6/5), 5)
+        check_for_relationship(frequency1, frequency2, (7/4), 5)
+        # check_for_relationship(frequency1, frequency2, (9/8), 5)
+        check_for_relationship(frequency1, frequency2, (15/8), 5)
+        check_for_relationship(frequency1, frequency2, (11/8), 5)
 
     p.close
