@@ -19,7 +19,7 @@ class Oscillator:
         rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
-        waveform3 = np.power(waveform, 4)/4
+        waveform3 = np.power(rounded_waveform, 4)/4
 
 
         # return waveform
