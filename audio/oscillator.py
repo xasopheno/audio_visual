@@ -28,7 +28,7 @@ class Oscillator:
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
-
+        volume *= .5
         allTones = []
 
         for freq in freqs:
