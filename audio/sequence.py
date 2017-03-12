@@ -150,6 +150,56 @@ def pretty4(freq):
     pretty(500, .05)
 
 
+def super_cascade():
+    for i in range(0, 4):
+        pretty(450, .02)
+    for i in range(0, 1):
+        pretty(300, .02)
+    for i in range(0, 1):
+        pretty(250, .02)
+    for i in range(0, 4):
+        pretty(450, .02)
+
+    for i in range(0, 1):
+        pretty(250, .02)
+    for i in range(0, 1):
+        pretty(300, .02)
+    for i in range(0, 4):
+        pretty(450, .02)
+
+    for i in range(0, 1):
+        pretty(450, .02)
+    for i in range(0, 1):
+        pretty(500, .02)
+    for i in range(0, 4):
+        pretty(650, .02)
+
+    for i in range(0, 1):
+        pretty(550, .02)
+    for i in range(0, 1):
+        pretty(600, .02)
+    for i in range(0, 4):
+        pretty(750, .02)
+
+    for i in range(0, 1):
+        pretty(900, .02)
+    for i in range(0, 4):
+        pretty(1050, .02)
+    for i in range(0, 1):
+        pretty(1100, .02)
+    for i in range(0, 4):
+        pretty(1250, .02)
+
+    for i in range(0, 1):
+        pretty(900, .02)
+    for i in range(0, 4):
+        pretty(1050, .02)
+    for i in range(0, 1):
+        pretty(1100, .02)
+    for i in range(0, 4):
+        pretty(1250, .02)
+
+
 bassline()
 bassline()
 pretty(390, .5)
@@ -172,25 +222,21 @@ pretty(425, .03)
 cascade()
 cascade()
 
-for i in range(0, 4):
-    pretty(450, .02)
-for i in range(0, 1):
-    pretty(300, .02)
-for i in range(0, 1):
-    pretty(250, .02)
+super_cascade()
 
 bassline()
 bassline()
 
 time.sleep(.2)
-#
-pretty(500, .01)
-pretty(405, .02)
-pretty(410, .05)
-pretty(415, .03)
-pretty(425, .03)
-pretty(490, .02)
-pretty(495, .02)
+
+pretty(250, .02)
+for i in range(0, 1):
+    pretty(300, .02)
+for i in range(0, 1):
+    pretty(300, .02)
+for i in range(0, 4):
+    pretty(450, .01)
+
 bassline()
 
 pretty(500, .01)
@@ -200,6 +246,7 @@ pretty4(336)
 pretty4(310)
 pretty4(336)
 pretty4(310)
+
 
 
 if __name__ == '__main__':
