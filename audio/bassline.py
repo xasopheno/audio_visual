@@ -2,9 +2,9 @@ import pyaudio
 import random
 import time
 
-from oscillator import Oscillator
+from oscillator_backup import Oscillator2
 
-osc = Oscillator()
+osc = Oscillator2()
 
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paFloat32,
@@ -38,7 +38,6 @@ def bassline():
             otherMelody - 10,
             otherMelody + 6,
             otherMelody - 6,
-            #
             otherMelody/2,
         )
 
