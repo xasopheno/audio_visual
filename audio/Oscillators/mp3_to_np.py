@@ -7,7 +7,7 @@ import scipy.io.wavfile as wav
 def mp3_to_np(file_name):
     fname = file_name
     temp = 'temp.wav'
-    cmd = 'lame --decode {0} {1}'.format(fname,temp)
+    cmd = 'lame --decode {0} {1}'.format(fname, temp)
     os.system(cmd)
     data = wav.read(temp)
     return data

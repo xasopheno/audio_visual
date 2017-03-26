@@ -1,10 +1,10 @@
 import time
 import pyaudio
+from Melodies.bassline import bassline
+from Melodies.pretty_styx import river_styx
+from Melodies.pretty import pretty, pretty2, cascade, super_cascade, pretty4
 from Oscillators.sine_osc import SineOsc
-from bassline import bassline
 from slow import slow
-from pretty import pretty, pretty2, cascade, super_cascade, pretty4
-from pretty_styx import river_styx
 
 sine_osc = SineOsc()
 
@@ -58,6 +58,7 @@ pretty(250, .02)
 pretty(300, .02)
 pretty(200, .02)
 pretty(150, .01)
+pretty(100, .005)
 
 bassline()
 

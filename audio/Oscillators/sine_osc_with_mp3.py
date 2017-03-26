@@ -3,14 +3,14 @@ from math import pi
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-from filehandler import mp3_to_np
+from mp3_to_np import mp3_to_np
 
 
 class SineOscWithMp3:
 
     def __init__(self):
         self.sample_rate = 44100
-        self.sound_data = mp3_to_np('styx.mp3')
+        self.sound_data = mp3_to_np('./styx.mp3')
 
     def wave(self, frequency, length, rate):
         """produces sine across np array"""
