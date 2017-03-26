@@ -1,12 +1,10 @@
-
-import pyaudio
 import random
-import time
-from oscillator import Oscillator
-from filehandler import mp3_to_np
+from Oscillators.sine_osc import SineOsc
+from Oscillators.sine_osc_with_mp3 import SineOscWithMp3
+import pyaudio
 
-
-osc = Oscillator()
+sine_osc = SineOsc()
+sine_osc_with_mp3 = SineOscWithMp3()
 
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paFloat32,
@@ -17,57 +15,57 @@ stream = p.open(format=pyaudio.paFloat32,
 
 
 def pretty(freq, tempo):
-    osc.play_frequencies(stream, tempo, .09, 200, 200,
+    sine_osc.play_frequencies(stream, tempo, .09, 200, 200,
                          freq - 5, freq + 4)
-    osc.play_frequencies(stream, tempo*2, .04, 200, 200,
+    sine_osc.play_frequencies(stream, tempo*2, .04, 200, 200,
                          freq * 15/8,
                          freq * 9/8,
                          freq,)
-    osc.play_frequencies(stream, tempo*3, .05, 200, 200,
+    sine_osc.play_frequencies(stream, tempo*3, .05, 200, 200,
                          freq * 3/2,
                          freq /2 * 6/7,
                          )
-    osc.play_frequencies(stream, tempo*2, .05, 200, 200,
+    sine_osc.play_frequencies(stream, tempo*2, .05, 200, 200,
                          freq/3, freq * 5/4,
                          )
-    osc.play_frequencies(stream, tempo*3, .051, 200, 200,
+    sine_osc.play_frequencies(stream, tempo*3, .051, 200, 200,
                          freq * 9/8,
                          freq/4,
                          freq * 9/8 + 1,
                          )
 
 
-def pretty4(freq):
+def prettystyx4(freq):
     print('pretty4')
 
-    osc.play_frequencies(stream, 3, .051, 200, 2000,
+    sine_osc_with_mp3.play_frequencies(stream, 3, .051, 200, 2000,
                          freq * 9/8,
                          freq/4,
                          freq * 9/8 + 1,
                          )
     pretty(300, .005)
-    osc.play_frequencies(stream, 3, .051, 200, 2000,
+    sine_osc_with_mp3.play_frequencies(stream, 3, .051, 200, 2000,
                          freq * 21/17,
                          freq * 9/8,
                          freq * 9/8 + 1,
                          freq/4,
                          )
 
-    osc.play_frequencies(stream, 3, .051, 200, 2000,
+    sine_osc_with_mp3.play_frequencies(stream, 3, .051, 200, 2000,
 
                          freq * 9/8,
                          freq * 9/8 + 1,
                          freq/4,
                          )
     pretty(300, .005)
-    osc.play_frequencies(stream, 1.5, .051, 200, 2000,
+    sine_osc_with_mp3.play_frequencies(stream, 1.5, .051, 200, 2000,
                          freq * 26/17,
                          freq * 9/8,
                          freq * 9/8 + 1,
                          freq/4,
                          )
 
-    osc.play_frequencies(stream, random.choice([.5, .8]), .051, 200, 2000,
+    sine_osc_with_mp3.play_frequencies(stream, random.choice([.5, .8]), .051, 200, 2000,
                          freq * 31/17,
                          freq * 13/8,
                          freq * 13/8 + 1,
@@ -77,8 +75,6 @@ def pretty4(freq):
                          )
     pretty(500, .05)
 
-for i in range(50):
-    pretty4(336)
-    pretty4(310)
 
-
+def river_styx(value):
+    prettystyx4(value)

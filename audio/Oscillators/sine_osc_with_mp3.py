@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from filehandler import mp3_to_np
 
 
-class Oscillator:
+class SineOscWithMp3:
 
     def __init__(self):
         self.sample_rate = 44100
@@ -23,11 +23,7 @@ class Oscillator:
         sound = self.sound_data[1][start:start + length]
         sound = sound[:, ::2] / random.choice([3000, 3000, 3000, 5000])
         waveform2 = np.power(waveform, 3)
-        # sound = np.add(np.round(sound, 1), sound)
 
-        # return sound.flatten() /4
-        # waveform = np.add(rounded_waveform, waveform)
-        # return waveform
         return np.add(waveform, sound.flatten()) + waveform2
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
@@ -36,10 +32,7 @@ class Oscillator:
         allTones = []
 
         for freq in freqs:
-            # if freq > 1000:
-            #     volume = volume * .80902
-            chunks = []
-            chunks.append(self.wave(freq, length, self.sample_rate))
+            chunks = [self.wave(freq, length, self.sample_rate)]
             chunk = np.concatenate(chunks) * volume
 
             attack = attack
@@ -54,8 +47,8 @@ class Oscillator:
             allTones.append(chunk)
 
         chunk = sum(allTones)
-        # plt.plot(chunk[1200:3000])
-        # plt.show()
 
+        # plt.plot(chunk[])
+        # plt.show()
 
         stream.write(chunk.astype(np.float32).tostring())

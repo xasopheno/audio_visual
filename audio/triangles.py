@@ -1,12 +1,14 @@
 from __future__ import division
-import pyaudio
-from random import shuffle
+
 import time
 from fractions import Fraction
+from random import shuffle
 
-from oscillator import Oscillator
+import pyaudio
 
-osc = Oscillator()
+from Oscillators.sine_osc_with_mp3 import SineOscWithMp3
+
+osc = SineOscWithMp3()
 
 """
 "triangles.py"

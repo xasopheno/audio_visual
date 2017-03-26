@@ -1,19 +1,18 @@
-import pyaudio
 import random
-import time
-from oscillator import Oscillator
+from Oscillators.sine_osc_with_mp3 import SineOscWithMp3
+import pyaudio
 
-osc = Oscillator()
+osc = SineOscWithMp3()
 
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paFloat32,
                 channels=1,
                 rate=44100,
                 output=1,
-                frames_per_buffer=6615)
+                )
 
 
-def pretty(frequency, tempo):
+def pretty(frequency):
     freq = random.choice([frequency, frequency +1, frequency+2, frequency+3, frequency+4, frequency+5])
     osc.play_frequencies(stream, .35, .1, 200, 200,
                          freq * 11/8,
@@ -52,18 +51,10 @@ def thechord():
 def slow():
     for i in range(3):
         for i in range(1):
-            pretty(300, 0)
+            pretty(300)
             thechord()
             thechord()
-            pretty(300, 0)
+            pretty(300)
             thechord()
             thechord()
             thechord()
-
-# low notes
-# for i in range(1000):
-#     freq = random.choice([60, 61, 62, 63, 64, 65, 66, 67, ])
-#     osc.play_frequencies(stream, 5, .3, 200, 200,
-#                          freq * 3/2,
-#                          freq/2,
-#                          freq/2 +3,)
