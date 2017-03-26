@@ -228,6 +228,7 @@ def super_cascade():
         pretty(850, .02)
 
 
+# worlds tiniest edm
 bassline()
 bassline()
 pretty(390, .5)
