@@ -7,7 +7,6 @@ from mp3_to_np import mp3_to_np
 
 
 class SineOscWithMp3:
-
     def __init__(self):
         self.sample_rate = 44100
         self.sound_data = mp3_to_np('./styx.mp3')

@@ -34,7 +34,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
         osc.play_frequencies(
                         stream,
                         length,
-                        .8,
+                        .2,
                         150000,
                         random.choice([20000,10000,5000]),
                         frequency1,

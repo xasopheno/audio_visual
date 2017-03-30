@@ -1,5 +1,4 @@
 import random
-
 import pyaudio
 
 from Oscillators.sine_osc import SineOsc
