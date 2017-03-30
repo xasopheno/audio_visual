@@ -81,7 +81,6 @@ def bassline():
             .1,
             random.choice([200]),
             random.choice([200]),
-            # frequency,
             other_melody,
             other_melody *3/2,
             other_melody/4,
@@ -124,7 +123,7 @@ def bassline():
             other_melody * 2,
             other_melody * 4/3
             )
-        # good ___
+
 
         sine_osc.play_frequencies(
             stream,
@@ -193,7 +192,6 @@ def bassline():
             volume,
             random.choice([100]),
             random.choice([100]),
-            # frequency,
             other_melody,
             other_melody + 3,
             other_melody - 3,
@@ -203,7 +201,6 @@ def bassline():
             other_melody - 10,
             other_melody + 6,
             other_melody - 6,
-            #
             other_melody/2,
             )
 
@@ -342,7 +339,6 @@ def bassline():
                 200,
                 i
         )
-
 
 
 if __name__ == '__main__':
