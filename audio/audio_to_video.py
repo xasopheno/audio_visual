@@ -36,9 +36,9 @@ class GenerateVideo:
         write('./out/' + 'out.wav', 44100, scaled)
 
     def get_cycle_length(self, data, length):
-        temporal_window = 3 #seconds
+        temporal_window = 3  # seconds
 
-        T = self.sample_rate * 60/(temporal_window) #Cycles per minute
+        T = self.sample_rate * 60/temporal_window  # Cycles per minute
 
         a = np.abs(fft.rfft(data, n=data.size))[1:]
         freqs = fft.rfftfreq(data.size, d=1./T)[1:]
