@@ -219,3 +219,5 @@ def super_cascade():
         pretty(700, .02)
     for i in range(0, 4):
         pretty(850, .02)
+
+cascade()

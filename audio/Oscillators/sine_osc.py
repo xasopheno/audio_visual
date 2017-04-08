@@ -1,11 +1,12 @@
 from __future__ import division
 from math import pi
 import numpy as np
-# import matplotlib.pyplot as plt
+from Filters.butter_bandpass_filter import butter_bandpass_filter
+import random
+import matplotlib.pyplot as plt
 
 
 class SineOsc:
-
     def __init__(self):
         self.sample_rate = 44100
 
@@ -19,9 +20,14 @@ class SineOsc:
         rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
-        # waveform3 = np.power(rounded_waveform, 4)/4
+        waveform3 = np.power(rounded_waveform, 4)/4
 
-        return np.add(waveform, waveform2)
+        pre_filtered = np.add(waveform, waveform3)
+        pre_filtered = np.add(pre_filtered, waveform2)
+
+        # filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
+
+        return pre_filtered
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
@@ -29,16 +35,30 @@ class SineOsc:
         all_tones = []
 
         for freq in freqs:
+            i = freq + 100
             if freq > 1000:
-                volume = volume * .3
+                volume *= .3
             chunks = [self.wave(freq, length, self.sample_rate)]
-            chunk = np.concatenate(chunks) * volume
 
-            attack = attack
-            decay = decay
+            if freq < 100:
+                volume *= 1.5
+            # chunks = butter_bandpass_filter(chunks, freq, random.choice([3000, 4000]), 44100, order=5)
+
+            chunk = np.concatenate(chunks) * volume
 
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)
+
+
+
+            first_noise = np.random.normal(0, .01, len(chunk[:attack]))
+            second_noise = np.random.normal(0, .01, len(chunk[-decay:]))
+
+            in_noise = np.multiply(first_noise, np.flipud(fade_in))
+            out_noise = np.multiply(second_noise, np.flipud(fade_out))
+
+            chunk[:attack] = np.add(chunk[:attack], in_noise)
+            chunk[-decay:] = np.add(chunk[-decay:], out_noise)
 
             chunk[:attack] = np.multiply(chunk[:attack], fade_in)
             chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
@@ -46,8 +66,8 @@ class SineOsc:
             all_tones.append(chunk)
 
         chunk = sum(all_tones)
-
-        # plt.plot(chunk[])
+        #
+        # plt.plot(chunk)
         # plt.show()
 
         stream.write(chunk.astype(np.float32).tostring())
