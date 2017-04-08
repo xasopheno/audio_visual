@@ -19,9 +19,9 @@ class SineOsc:
         rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
-        waveform3 = np.power(rounded_waveform, 4)/4
+        # waveform3 = np.power(rounded_waveform, 4)/4
 
-        return np.add(waveform, waveform2, waveform3)
+        return np.add(waveform, waveform2)
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
@@ -30,7 +30,7 @@ class SineOsc:
 
         for freq in freqs:
             if freq > 1000:
-                volume = volume * .80902
+                volume = volume * .3
             chunks = [self.wave(freq, length, self.sample_rate)]
             chunk = np.concatenate(chunks) * volume
 
