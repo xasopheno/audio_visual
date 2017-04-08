@@ -13,7 +13,7 @@ stream = p.open(format=pyaudio.paFloat32,
 
 
 def idea(freq, tempo):
-    sine_osc.play_frequencies(stream, tempo, 1, 800, 200,
+    sine_osc.play_frequencies(stream, tempo, .7, 800, 200,
                               freq,
                               freq,
                               freq * 3/2,
@@ -65,11 +65,12 @@ def idea_2(freq, tempo):
                               freq * 44/8
                               )
 
-
 idea_2(190, 8)
 idea_2(180, 8)
+idea_2(170, 8)
+idea_2(160, 8)
 
-for i in range(2):
+for i in range(4):
     freq = 190
     for i in range(3):
         freq += random.choice([-6, -10, -20, -30, 20])
@@ -82,9 +83,9 @@ for i in range(2):
         idea(freq2, .03)
         freq2 -= 13.9
     for i in range(30):
-        idea(freq2, .02)
+        idea(freq2, .022)
         freq2 += 3
-    for i in range(20):
+    for i in range(18):
         idea(freq2, .02)
         freq2 -= 3
     for i in range(20):
@@ -93,39 +94,57 @@ for i in range(2):
     for i in range(10):
         idea(freq2, .02)
         freq2 -= 4
-    for i in range(20):
-        idea(freq2, .02)
-        freq2 -= 1
     for i in range(10):
         idea(freq2, .02)
-        freq2 -= 2
-    for i in range(10):
+        freq2 += 3
+    for i in range(5):
         idea(freq2, .02)
-        freq2 += 2
-    for i in range(10):
+        freq2 -= 4
+    for i in range(5):
         idea(freq2, .02)
-        freq2 -= 2
-    for i in range(10):
+        freq2 += 5
+    for i in range(4):
         idea(freq2, .02)
-        freq2 += 9
-    for i in range(10):
+        freq2 -= 4
+    for i in range(4):
         idea(freq2, .02)
-        freq2 -= 7
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 8
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 7
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 8
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 7
-    for i in range(10):
-        idea(freq2, .02)
-    freq2 += 12
+        freq2 += 4
 
-idea_2(170, 8)
-idea_2(160, 8)
+    # for i in range(20):
+    #     idea(freq2, .02)
+    #     freq2 -= 1
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 -= 2
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 += 2
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 -= 2
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 += 9
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 -= 7
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 += 8
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 -= 7
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 += 8
+    # for i in range(10):
+    #     idea(freq2, .02)
+    #     freq2 -= 7
+    # for i in range(10):
+    #     idea(freq2, .02)
+    # freq2 += 12
+
+# idea_2(190, 8)
+# idea_2(180, 8)
+# idea_2(170, 8)
+# idea_2(160, 8)
