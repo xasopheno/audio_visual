@@ -1,22 +1,25 @@
 from __future__ import division
-import pyaudio
+
 import numpy
-import scipy.io.wavfile as wav
-from numpy.fft import rfft
+import pyaudio
 from numpy import argmax, log
+from numpy.fft import rfft
 from scipy.signal import kaiser
-import butter_bandpass_filter
-from parabolic import parabolic
+
 from Oscillators.sine_osc import SineOsc
+from Filters.butter_bandpass_filter import butter_bandpass_filter
+from parabolic import parabolic
 
 RATE = 44100
 RECORD_SECONDS = 5
-CHUNKSIZE = 2048
+CHUNKSIZE = 1024
 
 osc = SineOsc()
 
 p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNKSIZE)
+stream = p.open(format=pyaudio.paInt16,
+                channels=1, rate=RATE, input=True,
+                frames_per_buffer=CHUNKSIZE)
 
 stream2 = p.open(format=pyaudio.paFloat32,
                  channels=1, rate=RATE, output=2)
@@ -50,7 +53,7 @@ frames = []
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     data = stream.read(CHUNKSIZE)
     frame = numpy.fromstring(data, dtype=numpy.int16)
-    frame = butter_bandpass_filter.butter_bandpass_filter(frame, 60, 2000, RATE, order=5)
+    frame = butter_bandpass_filter(frame, 100, 2000, RATE, order=5)
     frames.append(frame)
     cycle_length = get_cycle_length(frame, RATE)
     print cycle_length
