@@ -16,5 +16,3 @@ for key in note_to_number:
     if not os.path.exists(training_data_dir + key_path):
         os.makedirs(training_data_dir + key_path)
     print 'created: ' + training_data_dir + key_path
-
-
