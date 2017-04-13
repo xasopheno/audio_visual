@@ -2,10 +2,12 @@ from datetime import datetime
 from note_to_number import note_to_number
 
 
-def file_name_generator(file_number):
+def file_name_generator():
     """
     generates a filename in this format
-    # name=B3__i=0__batch=y2017m04d12H15M10S11__num=14
+    name=Ab3__num=11__batch=y2017m04d12H19M05S01
+
+    returns file_name, note_name
     """
 
     note_name = raw_input('Which note is this?: ')
@@ -18,13 +20,14 @@ def file_name_generator(file_number):
             note_number = note_to_number[key]
 
     if note_number >= 0:
-        file_name = 'name=' + note_name + '__' + "i=" + str(file_number) + "__batch=" + now.strftime('y%Ym%md%dH%HM%MS%S') + '__num=' + str(note_number)
+        file_name = 'name=' + note_name + '__num=' + str(note_number) + "__batch=" + now.strftime('y%Ym%md%dH%HM%MS%S')
     else:
         print 'Please enter a real note name.'
-        file_name_generator(file_number)
+        file_name_generator()
 
-    return file_name
+    return file_name, note_name
 
 if __name__ == '__main__':
-    name = file_name_generator(108)
+    name, note = file_name_generator()
     print name
+    print note
