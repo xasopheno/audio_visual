@@ -9,4 +9,4 @@ venv/*
 *.pyc
 visual/reversed/*
 audio/Trainer/training_data/*
-audio/out/*
+audio/out/final/*
