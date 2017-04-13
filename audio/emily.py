@@ -43,33 +43,32 @@ def idea(freq, tempo):
 
 
 def idea_2(freq, tempo):
-    sine_osc.play_frequencies(stream, tempo * 2, .5, 500000, 500000,
-                                freq
-                              # freq /2,
-                              # freq /2 - 2,
-                              # freq /2 + 2,
-                              # freq,
-                              # freq * 3/2,
-                              # freq * 3/2 - 3.2,
-                              # freq * 3/2 + 3.2,
-                              # freq * 5/4,
-                              # freq * 3/2 - 2,
-                              # freq * 9/4 + 2,
-                              # freq * 9/2,
-                              # freq * 30/8,
-                              # freq * 30/8 - 3.2,
-                              # freq * 36/8 + 3.2,
-                              # freq * 20/4,
-                              # freq * 23/4,
-                              # freq * 23/4 + 3.2,
-                              # freq * 33/8,
-                              # freq * 44/8
+    sine_osc.play_frequencies(stream, tempo, .09, 500000, 500000,
+                              freq /2,
+                              freq /2 - 2,
+                              freq /2 + 2,
+                              freq,
+                              freq * 3/2,
+                              freq * 3/2 - 3.2,
+                              freq * 3/2 + 3.2,
+                              freq * 5/4,
+                              freq * 3/2 - 2,
+                              freq * 9/4 + 2,
+                              freq * 9/2,
+                              freq * 30/8,
+                              freq * 30/8 - 3.2,
+                              freq * 36/8 + 3.2,
+                              freq * 20/4,
+                              freq * 23/4,
+                              freq * 23/4 + 3.2,
+                              freq * 33/8,
+                              freq * 44/8
                               )
 
-idea_2(190, 8)
-idea_2(180, 8)
-idea_2(170, 8)
-idea_2(160, 8)
+idea_2(190, 16)
+idea_2(180, 16)
+idea_2(170, 16)
+idea_2(160, 16)
 
 # for i in range(4):
 #     freq = 190
