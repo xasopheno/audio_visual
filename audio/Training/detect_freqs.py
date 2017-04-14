@@ -59,12 +59,12 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     cycle_length = get_cycle_length(frame, RATE)
 
-    if vol > 4500:
-        print vol
+    if vol > 3000:
+        print 'rec'
 
     # print cycle_length
 
-    if abs(cycle_length - past_freq) < 50 and vol > 4500:
+    if abs(cycle_length - past_freq) < 50 and vol > 3000:
         frequencies.append(cycle_length)
     else:
         frequencies.append(0)
