@@ -28,7 +28,7 @@ class SineOscWithMp3:
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
         volume *= .25
-        allTones = []
+        all_tones = []
 
         for freq in freqs:
             chunks = [self.wave(freq, length, self.sample_rate)]
@@ -43,9 +43,9 @@ class SineOscWithMp3:
             chunk[:attack] = np.multiply(chunk[:attack], fade_in)
             chunk[-decay:] = np.multiply(chunk[-decay:], fade_out)
 
-            allTones.append(chunk)
+            all_tones.append(chunk)
 
-        chunk = sum(allTones)
+        chunk = sum(all_tones)
 
         # plt.plot(chunk[])
         # plt.show()
