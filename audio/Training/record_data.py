@@ -2,10 +2,8 @@ import pyaudio
 import wave
 import audioop
 from collections import deque
-import time
 import os
 import math
-import numpy as np
 from file_namer import file_name_generator
 
 # Microphone stream config.
@@ -55,6 +53,7 @@ def audio_int(num_samples=50):
 
 
 def listen_for_audio():
+    file_number = 1
     num_phrases = -1
 
     p = pyaudio.PyAudio()
@@ -70,7 +69,7 @@ def listen_for_audio():
     rel = RATE/CHUNK
     slid_win = deque(maxlen=SILENCE_LIMIT * rel)
 
-    #Prepend audio from 0.5 seconds before noise was detected
+    # Prepend audio from 0.5 seconds before noise was detected
     prev_audio = deque(maxlen=PREV_AUDIO * rel)
     started = False
     n = num_phrases
@@ -87,8 +86,8 @@ def listen_for_audio():
         elif started is True:
             print "Finished"
             # The limit was reached, finish capture and deliver.
-            filename = save_recording(list(prev_audio) + audio2send, p)
-            print filename
+            save_recording(list(prev_audio) + audio2send, file_number, p)
+            file_number += 1
 
             # Reset all
             started = False
@@ -105,9 +104,9 @@ def listen_for_audio():
     p.terminate()
 
 
-def save_recording(data, p):
-    filename = PATH + '/training_data/' + NOTE_NAME + '/' + GENERATED_FILE_NAME
-    print filename
+def save_recording(data, file_number, p):
+    filename = PATH + '/training_data/' + NOTE_NAME + '/' + GENERATED_FILE_NAME + '__' + str(file_number)
+
     # writes data to WAV file
     data = ''.join(data)
     wf = wave.open(filename + '.wav', 'wb')
@@ -116,7 +115,11 @@ def save_recording(data, p):
     wf.setframerate(RATE)
     wf.writeframes(data)
     wf.close()
-    return filename + '.wav'
+
+    final_name = filename + '.wav'
+
+    print final_name
+    return final_name
 
 
 if(__name__ == '__main__'):

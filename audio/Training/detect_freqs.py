@@ -1,7 +1,6 @@
 from __future__ import division
 
 import numpy
-import pyaudio
 from numpy import argmax, log
 from numpy.fft import rfft
 from scipy.signal import kaiser

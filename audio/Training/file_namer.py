@@ -27,7 +27,6 @@ def file_name_generator():
         file_name_generator()
 
 
-
 if __name__ == '__main__':
     name, note = file_name_generator()
     print name
