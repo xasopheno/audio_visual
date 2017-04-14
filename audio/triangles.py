@@ -3,9 +3,11 @@ from __future__ import division
 import random
 from fractions import Fraction
 from random import shuffle
-import time
-import pyaudio
+from Normalizing.StreamGenerator import *
 
+from Oscillators.sine_osc import SineOsc
+
+osc = SineOsc()
 from Oscillators.sine_osc_with_mp3 import SineOscWithMp3
 from Oscillators.sine_osc import SineOsc
 
@@ -53,7 +55,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
                         # frequency1+frequency2,
                         # 3 * (frequency1+frequency2)/2/2 + 5
                         )
-        time.sleep(random.choice([4]))
+
 def generate_test_array():
     """"Randomized test array"""
     freqs = []
@@ -64,9 +66,8 @@ def generate_test_array():
     return freqs
 
 if __name__ == '__main__':
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paFloat32,
-                channels=1, rate=sample_rate, output=2)
+    sg = StreamGenerator()
+    stream = sg.output_stream_generator()
 
     test_freqs = generate_test_array()
 
@@ -76,13 +77,13 @@ if __name__ == '__main__':
             to get some ratios to work.  
         """
         # check_for_relationship(frequency1, frequency2, (3/2), 3.2)
-        check_for_relationship(frequency1, frequency2, (5/4), 4)
+        check_for_relationship(frequency1, frequency2, (5/4), 4.2)
         check_for_relationship(frequency1, frequency2, (6/5), 4)
-        check_for_relationship(frequency1, frequency2, (7/4), 4)
+        check_for_relationship(frequency1, frequency2, (7/4), 4.5)
         # check_for_relationship(frequency1, frequency2, (9/8), 3.2)
-        check_for_relationship(frequency1, frequency2, (15/8), 4)
+        check_for_relationship(frequency1, frequency2, (15/8), 4.1)
         # check_for_relationship(frequency1, frequency2, (11/8), 5)
-        #
-        # time.sleep(random.choice([0, 0, 0, 0, 0, 0, 0,
-        #                           2, 3, 3, 3, 5, 5, 5, 10, ]))
-    p.close
+
+        # time.sleep(.02618)
+    #
+    sg.close_stream(stream)

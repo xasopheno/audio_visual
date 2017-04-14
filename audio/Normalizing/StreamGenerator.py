@@ -13,8 +13,7 @@ class StreamGenerator:
     def set_chunk_size(self, chunk_size):
         self.chunk_size = chunk_size
 
-
-    def play_stream_generator(self):
+    def output_stream_generator(self):
         p = pyaudio.PyAudio()
 
         return p.open(
@@ -24,8 +23,7 @@ class StreamGenerator:
             output=2
     )
 
-
-    def record_stream_generator(self):
+    def input_stream_generator(self):
         p = pyaudio.PyAudio()
 
         return p.open(
@@ -35,3 +33,6 @@ class StreamGenerator:
             input=True,
             frames_per_buffer=self.chunk_size
         )
+
+    def close_stream(self, stream):
+        stream.close()

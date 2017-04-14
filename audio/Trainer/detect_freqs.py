@@ -9,6 +9,7 @@ from scipy.signal import kaiser
 from Oscillators.sine_osc import SineOsc
 from Filters.butter_bandpass_filter import butter_bandpass_filter
 from parabolic import parabolic
+from Normalizing.StreamGenerator import *
 
 RATE = 44100
 RECORD_SECONDS = 5
@@ -16,13 +17,9 @@ CHUNKSIZE = 1024
 
 osc = SineOsc()
 
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paInt16,
-                channels=1, rate=RATE, input=True,
-                frames_per_buffer=CHUNKSIZE)
-
-stream2 = p.open(format=pyaudio.paFloat32,
-                 channels=1, rate=RATE, output=2)
+sg = StreamGenerator()
+stream = sg.input_stream_generator()
+stream2 = sg.output_stream_generator()
 
 
 def get_cycle_length(signal, fs):
@@ -59,7 +56,6 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     print cycle_length
     # osc.play_frequencies(stream2, .0249, 1, 100, 100, cycle_length)
     frequencies.append(cycle_length)
-
 
 # numpydata = numpy.hstack(frames)
 #
