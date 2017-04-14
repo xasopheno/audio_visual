@@ -25,9 +25,10 @@ class SineOsc:
         pre_filtered = np.add(waveform, waveform3)
         pre_filtered = np.add(pre_filtered, waveform2)
 
-        # filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
+        filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
 
         return pre_filtered
+        # return waveform
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
@@ -49,8 +50,8 @@ class SineOsc:
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)
 
-            first_noise = np.random.normal(0, .01, len(chunk[:attack]))
-            second_noise = np.random.normal(0, .01, len(chunk[-decay:]))
+            first_noise = np.random.normal(0, .004, len(chunk[:attack]))
+            second_noise = np.random.normal(0, .004, len(chunk[-decay:]))
 
             in_noise = np.multiply(first_noise, np.flipud(fade_in))
             out_noise = np.multiply(second_noise, np.flipud(fade_out))

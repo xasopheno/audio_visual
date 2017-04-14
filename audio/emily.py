@@ -43,7 +43,7 @@ def idea(freq, tempo):
 
 
 def idea_2(freq, tempo):
-    sine_osc.play_frequencies(stream, tempo, .09, 500000, 500000,
+    sine_osc.play_frequencies(stream, tempo, .09, 500000, 600000,
                               freq /2,
                               freq /2 - 2,
                               freq /2 + 2,
@@ -69,6 +69,9 @@ idea_2(190, 16)
 idea_2(180, 16)
 idea_2(170, 16)
 idea_2(160, 16)
+idea_2(150, 16)
+idea_2(140, 16)
+idea_2(130, 20)
 
 # for i in range(4):
 #     freq = 190
