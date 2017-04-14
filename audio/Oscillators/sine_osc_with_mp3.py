@@ -1,13 +1,12 @@
 from __future__ import division
+import random
 from math import pi
 import numpy as np
-import random
-import matplotlib.pyplot as plt
-from mp3_to_np import mp3_to_np
+
+from Conversion.mp3_to_np import mp3_to_np
 
 
 class SineOscWithMp3:
-
     def __init__(self):
         self.sample_rate = 44100
         self.sound_data = mp3_to_np('./styx.mp3')

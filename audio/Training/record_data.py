@@ -123,5 +123,5 @@ def save_recording(data, file_number, p):
 
 
 if(__name__ == '__main__'):
-    listen_for_audio()  # listen to mic.
-    # audio_int()  # To measure your mic levels
+    # listen_for_audio()  # listen to mic.
+    audio_int()  # To measure your mic levels

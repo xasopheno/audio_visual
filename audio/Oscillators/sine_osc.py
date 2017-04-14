@@ -5,7 +5,6 @@ import numpy as np
 
 
 class SineOsc:
-
     def __init__(self):
         self.sample_rate = 44100
 

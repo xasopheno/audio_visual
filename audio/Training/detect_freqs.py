@@ -4,6 +4,8 @@ import numpy
 from numpy import argmax, log
 from numpy.fft import rfft
 from scipy.signal import kaiser
+import math
+import audioop
 
 from Oscillators.sine_osc import SineOsc
 from Filters.butter_bandpass_filter import butter_bandpass_filter
@@ -45,25 +47,36 @@ def get_cycle_length(signal, fs):
 
 frequencies = []
 frames = []
+past_freq = 0
 
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     data = stream.read(CHUNKSIZE)
+    vol = math.sqrt(abs(audioop.avg(data, 4)))
+
     frame = numpy.fromstring(data, dtype=numpy.int16)
     frame = butter_bandpass_filter(frame, 100, 2000, RATE, order=5)
-    frames.append(frame)
+    # frames.append(frame)
+
     cycle_length = get_cycle_length(frame, RATE)
-    print cycle_length
-    # osc.play_frequencies(stream2, .0249, 1, 100, 100, cycle_length)
-    frequencies.append(cycle_length)
+
+    if vol > 4500:
+        print vol
+
+    # print cycle_length
+
+    if abs(cycle_length - past_freq) < 50 and vol > 4500:
+        frequencies.append(cycle_length)
+    else:
+        frequencies.append(0)
+    past_freq = cycle_length
 
 # numpydata = numpy.hstack(frames)
 #
 # wav.write('out.wav', RATE, numpydata)
 #
-past_freq = 0
+
 for freq in frequencies:
-    # if freq - freq
-    #     freq = past_freq
+
     osc.play_frequencies(stream2, CHUNKSIZE/RATE, 1, 100, 100, freq,
                          freq / 2,
                          freq * 3/2,

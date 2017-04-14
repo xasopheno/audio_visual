@@ -1,0 +1,10 @@
+last_ten = [100, 101, 99, 90, 100, 1200, 200, 86, 94, 107]
+
+sorted = [86, 90, 94, 99, 100, 101, 100, 107, 109, 1200]
+without_outliers = [90, 94, 99, 100, 101, 100, 107, 109]
+average_frequency = 100
+
+
+[90, 94, 99, 100, 101, 100, 107, 109], 100 = note_number
+
+sorted_without_outliers, average = note_number
