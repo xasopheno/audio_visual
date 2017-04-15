@@ -14,7 +14,7 @@ from Normalizing.StreamGenerator import *
 
 RATE = 44100
 RECORD_SECONDS = 5
-CHUNKSIZE = 1024
+CHUNKSIZE = 2048
 
 osc = SineOsc()
 
@@ -59,13 +59,11 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     cycle_length = get_cycle_length(frame, RATE)
 
-    if vol > 1500:
-        print 'rec'
-
     # print cycle_length
 
-    if abs(cycle_length - past_freq) < 50 and vol > 800:
+    if abs(cycle_length - past_freq) < 50 and vol > 1000:
         frequencies.append(cycle_length)
+        print '-'
     else:
         frequencies.append(0)
     past_freq = cycle_length
