@@ -16,12 +16,12 @@ class SineOsc:
         factor = float(frequency) * (pi * 2) / rate
         waveform = np.sin(np.arange(length) * factor)
 
-        rounded_waveform = np.round(waveform, 0)
+        rounded_waveform = np.round(waveform, 1)
 
         waveform2 = np.power(waveform, 3)
         waveform3 = np.power(rounded_waveform, 4)/4
 
-        return np.add(waveform, waveform2, waveform3)
+        return np.add(waveform, np.add(rounded_waveform, waveform2))
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
