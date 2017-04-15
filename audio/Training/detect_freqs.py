@@ -1,12 +1,13 @@
 from __future__ import division
 
 import numpy
-from numpy import argmax, log
-from numpy.fft import rfft
-from scipy.signal import kaiser
 import math
 import audioop
+from numpy import argmax, diff
+from matplotlib.mlab import find
 
+
+from scipy.signal import fftconvolve
 from Oscillators.sine_osc import SineOsc
 from Filters.butter_bandpass_filter import butter_bandpass_filter
 from parabolic import parabolic
@@ -14,7 +15,7 @@ from Normalizing.StreamGenerator import *
 
 RATE = 44100
 RECORD_SECONDS = 5
-CHUNKSIZE = 2048
+CHUNKSIZE = 1024
 
 osc = SineOsc()
 
@@ -23,31 +24,39 @@ stream = sg.input_stream_generator()
 stream2 = sg.output_stream_generator()
 
 
-def get_cycle_length(signal, fs):
-    """Estimate frequency from peak of FFT
-    Pros: Accurate, usually even more so than zero crossing counter
-    (1000.000004 Hz for 1000 Hz, for instance).  Due to parabolic
-    interpolation being a very good fit for windowed log FFT peaks?
-    https://ccrma.stanford.edu/~jos/sasp/Quadratic_Interpolation_Spectral_Peaks.html
-    Accuracy also increases with signal length
-    Cons: Doesn't find the right value if harmonics are stronger than
-    fundamental, which is common.
-    """
-    N = len(signal)
+def get_cycle_length(sig, fs):
+    """Estimate frequency using autocorrelation
 
-    # Compute Fourier transform of windowed signal
-    windowed = signal * kaiser(N, 100)
-    f = rfft(windowed)
-    # Find the peak and interpolate to get a more accurate peak
-    i_peak = argmax(abs(f))  # Just use this value for less-accurate result
-    i_interp = parabolic(log(abs(f)), i_peak)[0]
+        Pros: Best method for finding the true fundamental of any repeating wave,
+        even with strong harmonics or completely missing fundamental
 
-    # Convert to equivalent frequency
-    return round(fs * i_interp / N, 0)
+        Cons: Not as accurate, currently has trouble with finding the true peak
+
+        """
+    # Calculate circular autocorrelation (same thing as convolution, but with
+    # one input reversed in time), and throw away the negative lags
+    corr = fftconvolve(sig, sig[::-1], mode='full')
+    corr = corr[len(corr)//2:]
+
+    # Find the first low point
+    d = diff(corr)
+    start = find(d > 0)[0]
+
+    # Find the next peak after the low point (other than 0 lag).  This bit is
+    # not reliable for long signals, due to the desired peak occurring between
+    # samples, and other peaks appearing higher.
+    # Should use a weighting function to de-emphasize the peaks at longer lags.
+    # Also could zero-pad before doing circular autocorrelation.
+    peak = argmax(corr[start:]) + start
+    px, py = parabolic(corr, peak)
+
+    return int(round(fs / px, 0))
 
 frequencies = []
 frames = []
 past_freq = 0
+
+last_ten_freqs = numpy.zeros(10)
 
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     data = stream.read(CHUNKSIZE)
@@ -59,14 +68,26 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     cycle_length = get_cycle_length(frame, RATE)
 
-    # print cycle_length
-
-    if abs(cycle_length - past_freq) < 50 and vol > 1000:
-        frequencies.append(cycle_length)
+    if abs(cycle_length - past_freq) < 80 and vol > 4000:
+        pred_freq = cycle_length
         print '-'
     else:
-        frequencies.append(0)
+        pred_freq = 0
     past_freq = cycle_length
+    # print cycle_length
+
+    last_ten_freqs = numpy.roll(last_ten_freqs, 1)
+    last_ten_freqs[0] = pred_freq
+
+    avg_freq = numpy.average(last_ten_freqs[numpy.nonzero(last_ten_freqs)])
+
+    if pred_freq == 0:
+        frequencies.append(pred_freq)
+    else:
+        frequencies.append(avg_freq)
+    print frequencies[-1]
+
+
 
 # numpydata = numpy.hstack(frames)
 
