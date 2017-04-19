@@ -5,13 +5,15 @@ import math
 import audioop
 from numpy import argmax, diff
 from matplotlib.mlab import find
-
-
 from scipy.signal import fftconvolve
-from Oscillators.sine_osc import SineOsc
+
 from Filters.butter_bandpass_filter import butter_bandpass_filter
+from Oscillators.sine_osc import SineOsc
+
 from parabolic import parabolic
 from Normalizing.StreamGenerator import *
+
+
 
 RATE = 44100
 RECORD_SECONDS = 5
@@ -22,7 +24,6 @@ osc = SineOsc()
 sg = StreamGenerator()
 stream = sg.input_stream_generator()
 stream2 = sg.output_stream_generator()
-
 
 def get_cycle_length(sig, fs):
     """Estimate frequency using autocorrelation
@@ -68,7 +69,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     cycle_length = get_cycle_length(frame, RATE)
 
-    if abs(cycle_length - past_freq) < 80 and vol > 4000:
+    if abs(cycle_length - past_freq) < 80 and vol > 1000:
         pred_freq = cycle_length
         print '-'
     else:
