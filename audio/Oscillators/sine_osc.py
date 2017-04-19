@@ -21,7 +21,7 @@ class SineOsc:
         waveform2 = np.power(waveform, 3)
         waveform3 = np.power(rounded_waveform, 4)/4
 
-        return np.add(waveform, np.add(rounded_waveform, waveform2))
+        return np.add(waveform, np.add(waveform, waveform2))
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""

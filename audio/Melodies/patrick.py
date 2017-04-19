@@ -32,27 +32,15 @@ def patrick_2(freq, length, vol):
                               )
 
 
-# for j in range(2):
-#
-#     for i in range(80):
-#         vol = random.choice([.5, .3, 0, .4, .5, .5, .5, 0, 0])
-#         freq = random.randint(300, 360)
-#         patrick(freq, random.choice([.3, .6]), vol /2)
-#
-#     bass = 200
-#     for i in range(200):
-#         if bass < 50:
-#             bass = 150
-#         if bass > 250:
-#             bass = 50
-#         vol = random.choice([.5, .3, .4, .5, .5, .5, 0, 0])
-#         patrick_2(bass, random.choice([.16]), vol)
-#         rand = random.choice([4, 5, 8, 30, -20, -30, -50,])
-#         bass += rand
+for j in range(2):
 
-for k in range(50):
+    for i in range(80):
+        vol = random.choice([.5, .3, 0, .4, .5, .5, .5, 0, 0])
+        freq = random.randint(300, 360)
+        patrick(freq, random.choice([.3, .6]), vol / 2)
+
     bass = 200
-    for i in range(20):
+    for i in range(200):
         if bass < 50:
             bass = 150
         if bass > 250:
@@ -62,12 +50,24 @@ for k in range(50):
         rand = random.choice([4, 5, 8, 30, -20, -30, -50,])
         bass += rand
 
-    for i in range(8):
-        vol = random.choice([.5, .3, 0, .4, .5, .5, .5, 0, 0])
-        freq = random.randint(300, 360)
-        patrick(freq, random.choice([.3, .6]), vol /2)
-
-    bass = 200
+# for k in range(50):
+#     bass = 200
+#     for i in range(20):
+#         if bass < 50:
+#             bass = 150
+#         if bass > 250:
+#             bass = 50
+#         vol = random.choice([.5, .3, .4, .5, .5, .5, 0, 0])
+#         patrick_2(bass, random.choice([.16]), vol)
+#         rand = random.choice([4, 5, 8, 30, -20, -30, -50,])
+#         bass += rand
+#
+#     for i in range(8):
+#         vol = random.choice([.5, .3, 0, .4, .5, .5, .5, 0, 0])
+#         freq = random.randint(300, 360)
+#         patrick(freq, random.choice([.3, .6]), vol /2)
+#
+#     bass = 200
 
 
 time.sleep(.5)
