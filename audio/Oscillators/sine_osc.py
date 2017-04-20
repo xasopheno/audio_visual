@@ -50,8 +50,8 @@ class SineOsc:
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)
 
-            first_noise = np.random.normal(0, .004, len(chunk[:attack]))
-            second_noise = np.random.normal(0, .004, len(chunk[-decay:]))
+            first_noise = np.random.normal(0, .0045, len(chunk[:attack]))
+            second_noise = np.random.normal(0, .0045, len(chunk[-decay:]))
 
             in_noise = np.multiply(first_noise, np.flipud(fade_in))
             out_noise = np.multiply(second_noise, np.flipud(fade_out))

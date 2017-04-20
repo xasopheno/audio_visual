@@ -43,7 +43,7 @@ def idea(freq, tempo):
 
 
 def idea_2(freq, tempo):
-    sine_osc.play_frequencies(stream, tempo, .09, 500000, 600000,
+    sine_osc.play_frequencies(stream, tempo, .09, 500000, 800000,
                               freq /2,
                               freq /2 - 2,
                               freq /2 + 2,
@@ -65,87 +65,87 @@ def idea_2(freq, tempo):
                               freq * 44/8
                               )
 
-idea_2(190, 16)
-idea_2(180, 16)
-idea_2(170, 16)
-idea_2(160, 16)
-idea_2(150, 16)
-idea_2(140, 16)
-idea_2(130, 20)
+idea_2(190, 25)
+idea_2(180, 25)
+idea_2(170, 25)
+idea_2(160, 25)
+idea_2(150, 25)
+idea_2(140, 25)
+idea_2(130, 25)
 
-for i in range(4):
-    freq = 190
-    for i in range(3):
-        freq += random.choice([-6, -10, -20, -30, 20])
-        freq2 = 190
-        for i in range(13):
-            idea(freq2, .045)
-            freq2 += 14
-        idea(freq, 1.2)
-    for i in range(22):
-        idea(freq2, .03)
-        freq2 -= 13.9
-    for i in range(30):
-        idea(freq2, .022)
-        freq2 += 3
-    for i in range(18):
-        idea(freq2, .02)
-        freq2 -= 3
-    for i in range(20):
-        idea(freq2, .02)
-        freq2 += 3
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 4
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 3
-    for i in range(5):
-        idea(freq2, .02)
-        freq2 -= 4
-    for i in range(5):
-        idea(freq2, .02)
-        freq2 += 5
-    for i in range(4):
-        idea(freq2, .02)
-        freq2 -= 4
-    for i in range(4):
-        idea(freq2, .02)
-        freq2 += 4
-
-    for i in range(20):
-        idea(freq2, .02)
-        freq2 -= 1
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 2
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 2
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 2
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 9
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 7
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 8
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 7
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 += 8
-    for i in range(10):
-        idea(freq2, .02)
-        freq2 -= 7
-    for i in range(10):
-        idea(freq2, .02)
-    freq2 += 12
+# for i in range(4):
+#     freq = 190
+#     for i in range(3):
+#         freq += random.choice([-6, -10, -20, -30, 20])
+#         freq2 = 190
+#         for i in range(13):
+#             idea(freq2, .045)
+#             freq2 += 14
+#         idea(freq, 1.2)
+#     for i in range(22):
+#         idea(freq2, .03)
+#         freq2 -= 13.9
+#     for i in range(30):
+#         idea(freq2, .022)
+#         freq2 += 3
+#     for i in range(18):
+#         idea(freq2, .02)
+#         freq2 -= 3
+#     for i in range(20):
+#         idea(freq2, .02)
+#         freq2 += 3
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 -= 4
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 += 3
+#     for i in range(5):
+#         idea(freq2, .02)
+#         freq2 -= 4
+#     for i in range(5):
+#         idea(freq2, .02)
+#         freq2 += 5
+#     for i in range(4):
+#         idea(freq2, .02)
+#         freq2 -= 4
+#     for i in range(4):
+#         idea(freq2, .02)
+#         freq2 += 4
+#
+#     for i in range(20):
+#         idea(freq2, .02)
+#         freq2 -= 1
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 -= 2
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 += 2
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 -= 2
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 += 9
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 -= 7
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 += 8
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 -= 7
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 += 8
+#     for i in range(10):
+#         idea(freq2, .02)
+#         freq2 -= 7
+#     for i in range(10):
+#         idea(freq2, .02)
+#     freq2 += 12
 
 # idea_2(190, 8)
 # idea_2(180, 8)
