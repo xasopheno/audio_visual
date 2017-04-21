@@ -6,6 +6,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.par
 import numpy
 import math
 import audioop
+
+import aubio
+
 from numpy import argmax, diff
 from matplotlib.mlab import find
 from scipy.signal import fftconvolve
@@ -58,7 +61,7 @@ frequencies = []
 frames = []
 past_freq = 0
 
-last_ten_freqs = numpy.zeros(4)
+last_ten_freqs = numpy.zeros(3)
 
 print('recording...')
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
@@ -73,7 +76,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     if abs(cycle_length - past_freq) < 80 and vol > 800:
         pred_freq = cycle_length
-        print '-'
+        print ('-')
     else:
         pred_freq = 0
     past_freq = cycle_length
@@ -101,12 +104,14 @@ for freq in frequencies:
     # if abs(freq - past_freq > 400):
     #     freq = 0
     osc.play_frequencies(stream2, CHUNKSIZE/RATE, 1, 100, 100, freq,
-                         freq / 2,
-                         freq * 3/2,
-                         freq * 2,
-                         freq * 7/4
+                         # freq / 2,
+                         freq,
+                         # freq,
+                         # freq * 3/2,
+                         # freq * 2,
+                         # freq * 7/4
                          )
-    print int(round(freq))
+    print (int(round(freq)))
     past_freq = freq
 
 # close stream
