@@ -1,5 +1,8 @@
 from __future__ import division
 
+import os.path, sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+
 import numpy
 import math
 import audioop
@@ -7,16 +10,14 @@ from numpy import argmax, diff
 from matplotlib.mlab import find
 from scipy.signal import fftconvolve
 
-from Filters.butter_bandpass_filter import butter_bandpass_filter
 from Oscillators.sine_osc import SineOsc
+from Filters.butter_bandpass_filter import butter_bandpass_filter
 
 from parabolic import parabolic
 from Normalizing.StreamGenerator import *
 
-
-
 RATE = 44100
-RECORD_SECONDS = 5
+RECORD_SECONDS = 6
 CHUNKSIZE = 1024
 
 osc = SineOsc()
@@ -57,8 +58,9 @@ frequencies = []
 frames = []
 past_freq = 0
 
-last_ten_freqs = numpy.zeros(10)
+last_ten_freqs = numpy.zeros(4)
 
+print('recording...')
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     data = stream.read(CHUNKSIZE)
     vol = math.sqrt(abs(audioop.avg(data, 4)))
@@ -69,7 +71,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     cycle_length = get_cycle_length(frame, RATE)
 
-    if abs(cycle_length - past_freq) < 80 and vol > 1000:
+    if abs(cycle_length - past_freq) < 80 and vol > 800:
         pred_freq = cycle_length
         print '-'
     else:
@@ -86,7 +88,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
         frequencies.append(pred_freq)
     else:
         frequencies.append(avg_freq)
-    print frequencies[-1]
+    # print frequencies[-1]
 
 
 
@@ -94,17 +96,18 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
 # wav.write('out.wav', RATE, numpydata)
 
-
+past_freq = 0
 for freq in frequencies:
-
+    # if abs(freq - past_freq > 400):
+    #     freq = 0
     osc.play_frequencies(stream2, CHUNKSIZE/RATE, 1, 100, 100, freq,
                          freq / 2,
                          freq * 3/2,
                          freq * 2,
                          freq * 7/4
                          )
-    print freq
-
+    print int(round(freq))
+    past_freq = freq
 
 # close stream
 stream.stop_stream()
