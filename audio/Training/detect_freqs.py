@@ -7,7 +7,7 @@ import numpy
 import math
 import audioop
 
-import aubio
+from Detection.Detector import Detector
 
 from numpy import argmax, diff
 from matplotlib.mlab import find
@@ -20,42 +20,15 @@ from parabolic import parabolic
 from Normalizing.StreamGenerator import *
 
 RATE = 44100
-RECORD_SECONDS = 6
+RECORD_SECONDS = 5
 CHUNKSIZE = 1024
 
 osc = SineOsc()
+detector = Detector()
 
 sg = StreamGenerator()
 stream = sg.input_stream_generator()
 stream2 = sg.output_stream_generator()
-
-def get_cycle_length(sig, fs):
-    """Estimate frequency using autocorrelation
-
-        Pros: Best method for finding the true fundamental of any repeating wave,
-        even with strong harmonics or completely missing fundamental
-
-        Cons: Not as accurate, currently has trouble with finding the true peak
-
-        """
-    # Calculate circular autocorrelation (same thing as convolution, but with
-    # one input reversed in time), and throw away the negative lags
-    corr = fftconvolve(sig, sig[::-1], mode='full')
-    corr = corr[len(corr)//2:]
-
-    # Find the first low point
-    d = diff(corr)
-    start = find(d > 0)[0]
-
-    # Find the next peak after the low point (other than 0 lag).  This bit is
-    # not reliable for long signals, due to the desired peak occurring between
-    # samples, and other peaks appearing higher.
-    # Should use a weighting function to de-emphasize the peaks at longer lags.
-    # Also could zero-pad before doing circular autocorrelation.
-    peak = argmax(corr[start:]) + start
-    px, py = parabolic(corr, peak)
-
-    return int(round(fs / px, 0))
 
 frequencies = []
 frames = []
@@ -72,11 +45,11 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     frame = butter_bandpass_filter(frame, 100, 2000, RATE, order=5)
     # frames.append(frame)
 
-    cycle_length = get_cycle_length(frame, RATE)
+    # cycle_length = Detector.aubio_detector(frame)
+    cycle_length, volume = detector.aubio_detector(stream.read(1024))
 
-    if abs(cycle_length - past_freq) < 80 and vol > 800:
+    if abs(cycle_length - past_freq) < 80 and vol > 100:
         pred_freq = cycle_length
-        print ('-')
     else:
         pred_freq = 0
     past_freq = cycle_length
@@ -89,8 +62,12 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     if pred_freq == 0:
         frequencies.append(pred_freq)
+        print ('')
     else:
         frequencies.append(avg_freq)
+        # print(int((volume * 10)) * '-')
+        # print ( (volume) * 10 )
+        print ( int((volume) * 1085) * '-' )
     # print frequencies[-1]
 
 
@@ -111,7 +88,11 @@ for freq in frequencies:
                          # freq * 2,
                          # freq * 7/4
                          )
-    print (int(round(freq)))
+
+    if freq == 0:
+        print ('')
+    else:
+        print (int(round(freq)))
     past_freq = freq
 
 # close stream
