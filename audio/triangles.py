@@ -6,13 +6,9 @@ from random import shuffle
 from Normalizing.StreamGenerator import *
 
 from Oscillators.sine_osc import SineOsc
-
-osc = SineOsc()
 from Oscillators.sine_osc_with_mp3 import SineOscWithMp3
-from Oscillators.sine_osc import SineOsc
 
 osc = SineOscWithMp3()
-# osc = SineOsc()
 
 """
 "triangles.py"
@@ -30,7 +26,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
     Increased accuracy of three decimals places might be
     preferable in the context of video.
     """ 
-    print round((frequency1) / (frequency2), 3)
+    print round (frequency1 / frequency2, 3)
     print frequency1, frequency2, Fraction(relationship)
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:

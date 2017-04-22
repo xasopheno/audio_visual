@@ -1,3 +1,9 @@
+4/22/17
+The sound is recorded and labeled.
+Preprocessed 
+__________
+4/14/17
+
 stream that's coming in at 44,100 sps
 which is turned into 1024 sample chunks.
 
@@ -11,7 +17,10 @@ def WriteFileName():
     date = 04_04_17
     output_filename = noteName + '_' + date + '_' + noteNumber
 
+
+
 note_to_number = [
+    
     'F5' : 32
     'E5' : 31
     'Eb5' : 30

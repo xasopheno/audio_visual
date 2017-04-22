@@ -23,8 +23,8 @@ class Detector:
         pitch = self.pDetection(samples)[0]
 
         volume = numpy.sum(samples ** 2) / len(samples)
-        # volume = "{:.6f}".format(volume)
         volume = round(volume, 4)
+
         return pitch, volume
 
     @staticmethod
