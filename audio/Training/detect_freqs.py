@@ -9,15 +9,11 @@ import audioop
 
 from Detection.Detector import Detector
 
-from numpy import argmax, diff
-from matplotlib.mlab import find
-from scipy.signal import fftconvolve
-
 from Oscillators.sine_osc import SineOsc
 from Filters.butter_bandpass_filter import butter_bandpass_filter
 
-from parabolic import parabolic
 from Normalizing.StreamGenerator import *
+
 
 RATE = 44100
 RECORD_SECONDS = 5
