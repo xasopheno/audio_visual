@@ -1,7 +1,7 @@
 from __future__ import division
 from math import pi
 import numpy as np
-from Filters.butter_bandpass_filter import butter_bandpass_filter
+# from Filters.butter_bandpass_filter import butter_bandpass_filter
 import random
 import matplotlib.pyplot as plt
 
@@ -20,12 +20,12 @@ class SineOsc:
         rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
-        waveform3 = np.power(rounded_waveform, 4)/4
+        waveform3 = np.power(rounded_waveform, 4)
 
         pre_filtered = np.add(waveform, waveform3)
         pre_filtered = np.add(pre_filtered, waveform2)
 
-        filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
+        # filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
 
         return pre_filtered
         # return waveform
@@ -42,7 +42,7 @@ class SineOsc:
             chunks = [self.wave(freq, length, self.sample_rate)]
 
             if freq < 100:
-                volume *= 1.5
+                volume *= 1
             # chunks = butter_bandpass_filter(chunks, freq, random.choice([3000, 4000]), 44100, order=5)
 
             chunk = np.concatenate(chunks) * volume

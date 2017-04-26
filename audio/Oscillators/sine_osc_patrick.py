@@ -20,15 +20,12 @@ class SineOscPatrick:
         rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
-        waveform3 = np.power(rounded_waveform, 4)/4
+        waveform3 = np.power(rounded_waveform, 4) / 4
 
         pre_filtered = np.add(waveform, waveform3)
         pre_filtered = np.add(pre_filtered, waveform2)
 
-        filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
-
         return pre_filtered
-        # return waveform
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
@@ -43,15 +40,14 @@ class SineOscPatrick:
 
             if freq < 100:
                 volume *= 1.5
-            # chunks = butter_bandpass_filter(chunks, freq, random.choice([3000, 4000]), 44100, order=5)
 
             chunk = np.concatenate(chunks) * volume
 
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)
 
-            first_noise = np.random.normal(0, random.choice([.04, .05, .04]), len(chunk[:attack]))
-            second_noise = np.random.normal(0, random.choice([.04, .07, .08, .08]), len(chunk[-decay:]))
+            first_noise = np.random.normal(0, random.choice([.04, .05, .04]), len(chunk[:attack])) * 1
+            second_noise = np.random.normal(0, random.choice([.04, .07, .08, .08]), len(chunk[-decay:])) * 1
 
             in_noise = np.multiply(first_noise, np.flipud(fade_in))
             out_noise = np.multiply(second_noise, np.flipud(fade_out))
