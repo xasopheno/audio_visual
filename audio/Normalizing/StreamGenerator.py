@@ -34,5 +34,6 @@ class StreamGenerator:
             frames_per_buffer=self.chunk_size
         )
 
-    def close_stream(self, stream):
+    @staticmethod
+    def close_stream(stream):
         stream.close()
