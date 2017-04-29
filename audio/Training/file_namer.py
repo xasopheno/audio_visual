@@ -20,7 +20,11 @@ def file_name_generator():
             note_number = note_to_number[key]
 
     if note_number >= 0:
-        file_name = 'name=' + note_name + '__num=' + str(note_number) + "__batch=" + now.strftime('y%Ym%md%dH%HM%MS%S')
+        file_name = 'name=' + note_name + \
+                    '__num=' + \
+                    str('{0:02d}'.format(note_number)) + \
+                    "__batch=" + \
+                    now.strftime('y%Ym%md%dH%HM%MS%S')
         return file_name, note_name
     else:
         print 'Please enter a real note name.'

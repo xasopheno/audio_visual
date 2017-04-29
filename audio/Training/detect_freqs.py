@@ -1,19 +1,18 @@
 from __future__ import division
+import numpy
+import math
+import audioop
 
 import os.path
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 
-import numpy
-import math
-import audioop
-
 from Detection.Detector import Detector
-
 from Oscillators.sine_osc import SineOsc
-from Filters.butter_bandpass_filter import butter_bandpass_filter
-
 from Normalizing.StreamGenerator import *
+# from Filters.butter_bandpass_filter import butter_bandpass_filter
+
+
 
 
 RATE = 44100
@@ -31,7 +30,7 @@ frequencies = [0]
 frames = []
 past_freq = 0
 
-last_ten_freqs = numpy.zeros(3)
+last_three_freqs = numpy.zeros(3)
 
 print('listening...')
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
@@ -52,10 +51,10 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     past_freq = cycle_length
 
-    last_ten_freqs = numpy.roll(last_ten_freqs, 1)
-    last_ten_freqs[0] = pred_freq
+    last_three_freqs = numpy.roll(last_three_freqs, 1)
+    last_three_freqs[0] = pred_freq
 
-    avg_freq = numpy.average(last_ten_freqs[numpy.nonzero(last_ten_freqs)])
+    avg_freq = numpy.average(last_three_freqs[numpy.nonzero(last_three_freqs)])
 
     if pred_freq == 0 or frequencies[-1] == 0:
         if pred_freq != 0:
