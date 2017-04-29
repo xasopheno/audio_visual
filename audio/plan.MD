@@ -1,6 +1,13 @@
-4/22/17
-The sound is recorded and labeled.
-Preprocessed 
+4/28/17
+3 seconds of audio at 44100
+1024, 1024, 1024(start)
+
+def audio_to_csv(full_audio):
+    audio_as_array = full_audio.to_np()
+    audio_length = len(audio_as_array)
+    index = 0
+
+    while index > audio_length - 1
 __________
 4/14/17
 
@@ -18,6 +25,7 @@ def WriteFileName():
     output_filename = noteName + '_' + date + '_' + noteNumber
 
 
+    
 
 note_to_number = [
     
