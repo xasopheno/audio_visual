@@ -44,12 +44,14 @@ def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
 
     while index < max_testable_chunks:
         chunk = audio_as_array[index:index + chunk_size]
+        print ('chunk type', type(chunk))
 
         # Todo: minimum volume - use detect_freqs
 
         freq_prediction, volume = Detector.aubio_detector(chunk)
+        print (freq_prediction)
 
-        if volume > THRESHOLD:
+        if volume > 0:
             np.roll(window, 1)
             window[1] = freq_prediction
 
