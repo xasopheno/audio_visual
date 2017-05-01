@@ -18,6 +18,7 @@ from Normalizing.StreamGenerator import *
 RATE = 44100
 RECORD_SECONDS = 5
 CHUNKSIZE = 1024
+THRESHOLD = 1000
 
 osc = SineOsc()
 detector = Detector()
@@ -44,7 +45,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     # cycle_length = Detector.aubio_detector(frame)
     cycle_length, volume = detector.aubio_detector(stream.read(CHUNKSIZE))
 
-    if abs(cycle_length - past_freq) < 80 and vol > 100:
+    if abs(cycle_length - past_freq) < 80 and vol > THRESHOLD:
         pred_freq = cycle_length
     else:
         pred_freq = 0
