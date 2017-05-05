@@ -10,10 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.par
 from Detection.Detector import Detector
 from Oscillators.sine_osc import SineOsc
 from Normalizing.StreamGenerator import *
-# from Filters.butter_bandpass_filter import butter_bandpass_filter
-
-
-
+from Filters.butter_bandpass_filter import butter_bandpass_filter
 
 RATE = 44100
 RECORD_SECONDS = 5
@@ -28,10 +25,9 @@ stream = sg.input_stream_generator()
 stream2 = sg.output_stream_generator()
 
 frequencies = [0]
-frames = []
 past_freq = 0
 
-last_three_freqs = numpy.zeros(3)
+last_three_freqs = numpy.zeros(1)
 
 print('listening...')
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
@@ -39,13 +35,12 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     vol = math.sqrt(abs(audioop.avg(data, 4)))
 
     frame = numpy.fromstring(data, dtype=numpy.int16)
-    # frame = butter_bandpass_filter(frame, 50, 2000, RATE, order=5)
-    # frames.append(frame)
+    # frame = butter_bandpass_filter(frame, 50, 2200, RATE, order=5)
 
     # cycle_length = Detector.aubio_detector(frame)
     cycle_length, volume = detector.aubio_detector(stream.read(CHUNKSIZE))
 
-    if abs(cycle_length - past_freq) < 80 and vol > THRESHOLD:
+    if abs(cycle_length - past_freq) < 100 and vol > THRESHOLD:
         pred_freq = cycle_length
     else:
         pred_freq = 0
@@ -72,10 +67,9 @@ if __name__ == '__main__':
     past_freq = 0
     for freq in frequencies:
 
-        osc.play_frequencies(stream2, CHUNKSIZE/RATE, .1, 70, 70, freq,
+        osc.play_frequencies(stream2, CHUNKSIZE/RATE, .1, 70, 70,
                              freq,
                              )
-
         if freq == 0:
             print ('')
         else:
