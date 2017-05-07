@@ -1,13 +1,29 @@
+5/7/17
+Got detection working
+need to de-couple
+
+data recorder and frequency detector need to work together
+guarantee recording volume?
+
+take the last three values that are not 0 and take an average.
+
+    104, 1
+    107, 1
+    676, 9
+    450, 7
+    1000, 28
+    
+
+_________
+
 4/28/17
 3 seconds of audio at 44100
 1024, 1024, 1024(start)
 
-def audio_to_csv(full_audio):
-    audio_as_array = full_audio.to_np()
-    audio_length = len(audio_as_array)
-    index = 0
-
-    while index > audio_length - 1
+    def audio_to_csv(full_audio):
+        audio_as_array = full_audio.to_np()
+        audio_length = len(audio_as_array)
+        index = 0
 __________
 4/14/17
 
