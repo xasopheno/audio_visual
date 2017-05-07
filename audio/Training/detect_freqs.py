@@ -14,7 +14,7 @@ from Filters.butter_bandpass_filter import butter_bandpass_filter
 
 RATE = 44100
 RECORD_SECONDS = 5
-CHUNKSIZE = 1024
+CHUNKSIZE = 2048
 THRESHOLD = 1000
 
 osc = SineOsc()
@@ -27,7 +27,7 @@ stream2 = sg.output_stream_generator()
 frequencies = [0]
 past_freq = 0
 
-last_three_freqs = numpy.zeros(1)
+last_three_freqs = numpy.zeros(3)
 
 print('listening...')
 for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
@@ -39,6 +39,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
 
     # cycle_length = Detector.aubio_detector(frame)
     cycle_length, volume = detector.aubio_detector(stream.read(CHUNKSIZE))
+    # cycle_length = detector.auto_correlation(frame, 44100)
 
     if abs(cycle_length - past_freq) < 100 and vol > THRESHOLD:
         pred_freq = cycle_length
@@ -61,7 +62,6 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
         rounded = int(round(avg_freq))
         frequencies.append(rounded)
         print (rounded, int(volume * 1500) * '-')
-
 
 if __name__ == '__main__':
     past_freq = 0

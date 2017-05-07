@@ -9,7 +9,7 @@ from parabolic import parabolic
 
 class Detector:
     def __init__(self):
-        self.pDetection = aubio.pitch("yinfft", 2048, 2048//2, 44100)
+        self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
         self.pDetection.set_unit("Hz")
         self.pDetection.set_silence(-40)
         self.pDetection.set_tolerance(.85)
