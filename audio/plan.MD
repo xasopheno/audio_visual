@@ -5,14 +5,15 @@ need to de-couple
 data recorder and frequency detector need to work together
 guarantee recording volume?
 
-take the last three values that are not 0 and take an average.
 
-    104, 1
-    107, 1
-    676, 9
-    450, 7
-    1000, 28
-    
+take the last three values that are not 0 and take an average.
+last three averages.
+
+    105, 102, 104, 1 prob: 100
+    0, 107, 107, 1 prob: 90
+    667, 657, 676, prob: 95
+    800, 0, 450, 7: prob: 20
+    0, 1014, 1000, 28 prob: 80
 
 _________
 

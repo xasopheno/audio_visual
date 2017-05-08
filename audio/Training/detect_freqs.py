@@ -34,7 +34,7 @@ for i in range(0, int(RATE / CHUNKSIZE * RECORD_SECONDS)):
     data = stream.read(CHUNKSIZE)
     vol = math.sqrt(abs(audioop.avg(data, 4)))
 
-    frame = numpy.fromstring(data, dtype=numpy.int16)
+    # frame = numpy.fromstring(data, dtype=numpy.int16)
     # frame = butter_bandpass_filter(frame, 50, 2200, RATE, order=5)
 
     # cycle_length = Detector.aubio_detector(frame)
