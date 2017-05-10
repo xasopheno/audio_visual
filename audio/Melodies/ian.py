@@ -20,7 +20,6 @@ stream = p.open(format=pyaudio.paFloat32,
 def one(freq, length, vol):
     sine_osc.play_frequencies(stream, length, vol, 8000, 5000,
                               random.choice([freq/3, freq * 1/2]),
-                              # freq / 3 * 2,
                               freq / 2,
                               freq,
                               freq * 3/2 + 2,
@@ -40,7 +39,7 @@ def two(freq, length, vol):
     for j in range(2):
         one(freq, length, vol)
     for j in range(2):
-        one(freq + 200, length, vol)
+        one(freq * 2, length, vol)
     melody = random.choice([120, 130, 140, 150])
     for j in range(6):
         one(melody, .2, vol)
@@ -52,10 +51,10 @@ if __name__ == '__main__':
         vol = 0
         for j in range(180):
             if j < 30:
-                vol += .05
+                vol += .06
             three(freq, .05, vol)
             if j > 120:
-                vol -= .025
+                vol -= .03
             freq += random.choice([-10, 12, -9, 13, -8, 14])
 
         for i in range(4):

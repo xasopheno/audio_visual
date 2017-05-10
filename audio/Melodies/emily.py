@@ -1,3 +1,7 @@
+import os.path
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+
 import random
 import pyaudio
 from Oscillators.sine_osc import SineOsc
@@ -52,13 +56,14 @@ def idea_2(freq, tempo):
                               freq * 44/8
                               )
 
-idea_2(190, 25)
-idea_2(180, 25)
-idea_2(170, 25)
-idea_2(160, 25)
-idea_2(150, 25)
-idea_2(140, 25)
-idea_2(130, 25)
+if __name__ == '__main__':
+    idea_2(190, 25)
+    idea_2(180, 25)
+    idea_2(170, 25)
+    idea_2(160, 25)
+    idea_2(150, 25)
+    idea_2(140, 25)
+    idea_2(130, 25)
 
 # for i in range(4):
 #     freq = 190
