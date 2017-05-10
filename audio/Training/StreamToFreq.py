@@ -10,7 +10,6 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.par
 from Detection.Detector import Detector
 from Oscillators.sine_osc import SineOsc
 from Normalizing.StreamGenerator import *
-from Filters.butter_bandpass_filter import butter_bandpass_filter
 
 
 class StreamToFreq:
@@ -29,20 +28,16 @@ class StreamToFreq:
 
         self.frequencies = [0]
         self.past_freq = 0
+        self.last_three_freqs = numpy.zeros(3)
 
     def detectorit(self):
         print('listening...')
-        last_three_freqs = numpy.zeros(3)
+
         for i in range(0, int(self.RATE / self.CHUNKSIZE * self.RECORD_SECONDS)):
             data = self.stream.read(self.CHUNKSIZE)
             vol = math.sqrt(abs(audioop.avg(data, 4)))
 
-            # frame = numpy.fromstring(data, dtype=numpy.int16)
-            # frame = butter_bandpass_filter(frame, 50, 2200, RATE, order=5)
-
-            # cycle_length = Detector.aubio_detector(frame)
             cycle_length, volume = self.detector.aubio_detector(self.stream.read(self.CHUNKSIZE))
-            # cycle_length = detector.auto_correlation(frame, 44100)
 
             if abs(cycle_length - self.past_freq) < 100 and vol > self.THRESHOLD:
                 pred_freq = cycle_length
@@ -51,10 +46,10 @@ class StreamToFreq:
 
             self.past_freq = cycle_length
 
-            last_three_freqs = numpy.roll(last_three_freqs, 1)
-            last_three_freqs[0] = pred_freq
+            self.last_three_freqs = numpy.roll(self.last_three_freqs, 1)
+            self.last_three_freqs[0] = pred_freq
 
-            avg_freq = numpy.average(last_three_freqs[numpy.nonzero(last_three_freqs)])
+            avg_freq = numpy.average(self.last_three_freqs[numpy.nonzero(self.last_three_freqs)])
 
             if pred_freq == 0 or self.frequencies[-1] == 0:
                 if pred_freq != 0:
@@ -69,8 +64,8 @@ class StreamToFreq:
     def play_frequencies(self):
         for freq in self.frequencies:
             self.osc.play_frequencies(self.stream2, self.CHUNKSIZE/self.RATE, .1, 70, 70,
-                                 freq,
-                                 )
+                                      freq,
+                                     )
             if freq == 0:
                 print ('')
             else:
@@ -80,8 +75,10 @@ class StreamToFreq:
         print frequencies
 
         # close stream
-        # self.stream.stop_stream()
-        # self.stream.close()
+        self.stream.stop_stream()
+        self.stream.close()
+        self.stream2.stop_stream()
+        self.stream2.close()
 
 if __name__ == "__main__":
     detect = StreamToFreq()

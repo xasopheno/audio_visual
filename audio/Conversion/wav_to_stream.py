@@ -1,10 +1,8 @@
-"""PyAudio Example: Play a wave file."""
-
 import pyaudio
 import wave
 import sys
 
-CHUNK = 1024
+CHUNK = 2048
 
 if len(sys.argv) < 2:
     print("Plays a wave file.\n\nUsage: %s filename.wav" % sys.argv[0])
@@ -30,8 +28,8 @@ while len(data) > 0:
     data = wf.readframes(CHUNK)
 
 # stop stream (4)
-stream.stop_stream()
-stream.close()
-
-# close PyAudio (5)
-p.terminate()
+# stream.stop_stream()
+# stream.close()
+#
+# # close PyAudio (5)
+# p.terminate()
