@@ -57,7 +57,7 @@ if __name__ == '__main__':
                 vol -= .03
             freq += random.choice([-10, 12, -9, 13, -8, 14])
 
-        for i in range(4):
-            two(200, 1, 1)
+        for i in range(6):
+            two(206, 1, 1)
 
     time.sleep(.5)

@@ -35,9 +35,15 @@ def idea(freq, tempo):
 
 def idea_2(freq, tempo):
     sine_osc.play_frequencies(stream, tempo, .09, 500000, 800000,
+                              freq /4 - 2,
+                              freq /4 - 2,
+                              freq /4 + 2,
                               freq /2,
                               freq /2 - 2,
                               freq /2 + 2,
+                              freq /2 + 2,
+                              freq /2 * 3,
+                              freq /2 * 3,
                               freq,
                               freq * 3/2,
                               freq * 3/2 - 3.2,
