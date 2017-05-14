@@ -71,7 +71,7 @@ def sound():
                                   )
         vol += .14
 
-for j in range(5):
+for j in range(20):
     bass = 100
 
     for i in range(random.choice([160])):
