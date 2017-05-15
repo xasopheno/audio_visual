@@ -18,6 +18,7 @@ class Detector:
         call(cmd, shell=True)
 
     def aubio_detector(self, data):
+        print ('aubio_detector()')
         samples = numpy.fromstring(data,
                                    dtype=aubio.float_type)
 

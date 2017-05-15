@@ -29,7 +29,7 @@ class StreamGenerator:
         return p.open(
             format=pyaudio.paFloat32,
             channels=self.channels,
-            rate = self.sample_rate,
+            rate=self.sample_rate,
             input=True,
             frames_per_buffer=self.chunk_size
         )
