@@ -22,7 +22,7 @@ def one(freq, length, vol):
                               random.choice([freq/3, freq * 1/2]),
                               freq / 2,
                               freq,
-                              freq * 3/2 + 2,
+                              freq * 3/2 + 2 * 2,
                               random.choice([freq * 10/4]),
                               )
 
@@ -47,6 +47,23 @@ def two(freq, length, vol):
 
 if __name__ == '__main__':
     for k in range(4):
+        freq = 100
+        vol = 0
+        for j in range(180):
+            if j < 30:
+                vol += .06
+            three(freq, .05, vol)
+            if j > 120:
+                vol -= .03
+            freq += random.choice([-10, 12, -9, 13, -8, 14])
+
+        for i in range(6):
+            two(206, 1, 1)
+
+    time.sleep(60)
+
+
+    for k in range(1):
         freq = 100
         vol = 0
         for j in range(180):
