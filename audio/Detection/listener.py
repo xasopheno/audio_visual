@@ -1,6 +1,7 @@
 import time
 import os.path
 import sys
+import random
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 
 
@@ -20,37 +21,80 @@ f.seek(0, os.SEEK_END)
 
 past_freq = 0
 
-while True:
-    line = f.readline()
-    if not line:
-        time.sleep(0.025)
-        continue
-    line = line.strip('\n')
-    line = float(line)
+
+def follow():
+    while True:
+        line = f.readline()
+        if not line:
+            time.sleep(0.025)
+            continue
+        line = float(line.strip('\n'))
+        yield line
+
+for line in follow():
     print line
-    # if 1300 < line < 1400:
-    # if abs(line - past_freq > 100):
-    if line == 0:
-        vol = 0
-        line = 100
-    else:
-        vol = .5
-    osc.play_frequencies(stream, .02, vol, 80, 80,
-                         line
-                         # # line +2,
-                         # # line -2,
-                         # # line / 2 * 3/2,
-                         # line / 4,
-                         )
-    # if 1000 < line < 1100:
-    #     if abs(line - past_freq > 100):
-    #         osc.play_frequencies(stream, 1, .5, 40000, 40000,
-    #                              # line / 4,
-    #                              # line /4 + 1,
-    #                              line + 100,
-    #                              # line * 11/8,
-    #                              # line * 6/5,
-    #                              # line * 4/3,
-    #                              )
+    if 1000 < line:
+        # if abs(line - past_freq > 10):
+        osc.play_frequencies(stream, random.choice([.25, .5, .20, .3]), random.choice([1, .75, 1.25]), 4000, 7000,
+                             line,
+                             line / 16 * 3/2,
+                             line + 2,
+                             line - 2,
+                             line / 2 * 3/2,
+                             line / 4,
+                             # random.choice([line / 8 * 7/4]),
+                             line / 8 * 5/4,
+                             line / 16,
+                             line / 32,
+                             )
+    # if 1000 < line < 1300:
+    #     # if abs(line - past_freq > 10):
+    #     osc.play_frequencies(stream, 2, 1.5, 800, 40000,
+    #                          line / 4,
+    #                          line / 4 + 1,
+    #                          line / 4 + 3,
+    #                          line,
+    #                          # line * 11/8,
+    #                          # line * 6/5,
+    #                          # line * 4/3,
+    #                          )
+    f.seek(0, os.SEEK_END)
     past_freq = line
 
+
+#
+# while True:
+#     line = f.readline()
+#     if not line:
+#         time.sleep(0.025)
+#         continue
+#     line = line.strip('\n')
+#     line = float(line)
+#     print line
+#     # if 1300 < line < 1400:
+#     # if abs(line - past_freq > 100):
+#     if line == 0:
+#         vol = 0
+#         # line = 100
+#     else:
+#         vol = .5
+#     osc.play_frequencies(stream, .02, vol, 80, 80,
+#                          line,
+#                          line * 3/2
+#                          # # line +2,
+#                          # # line -2,
+#                          # # line / 2 * 3/2,
+#                          # line / 4,
+#                          )
+#     # if 1000 < line < 1100:
+#     #     if abs(line - past_freq > 100):
+#     #         osc.play_frequencies(stream, 1, .5, 40000, 40000,
+#     #                              # line / 4,
+#     #                              # line /4 + 1,
+#     #                              line + 100,
+#     #                              # line * 11/8,
+#     #                              # line * 6/5,
+#     #                              # line * 4/3,
+#     #                              )
+#     past_freq = line
+#
