@@ -55,14 +55,16 @@ class StreamToFrequency:
     def print_frequency(self):
         print (self.pred_freq)
 
-detector = StreamToFrequency()
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paFloat32,
-                channels=1,
-                rate=44100,
-                frames_per_buffer=2048,
-                input=True,
-                output=False,
-                stream_callback=detector.callback)
+if __name__ == '__main__':
+    detector = StreamToFrequency()
+    p = pyaudio.PyAudio()
 
-detector.stream_reader(stream)
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=44100,
+                    frames_per_buffer=2048,
+                    input=True,
+                    output=False,
+                    stream_callback=detector.callback)
+
+    detector.stream_reader(stream)
