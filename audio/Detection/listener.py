@@ -19,6 +19,7 @@ stream = sg.output_stream_generator()
 
 f = open('Detection/output.txt', 'r')
 f.seek(0, os.SEEK_END)
+commands = open('Detection/commands.txt', 'w')
 
 past_freq = 0
 prev_lines = deque(maxlen=10)
@@ -36,29 +37,16 @@ def follow():
         yield line, prev_lines
 
 for line, prev_lines in follow():
-    # print line
     print prev_lines
 
-    if 1000 < line:
-        # if abs(line - past_freq > 10):
-        for i in range(3):
-            for freq in prev_lines:
-                if freq < 1000:
-                    osc.play_frequencies(stream, random.choice([.1]), 1, 100, 100,
-                                        freq /2,
-                                        freq,
-                                        freq * 3/2,
-                                        )
-        # osc.play_frequencies(stream, random.choice([.1, .15, .5]), .5, 200, 2000,
-        #                      line / 4,
-        #                      line / 2,
-        #                      line,
-        #                      )
+    if 1000 < line and len(prev_lines) > 1:
+        commands.write(str(list(prev_lines)) + '\n')
+        commands.flush()
+        os.fsync(commands.fileno())
         prev_lines = deque(maxlen=10)
         time.sleep(.5)
     f.seek(0, os.SEEK_END)
     past_freq = line
-
 
 # while True:
 #     line = f.readline()
