@@ -63,21 +63,22 @@ def idea_2(freq, tempo):
                               )
 
 if __name__ == '__main__':
-    # time.sleep(30)
-    idea_2(190, 20)
-    # time.sleep(30)
-    idea_2(180, 25)
-    # time.sleep(10)
-    idea_2(170, 30)
-    # time.sleep(30)
-    idea_2(160, 30)
+    time.sleep(50)
+    idea_2(131, 45)
+    time.sleep(20)
+    idea_2(131, 45)
+    time.sleep(60)
+    idea_2(143, 30)
+    time.sleep(20)
+    idea_2(131, 20)
+    time.sleep(20)
+    idea_2(196, 50)
+    time.sleep(10)
+    idea_2(131, 45)
     # time.sleep(20)
-    idea_2(150, 40)
-    # time.sleep(10)
-    idea_2(140, 30)
-    # time.sleep(20)
-    idea_2(130, 40)
+    # idea_2(131, 40)
     # time.sleep(.5)
+
 # for i in range(4):
 #     freq = 190
 #     for i in range(3):
