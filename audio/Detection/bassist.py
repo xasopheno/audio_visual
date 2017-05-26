@@ -4,16 +4,12 @@ import sys
 import ast
 import random
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
-
 from Oscillators.sine_osc import SineOsc
 from Normalizing.StreamGenerator import *
 
 
 class Musician:
     def __init__(self):
-        self.RATE = 44100
-        self.CHUNKSIZE = 1024
-
         self.osc = SineOsc()
         self.sg = StreamGenerator()
         self.stream = self.sg.output_stream_generator()
@@ -21,7 +17,6 @@ class Musician:
         self.f = open('Detection/commands.txt', 'r')
         self.f.seek(0, os.SEEK_END)
 
-        self.pause = 0
         self.freq_array = []
 
     def follow(self):
@@ -43,8 +38,7 @@ class Musician:
                                           freq,
                                           freq * 3/2,
                                           freq * 3/4,
-
-                                     )
+                                          )
 
 
 musician = Musician()
