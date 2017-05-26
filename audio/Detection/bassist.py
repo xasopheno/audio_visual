@@ -21,7 +21,7 @@ class Musician:
         self.f = open('Detection/commands.txt', 'r')
         self.f.seek(0, os.SEEK_END)
 
-        self.play = 0
+        self.pause = 0
         self.freq_array = []
 
     def follow(self):
@@ -36,7 +36,7 @@ class Musician:
 
     def player(self, freqs):
         for freq in freqs:
-            if freq < 1000:
+            if freq < 400:
                 print freq
                 self.osc.play_frequencies(self.stream, .2, 1, 500, 500,
                                           freq / 2,
@@ -45,7 +45,6 @@ class Musician:
                                           freq * 3/4,
 
                                      )
-            # self.f.seek(0, os.SEEK_END)
 
 
 musician = Musician()

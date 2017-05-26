@@ -37,7 +37,7 @@ class StreamToFrequency:
             self.pred_freq = 0
 
         self.past_freq = cycle_length
-
+        print self.pred_freq
         self.output.write(str(self.pred_freq) + '\n')
         self.output.flush()
         os.fsync(self.output.fileno())
