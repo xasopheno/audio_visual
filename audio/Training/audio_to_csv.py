@@ -47,8 +47,8 @@ def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
     samplerate = 44100
     CHUNK = 2048
 
-    win_s = 2048  # fft size
-    hop_s = 2048  # hop size
+    win_s = CHUNK  # fft size
+    hop_s = CHUNK  # hop size
 
     s = aubio.source(filename, samplerate, hop_s)
     samplerate = s.samplerate
@@ -65,18 +65,27 @@ def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
     data = wf.readframes(CHUNK)
 
     prev_lines = deque(maxlen=NUM_PAST_FREQS)
+    for i in range(NUM_PAST_FREQS):
+        prev_lines.append(0)
+    empty_Deque = list(prev_lines)
+
     while True:
         samples, read = s()
         pred = pitch_o(samples)[0]
         pitch = int(round(pred))
         confidence = pitch_o.get_confidence()
+
         if confidence < 0.5:
-            pitch = 0.
+            pitch = 0
         if abs(pitch - prev_pred) > 100:
-            pitch = 0.
+            pitch = 0
         # print("%f %f %f" % (total_frames / float(win_s), pitch, confidence))
         prev_lines.append(pitch)
-        print (prev_lines)
+        counter = sum(1 if a == q else 0 for (a, q) in zip(prev_lines, empty_Deque))
+        # if list(prev_lines) != list(empty_Deque):
+        if list(prev_lines) != empty_Deque:
+            print (prev_lines)
+
         stream.write(data)
         data = wf.readframes(CHUNK)
 
