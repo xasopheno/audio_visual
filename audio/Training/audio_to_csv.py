@@ -3,74 +3,89 @@ import sys
 import numpy as np
 import glob
 import re
+import wave
+import pyaudio
+import aubio
+from collections import deque
+
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
-
-from Conversion.wav_to_np import wav_to_np
-from Detection.Detector import Detector
-
-detector = Detector()
 
 OUTPUT_DIR = './training_data/_training_input'
 THRESHOLD = 1000
 current_path = os.getcwd()
-
-detector = Detector()
+NUM_PAST_FREQS = 5
 
 def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
-    audio_as_array = wav_to_np(full_audio_path)[1]
-
-    print (type(audio_as_array))
-    print audio_as_array.shape
-    print
-    audio_length = audio_as_array.astype(float).shape[0]
-    print type(audio_length)
-    print 'audio_length', audio_length
     index = 0
-
     audio_file_name = os.path.splitext(full_audio_path)[0]
-    print full_audio_path
+    print (full_audio_path)
 
     note_number = re.search(r"num=\s*([^\n\r]{2})", str(full_audio_path)).group(1)
 
     print ('note_num', note_number)
 
     csv_num = len(glob.glob(OUTPUT_DIR)) + 1
-    print csv_num
+    print (csv_num)
 
     new_file_name = str(audio_file_name) + '__csv=' + str(csv_num) + '.csv'
 
     new_file = open(new_file_name, 'w')
 
-    min_testable_chunks = chunk_size * num_chunks
-    max_testable_chunks = audio_length - index * chunk_size
-    print (min_testable_chunks, max_testable_chunks)
-
     window = np.zeros(num_chunks)
 
-    while index < max_testable_chunks:
-        chunk = audio_as_array[index:index + chunk_size]
-        # print chunk.shape
-        # print type(chunk)
-        # Todo: minimum volume - use detect_freqs
+    current_path = os.getcwd()
+    filename = current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav'
 
+    p = pyaudio.PyAudio()
+
+    wf = wave.open(filename)
+    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                    channels=wf.getnchannels(),
+                    rate=wf.getframerate(),
+                    output=True)
+
+    samplerate = 44100
+    CHUNK = 2048
+
+    win_s = 2048  # fft size
+    hop_s = 2048  # hop size
+
+    s = aubio.source(filename, samplerate, hop_s)
+    samplerate = s.samplerate
+
+    tolerance = 0.4
+
+    pitch_o = aubio.pitch("yinfft", win_s, hop_s, samplerate)
+    pitch_o.set_unit("Hz")
+    pitch_o.set_tolerance(tolerance)
+
+    # total number of frames read
+    total_frames = 0
+    prev_pred = 0
+    data = wf.readframes(CHUNK)
+
+    prev_lines = deque(maxlen=NUM_PAST_FREQS)
+    while True:
+        samples, read = s()
+        pred = pitch_o(samples)[0]
+        pitch = int(round(pred))
+        confidence = pitch_o.get_confidence()
+        if confidence < 0.5:
+            pitch = 0.
+        if abs(pitch - prev_pred) > 100:
+            pitch = 0.
+        # print("%f %f %f" % (total_frames / float(win_s), pitch, confidence))
+        prev_lines.append(pitch)
+        print (prev_lines)
+        stream.write(data)
         data = wf.readframes(CHUNK)
 
-        # play stream (3)
-        while len(data) > 0:
-            stream.write(data)
-            data = wf.readframes(CHUNK)
+        prev_pred = pred
+        total_frames += read
 
+        if read < hop_s:
+            break
 
-        freq_prediction, volume = detector.aubio_detector(chunk)
-        print (freq_prediction)
-
-        if volume > 0:
-            np.roll(window, 1)
-            # window[1] = freq_prediction
-
-            if index > min_testable_chunks:
-                avg_pred = np.average(window)
-                new_file.write(int(avg_pred) + ',' + int(note_number.strip('0')) + '/n')
 
 if __name__ == '__main__':
-    predict_freq_from_wav(current_path + '/training_data/A3/name=A3__num=12__batch=y2017m05d07H21M30S31__1.wav', 4096, 3)
+    predict_freq_from_wav(current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav', 4096, 3)

@@ -1,3 +1,6 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 import pyaudio
 import wave
 import audioop
@@ -13,7 +16,7 @@ class DataRecorder:
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
         self.RATE = 44100
-        self.THRESHOLD = 1500  # The threshold intensity that defines silence
+        self.THRESHOLD = 400  # The threshold intensity that defines silence
         # and noise signal (an int. lower than THRESHOLD is silence).
 
         self.SILENCE_LIMIT = 0.2  # Silence limit in seconds. The max amount of seconds where
@@ -106,7 +109,7 @@ class DataRecorder:
 
 
     def save_recording(self, data, file_number, p):
-        filename = self.PATH + '/training_data/' + self.NOTE_NAME + '/' + self.GENERATED_FILE_NAME + '__' + str(file_number)
+        filename = self.PATH + '/Training/training_data/' + self.NOTE_NAME + '/' + self.GENERATED_FILE_NAME + '__' + str(file_number)
 
         # writes data to WAV file
         data = ''.join(data)
