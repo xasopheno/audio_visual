@@ -14,6 +14,10 @@ OUTPUT_DIR = './training_data/_training_input'
 THRESHOLD = 1000
 current_path = os.getcwd()
 NUM_PAST_FREQS = 5
+SAMPLERATE = 44100
+CHUNK = 2048
+TOLERANCE = 0.4
+
 
 def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
     index = 0
@@ -25,7 +29,7 @@ def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
     print ('note_num', note_number)
 
     csv_num = len(glob.glob(OUTPUT_DIR)) + 1
-    print (csv_num)
+    print ('csv_num=', csv_num)
 
     new_file_name = str(audio_file_name) + '__csv=' + str(csv_num) + '.csv'
 
@@ -44,20 +48,14 @@ def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
                     rate=wf.getframerate(),
                     output=True)
 
-    samplerate = 44100
-    CHUNK = 2048
-
     win_s = CHUNK  # fft size
     hop_s = CHUNK  # hop size
 
-    s = aubio.source(filename, samplerate, hop_s)
-    samplerate = s.samplerate
+    s = aubio.source(filename, SAMPLERATE, hop_s)
 
-    tolerance = 0.4
-
-    pitch_o = aubio.pitch("yinfft", win_s, hop_s, samplerate)
+    pitch_o = aubio.pitch("yinfft", win_s, hop_s, SAMPLERATE)
     pitch_o.set_unit("Hz")
-    pitch_o.set_tolerance(tolerance)
+    pitch_o.set_tolerance(TOLERANCE)
 
     # total number of frames read
     total_frames = 0
@@ -79,12 +77,15 @@ def predict_freq_from_wav(full_audio_path, chunk_size, num_chunks):
             pitch = 0
         if abs(pitch - prev_pred) > 100:
             pitch = 0
-        # print("%f %f %f" % (total_frames / float(win_s), pitch, confidence))
         prev_lines.append(pitch)
-        counter = sum(1 if a == q else 0 for (a, q) in zip(prev_lines, empty_Deque))
-        # if list(prev_lines) != list(empty_Deque):
-        if list(prev_lines) != empty_Deque:
-            print (prev_lines)
+        list_prev_lines = list(prev_lines)
+        if list_prev_lines != empty_Deque:
+            print (list_prev_lines)
+            for value in list_prev_lines:
+                new_file.write(str(value))
+                new_file.write(str(','))
+            new_file.write(str(note_number))
+            new_file.write('\n')
 
         stream.write(data)
         data = wf.readframes(CHUNK)
