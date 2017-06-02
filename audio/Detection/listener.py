@@ -39,7 +39,7 @@ def follow():
 for line, prev_lines in follow():
     print prev_lines
 
-    if 1000 < line and len(prev_lines) > 1:
+    if 550 < line and len(prev_lines) > 1:
         commands.write(str(list(prev_lines)) + '\n')
         commands.flush()
         os.fsync(commands.fileno())

@@ -8,15 +8,17 @@ from collections import deque
 import os
 import math
 from file_namer import file_name_generator
+import numpy
+import aubio
 
 class DataRecorder:
     def __init__(self):
         # Microphone stream config.
-        self.CHUNK = 1024  # CHUNKS of bytes to read each time from mic
+        self.CHUNK = 2048  # CHUNKS of bytes to read each time from mic
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
         self.RATE = 44100
-        self.THRESHOLD = 400  # The threshold intensity that defines silence
+        self.THRESHOLD = 2100  # The threshold intensity that defines silence
         # and noise signal (an int. lower than THRESHOLD is silence).
 
         self.SILENCE_LIMIT = 0.2  # Silence limit in seconds. The max amount of seconds where
@@ -40,13 +42,13 @@ class DataRecorder:
         print "Getting intensity values from mic."
         p = pyaudio.PyAudio()
 
-        stream = p.open(format=FORMAT,
-                        channels=CHANNELS,
-                        rate=RATE,
+        stream = p.open(format=self.FORMAT,
+                        channels=self.CHANNELS,
+                        rate=self.RATE,
                         input=True,
-                        frames_per_buffer=CHUNK)
+                        frames_per_buffer=self.CHUNK)
 
-        values = [math.sqrt(abs(audioop.avg(stream.read(CHUNK), 4)))
+        values = [math.sqrt(abs(audioop.avg(stream.read(self.CHUNK), 4)))
                   for x in range(num_samples)]
         values = sorted(values, reverse=True)
         r = sum(values[:int(num_samples * 0.2)]) / int(num_samples * 0.2)
@@ -79,14 +81,18 @@ class DataRecorder:
         n = num_phrases
 
         while num_phrases == -1 or n > 0:
-            cur_data = stream.read(self.CHUNK)
-            slid_win.append(math.sqrt(abs(audioop.avg(cur_data, 4))))
-            # print slid_win[-1]
-            if sum([x > self.THRESHOLD for x in slid_win]) > 0:
+            data = stream.read(self.CHUNK)
+            samples = numpy.fromstring(data,
+                                       dtype=aubio.float_type)
+            samples = samples[~numpy.isnan(samples)]
+            strange_volume = len(samples)
+            # volume = numpy.sum(samples ** 2)
+            # volume = round(volume, 6) * 100000
+            if strange_volume > 950:
                 if not started:
                     print "Starting record of phrase"
                     started = True
-                audio2send.append(cur_data)
+                audio2send.append(data)
             elif started is True:
                 print "Finished"
                 # The limit was reached, finish capture and deliver.
@@ -101,7 +107,7 @@ class DataRecorder:
                 n -= 1
                 print "Listening ..."
             else:
-                prev_audio.append(cur_data)
+                prev_audio.append(data)
 
         print "* Done recording"
         stream.close()
@@ -128,4 +134,4 @@ class DataRecorder:
 
 if(__name__ == '__main__'):
     DataRecorder().listen_and_record()  # listen to mic.
-    # audio_int()  # To measure your mic levels
+    # DataRecorder().audio_int()  # To measure your mic levels

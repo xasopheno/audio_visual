@@ -19,7 +19,7 @@ class StreamToFrequency:
         self.pDetection.set_unit("Hz")
         self.pDetection.set_silence(-40)
         self.pDetection.set_tolerance(.85)
-        self.threshold = 5
+        self.threshold = 500
 
         self.output = open('Detection/output.txt', 'w')
         self.past_freq = 0
@@ -36,10 +36,9 @@ class StreamToFrequency:
         cycle_length = self.pDetection(samples)[0]
 
         volume = numpy.sum(samples ** 2) / len(samples)
-        volume = round(volume, 3) * 100000
+        volume = round(volume, 6) * 100000
 
         confidence = self.pDetection.get_confidence()
-
         if abs(cycle_length - self.past_freq) < 100 and volume > self.threshold:
             self.pred_freq = cycle_length
         else:
