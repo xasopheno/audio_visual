@@ -39,8 +39,8 @@ print ('cm: ')
 print (cm)
 
 # Plotting decision regions
-x_min, x_max = X_test[:, 0].min() - 10, X_test[:, 0].max() + 10
-y_min, y_max = X_test[:, 1].min() - 10, X_test[:, 1].max() + 10
+x_min, x_max = X_test[:, 0].min() - 1, X_test[:, 0].max() + 1
+y_min, y_max = X_test[:, 1].min() - 1, X_test[:, 1].max() + 1
 xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
                      np.arange(y_min, y_max, 0.1))
 
@@ -49,7 +49,7 @@ tt = 'KNN (k=20) \n' + str(cm)
 Z = classifier.predict(np.c_[xx.ravel(), yy.ravel()])
 Z = Z.reshape(xx.shape)
 
-plt.contourf(xx, yy, Z, alpha=0.4)
+plt.contourf(xx, yy, Z, alpha=0.5)
 plt.scatter(X_test[:, 0], X_test[:, 1], c=y_pred, alpha=0.8)
 plt.suptitle(tt)
 

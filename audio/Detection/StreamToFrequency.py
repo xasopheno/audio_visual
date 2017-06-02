@@ -8,9 +8,9 @@ import wave
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
-audio_file = current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav'
+# audio_file = current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav'
 
-wf = wave.open(audio_file, 'rb')
+# wf = wave.open(audio_file, 'rb')
 
 
 class StreamToFrequency:
@@ -24,7 +24,7 @@ class StreamToFrequency:
         self.output = open('Detection/output.txt', 'w')
         self.past_freq = 0
         self.pred_freq = 0
-        self.wf = wave.open(audio_file, 'rb')
+        # self.wf = wave.open(audio_file, 'rb')
 
         self.last_three_freqs = numpy.zeros(3)
 
