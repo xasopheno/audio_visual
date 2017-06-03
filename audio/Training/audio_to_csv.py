@@ -39,14 +39,14 @@ def predict_freq_from_wav(full_audio_path):
 
     print(csv_file_name)
 
-    if not os.path.isfile(csv_file_name):
-        csv_file = open(csv_file_name, 'a')
-        for i in range(5):
-            csv_file.write('freq_pred' + str(i) + ',')
-        csv_file.write('note_number')
-        csv_file.write(str('\n'))
-    else:
-        csv_file = open(csv_file_name, 'a')
+    # if not os.path.isfile(csv_file_name):
+    #     csv_file = open(csv_file_name, 'a')
+    #     for i in range(5):
+    #         csv_file.write('freq_pred' + str(i) + ',')
+    #     csv_file.write('note_number')
+    #     csv_file.write(str('\n'))
+    # else:
+    csv_file = open(csv_file_name, 'a')
 
     audio_filename = full_audio_path
 

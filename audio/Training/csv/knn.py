@@ -9,7 +9,7 @@ from itertools import product
 
 
 # importing the dataset
-dataset = pd.read_csv('./Training/csv/test.csv')
+dataset = pd.read_csv('./Training/csv/output.csv')
 X = dataset.iloc[:,[0,4]].values
 y = dataset.iloc[:, 5].values
 
@@ -37,6 +37,7 @@ cm = confusion_matrix(y_test, y_pred)
 
 print ('cm: ')
 print (cm)
+np.savetxt('./Training/csv/confusion_matrix.out', cm, delimiter=',', fmt='%.0f')
 
 # Plotting decision regions
 x_min, x_max = X_test[:, 0].min() - 1, X_test[:, 0].max() + 1
@@ -44,13 +45,13 @@ y_min, y_max = X_test[:, 1].min() - 1, X_test[:, 1].max() + 1
 xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
                      np.arange(y_min, y_max, 0.1))
 
-tt = 'KNN (k=20) \n' + str(cm)
+tt = 'KNN (k=20) \n'
 
 Z = classifier.predict(np.c_[xx.ravel(), yy.ravel()])
 Z = Z.reshape(xx.shape)
 
-plt.contourf(xx, yy, Z, alpha=0.5)
-plt.scatter(X_test[:, 0], X_test[:, 1], c=y_pred, alpha=0.8)
+plt.contourf(xx, yy, Z, alpha=0.2)
+plt.scatter(X_test[:, 0], X_test[:, 1], c=y_pred, alpha=1)
 plt.suptitle(tt)
 
 plt.show()
