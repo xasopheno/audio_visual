@@ -40,18 +40,22 @@ print (cm)
 np.savetxt('./Training/csv/confusion_matrix.out', cm, delimiter=',', fmt='%.0f')
 
 # Plotting decision regions
-x_min, x_max = X_test[:, 0].min() - 1, X_test[:, 0].max() + 1
-y_min, y_max = X_test[:, 1].min() - 1, X_test[:, 1].max() + 1
+x_min, x_max = X_train[:, 0].min() - .5, X_train[:, 0].max() + .5
+y_min, y_max = X_train[:, 1].min() - .5, X_train[:, 1].max() + .5
 xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
                      np.arange(y_min, y_max, 0.1))
+
+print (x_min, x_max)
+print (y_min, y_max)
 
 tt = 'KNN (k=20) \n'
 
 Z = classifier.predict(np.c_[xx.ravel(), yy.ravel()])
 Z = Z.reshape(xx.shape)
 
-plt.contourf(xx, yy, Z, alpha=0.2)
+plt.contourf(xx, yy, Z, 1000, alpha=0.3, cmap='viridis')
 plt.scatter(X_test[:, 0], X_test[:, 1], c=y_pred, alpha=1)
 plt.suptitle(tt)
+plt.set_cmap('viridis')
 
 plt.show()
