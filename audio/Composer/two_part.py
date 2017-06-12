@@ -66,7 +66,6 @@ def func1():
             sine_osc.play_frequencies(stream, .25, 1, 10000, 1000,
                                       freq,
                                       freq * 2,
-                                      freq / 2,
                                       freq + 2,
                                       )
         time.sleep(1.9)
