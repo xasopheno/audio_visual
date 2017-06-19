@@ -13,7 +13,7 @@ stream = p.open(format=pyaudio.paFloat32,
                 output=1,
                 )
 
-x = 180
+x = 150
 freqs = [
         x,
         x * 9/8,
@@ -44,18 +44,41 @@ freqs = [
         x * 3/2,
         x * 4/3,
         x * 5/4,
+        #
+        x * 9/8,
+        x * 3/2,
+        x * 3/2,
+        x * 4/3,
+
+        x * 11/8,
+        x * 10/4,
+        x * 10/4,
+        x * 9/4,
+
+        x * 7/4,
+        x * 3/2,
+        x * 3/2,
+        x * 5/3,
+
+        x * 11/8,
+        0,
+        x * 12/5,
+        x * 9/4,
+
+        0,
+        x * 2/3,
+        x * 3/4,
+        x * 3/5,
+
+        x * 1/2,
+        0,
+        x * 12/5,
+        x * 11/8,
 
         x * 9/8,
-        x * 5/8,
-        x * 3/4,
-        x * 3/8,
-
-        0,
         x * 3/2,
         0,
-        x * 3/2 / 2,
-        x/2,
-        0,
+        x * 3/2,
          ]
 
 
@@ -63,7 +86,7 @@ def func1():
     print ('func1')
     for i in range(2):
         for freq in freqs:
-            sine_osc.play_frequencies(stream, .25, 1, 10000, 1000,
+            sine_osc.play_frequencies(stream, .25, 1, 8000, 1000,
                                       freq,
                                       freq * 2,
                                       freq + 2,
@@ -74,10 +97,11 @@ def func2():
     print ('func2')
     for i in range(2):
         for freq in freqs:
-            sine_osc.play_frequencies(stream, .25, 1, 7000, 10000,
+            sine_osc.play_frequencies(stream, .25, 1, 1000, 10000,
                                       freq * 3/2,
                                       freq * 3/2 * 2,
                                       freq * 3/2,
+                                      freq / 2,
                                       )
         time.sleep(1.9)
 
