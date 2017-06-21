@@ -34,19 +34,21 @@ y_pred = classifier.predict(X_test)
 # Making the confusion matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-
-print ('cm: ')
-print (cm)
 np.savetxt('./Training/csv/confusion_matrix.out', cm, delimiter=',', fmt='%.0f')
+
+from sklearn.model_selection import cross_val_score
+accuracies = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv = 10)
+print('mean accuracy:', accuracies.mean())
+print('accuracy standard deviation: ', accuracies.std())
+
+# from sklearn.model_selection import GridSearchCV
+# parameters
 
 # Plotting decision regions
 x_min, x_max = X_train[:, 0].min() - .5, X_train[:, 0].max() + .5
 y_min, y_max = X_train[:, 1].min() - .5, X_train[:, 1].max() + .5
 xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
                      np.arange(y_min, y_max, 0.1))
-
-print (x_min, x_max)
-print (y_min, y_max)
 
 tt = 'KNN (k=20) \n'
 
