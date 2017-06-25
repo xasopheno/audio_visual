@@ -5,7 +5,6 @@ import numpy as np
 
 
 class SineOsc:
-
     def __init__(self):
         self.sample_rate = 44100
 
@@ -29,8 +28,8 @@ class SineOsc:
         all_tones = []
 
         for freq in freqs:
-            if freq > 1000:
-                volume = volume * .80902
+            # if freq > 1000:
+            #     volume *= .80902
             chunks = [self.wave(freq, length, self.sample_rate)]
             chunk = np.concatenate(chunks) * volume
 
