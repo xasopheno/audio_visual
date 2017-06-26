@@ -18,7 +18,7 @@ def func1():
     print ('func1')
     freq = random.choice([300])
     for i in range(10):
-        sine_osc.play_frequencies(stream, 3, 1, 10000, 30000,
+        sine_osc.play_frequencies(stream, 3, 1, 10000, 15000,
                                   freq
                                   )
 
@@ -31,7 +31,7 @@ def func1():
                                   )
 
 #
-        sine_osc.play_frequencies(stream, 3, 1, 10000, 30000,
+        sine_osc.play_frequencies(stream, 3, 1, 10000, 15000,
                                   freq,
                                   freq * 2
                                   )
@@ -51,12 +51,12 @@ def func2():
     freq = 300
     freq = random.choice([freq])
     for i in range(8):
-        sine_osc.play_frequencies(stream, 3, .75, 1000, 30000,
+        sine_osc.play_frequencies(stream, 3, .75, 1000, 20000,
                                   freq * 2/3,
                                   freq / 3
                                   )
 
-        sine_osc.play_frequencies(stream, 1, .5, 2000, 30000,
+        sine_osc.play_frequencies(stream, 1, .5, 2000, 20000,
                                   freq * 3/2,
                                   freq * 4/3
                                   )
@@ -77,7 +77,7 @@ def func2():
 def func3():
     print ('func3')
     for i in range(9):
-        sine_osc.play_frequencies(stream, 12, .6, 1000, 50000,
+        sine_osc.play_frequencies(stream, 12, .6, 1000, 1000,
                                   50,
                                   48,
                                   )

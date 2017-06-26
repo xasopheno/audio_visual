@@ -2,49 +2,66 @@ from __future__ import division
 from math import pi
 import numpy as np
 import random
-# import matplotlib.pyplot as plt
+import os
+import scipy.io.wavfile as wav
 
 
 class SineOsc:
-
     def __init__(self):
-        self.sample_rate = 44100
+        self.sample_rate = 44100 / 2
+        self.sound_data = self.mp3_to_np('./NickyAudio2.mp3')
 
     def wave(self, frequency, length, rate):
-        """produces sine across np array"""
+            """produces sine across np array"""
 
-        length = int(length * rate)
-        factor = float(frequency) * (pi * 2) / rate
-        waveform = \
-            random.choice([np.sin(np.arange(length) * factor),
-                           np.sin(np.arange(length) * factor * .999),
-                           np.sin(np.arange(length) * factor * 1.01)
-                           ])
+            length_seconds = length
 
-        rounded_waveform = np.round(waveform, 1)
+            length = int(length * 2 * rate)
+            factor = float(frequency/2) * (pi * 2) / rate
+            waveform = \
+                random.choice([np.sin(np.arange(length) * factor),
+                               np.sin(np.arange(length) * factor * .999),
+                               np.sin(np.arange(length) * factor * 1.01)
+                               ])
 
-        waveform2 = np.power(waveform, 3)
-        waveform3 = np.power(rounded_waveform, 4)/4
+            rounded_waveform = np.round(waveform, 1)
 
-        waveform4 = waveform
+            waveform2 = np.power(waveform, 3)
+            waveform3 = np.power(rounded_waveform, 4)/4
 
-        for x in np.nditer(waveform4, op_flags=['readwrite']):
-            x[...] = random.choice([
-                random.choice([x, x, x, x, x, x, x, x, x, x, x/2]),
-                x,
-                x,
-                x,
-                x,
-                x,
-                x,
-                x,
-                x,
-                x,
-                x,
-            ])
-        return np.add(np.add(waveform, waveform3), np.add(waveform2, waveform4 / 100))
+            waveform4 = waveform
 
-        # return waveform3
+            for x in np.nditer(waveform4, op_flags=['readwrite']):
+                x[...] = random.choice([
+                    random.choice([x, x, x, x, x, x, x, x, x, x, x/2]),
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                ])
+
+            start = random.randint(10000, len(self.sound_data[1]) - length)
+            if length_seconds < 10:
+                sound = self.sound_data[1][start:start + length] * random.choice([1/3000, 0, 0, 0, 0, 0])
+            else:
+                sound = self.sound_data[1][start:start + length] * random.choice([1/8500])
+
+            return np.add(np.add(waveform, sound.flatten()), np.add(waveform2, waveform4 / 100))
+
+
+    def mp3_to_np(self, file_name):
+        fname = file_name
+        temp = 'temp.wav'
+        cmd = 'lame --decode {0} {1}'.format(fname, temp)
+        os.system(cmd)
+        data = wav.read(temp)
+        return data
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
