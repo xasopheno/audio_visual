@@ -13,10 +13,11 @@ stream = p.open(format=pyaudio.paFloat32,
                 output=1,
                 )
 
+myFreq = 311
 
 def func1():
     print ('func1')
-    freq = random.choice([300])
+    freq = myFreq
     for i in range(10):
         sine_osc.play_frequencies(stream, 3, 1, 10000, 15000,
                                   freq
@@ -48,7 +49,7 @@ def func1():
 
 def func2():
     print ('func2')
-    freq = 300
+    freq = myFreq
     freq = random.choice([freq])
     for i in range(8):
         sine_osc.play_frequencies(stream, 3, .75, 1000, 20000,
@@ -78,8 +79,8 @@ def func3():
     print ('func3')
     for i in range(9):
         sine_osc.play_frequencies(stream, 12, .6, 1000, 1000,
-                                  50,
-                                  48,
+                                  myFreq / 6,
+                                  myFreq / 6 + 2,
                                   )
 
 
