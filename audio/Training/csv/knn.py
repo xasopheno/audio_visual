@@ -4,6 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import pickle
 import sklearn
 from itertools import product
 
@@ -40,6 +41,9 @@ from sklearn.model_selection import cross_val_score
 accuracies = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv = 10)
 print('mean accuracy:', accuracies.mean())
 print('accuracy standard deviation: ', accuracies.std())
+
+with open('./Training/csv/knn_classifier.pickle', 'wb') as f:
+    pickle.dump(classifier, f, pickle.HIGHEST_PROTOCOL)
 
 # from sklearn.model_selection import GridSearchCV
 # parameters
