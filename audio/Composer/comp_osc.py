@@ -33,7 +33,16 @@ class SineOsc:
 
             for x in np.nditer(waveform4, op_flags=['readwrite']):
                 x[...] = random.choice([
-                    random.choice([x, x, x, x, x, x, x, x, x, x, x/2]),
+                    random.choice([x, x, x, x, x, x, x, x, x, x, x, x, x/2]),
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
+                    x,
                     x,
                     x,
                     x,
@@ -69,7 +78,7 @@ class SineOsc:
 
         for freq in freqs:
             wave = [self.wave(freq, length, self.sample_rate)]
-            waveform = (np.concatenate(wave) * volume)
+            waveform = (np.concatenate(wave) * volume / 30)
 
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)

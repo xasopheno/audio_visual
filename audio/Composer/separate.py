@@ -15,6 +15,7 @@ stream = p.open(format=pyaudio.paFloat32,
 
 myFreq = 311
 
+
 def func1():
     print ('func1')
     freq = myFreq
@@ -77,7 +78,7 @@ def func2():
 
 def func3():
     print ('func3')
-    for i in range(9):
+    for i in range(11):
         sine_osc.play_frequencies(stream, 12, .6, 1000, 1000,
                                   myFreq / 6,
                                   myFreq / 6 + 2,
