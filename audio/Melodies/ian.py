@@ -63,7 +63,7 @@ if __name__ == '__main__':
     time.sleep(60)
 
 
-    for k in range(1):
+    for k in range(2):
         freq = 100
         vol = 0
         for j in range(180):
