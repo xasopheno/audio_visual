@@ -29,6 +29,7 @@ class SineOsc:
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
         all_tones = []
+        volume = volume / 15
 
         for freq in freqs:
             wave = [self.wave(freq, length, self.sample_rate)]

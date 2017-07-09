@@ -94,7 +94,7 @@ freqs2 = [
         x * 10/3,
         ]
 
-timesThroughBach = 2
+timesThroughBach = 10
 length = 20
 
 def func1():
