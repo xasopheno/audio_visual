@@ -1,6 +1,6 @@
 import random
 import pyaudio
-from comp_osc import SineOsc
+from clear_osc import SineOsc
 import multiprocessing as mp
 import time
 
@@ -23,7 +23,7 @@ stream2 = p2.open(format=pyaudio.paFloat32,
 
 def func1():
     print ('func1')
-    for i in range(20):
+    for i in range(15):
         sine_osc.play_frequencies(stream, .1, 1, 1000, 1000,
                                   200, 300)
         sine_osc.play_frequencies(stream, .1, 1, 1000, 1000,
@@ -43,7 +43,7 @@ def func1():
 
 def func2():
     print ('func2')
-    for i in range(10):
+    for i in range(12):
         sine_osc.play_frequencies(stream, 1, 1.5, 1000, 30000,
                                   100, 150, 50, 50)
         sine_osc.play_frequencies(stream, 1, 1.5, 1000, 30000,
@@ -57,10 +57,10 @@ def func2():
 def func3():
     print ('func3')
     for i in range(5):
-        for i in range(20):
+        for i in range(15):
             sine_osc.play_frequencies(stream, .1, 0, 1000, 2000,
                                       0)
-            sine_osc.play_frequencies(stream, .2, .2, 5000, 5000,
+            sine_osc.play_frequencies(stream, .2, 1, 5000, 5000,
                                       1400)
         time.sleep(4)
 
@@ -76,14 +76,3 @@ if __name__=='__main__':
     time.sleep(4)
     p3 = mp.Process(target=func3)
     p3.start()
-
-
-
-    # I will pass you multiple series of notes and you will prepare to play them.
-    # When they are all ready, you will combine them and produce a single audio file.
-    # Phrases do not need to start at the same time.
-    # Phrases do not need to have any shared metrics.
-    # Rhythmic interaction will be described using mathematical relationships.
-    # I can put a flag in one phrase that signals when a second phrase will start
-    # I can wait to start a phrase.
-    # I can put space in a phrase.

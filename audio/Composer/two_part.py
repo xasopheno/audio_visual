@@ -1,6 +1,6 @@
 import random
 import pyaudio
-from comp_osc import SineOsc
+from clear_osc import SineOsc
 import multiprocessing as mp
 import time
 
@@ -13,7 +13,7 @@ stream = p.open(format=pyaudio.paFloat32,
                 output=1,
                 )
 
-x = 150
+x = 145
 freqs = [
         x,
         x * 9/8,
@@ -63,39 +63,66 @@ freqs = [
         x * 11/8,
         0,
         x * 12/5,
-        x * 9/4,
+        x * 12/5,
 
-        0,
-        x * 2/3,
-        x * 3/4,
-        x * 3/5,
+        x * 3/2,
+        x * 3/2,
+        x * 4/3,
+        x * 13/8,
+        x * 13/8,
+        x * 5/2,
+        x * 7/2,
+        x * 9/2,
+        x * 10/3,
+        ]
 
-        x * 1/2,
+freqs2 = [
+        x * 11/8,
+        x * 11/8,
         0,
         x * 12/5,
-        x * 11/8,
+        x * 12/5,
 
-        x * 9/8,
         x * 3/2,
-        0,
         x * 3/2,
-         ]
+        x * 4/3,
+        x * 13/8,
+        x * 13/8,
+        x * 5/2,
+        x * 7/2,
+        x * 9/2,
+        x * 10/3,
+        ]
 
+timesThroughBach = 2
+length = 20
 
 def func1():
     print ('func1')
-    for i in range(2):
+    for i in range(timesThroughBach):
         for freq in freqs:
             sine_osc.play_frequencies(stream, .25, 1, 8000, 1000,
                                       freq,
                                       freq * 2,
                                       freq + 2,
                                       )
+
+
+        if i == timesThroughBach - 1:
+            time.sleep(.25)
         time.sleep(1.9)
+
+    for i in range(length):
+        for freq in freqs2:
+            sine_osc.play_frequencies(stream, .25, 1, 8000, 1000,
+                                      freq,
+                                      freq * 2,
+                                      freq + 2,
+                                      )
 
 def func2():
     print ('func2')
-    for i in range(2):
+    for i in range(timesThroughBach):
         for freq in freqs:
             sine_osc.play_frequencies(stream, .25, 1, 1000, 10000,
                                       freq * 3/2,
@@ -103,17 +130,17 @@ def func2():
                                       freq * 3/2,
                                       freq / 2,
                                       )
+
         time.sleep(1.9)
 
-
-#
-# def func3():
-#     print ('func3')
-#     for i in range(5):
-#         for i in range(20):
-#             sine_osc.play_frequencies(stream, .1, 0, 1000, 2000,
-#                                       0)
-
+    for i in range(length):
+        for freq in freqs2:
+            sine_osc.play_frequencies(stream, .25, 1, 1000, 10000,
+                                      freq * 3/2,
+                                      freq * 3/2 * 2,
+                                      freq * 3/2,
+                                      freq / 2,
+                                      )
 
 
 if __name__=='__main__':
@@ -128,13 +155,12 @@ if __name__=='__main__':
     # p3.start()
 
 
-
 # I will pass you multiple series of notes and you will prepare to play them.
 # When they are all ready, you will combine them and produce a single audio file.
 # Phrases do not need to start at the same time.
 # Phrases do not need to have any shared metrics.
 # Rhythmic interaction will be described using mathematical relationships.
-# I can put a flag in one phrase that signals when a second phrase will start
+# Perhaps I can put a flag in one phrase that signals when a second phrase will start
 # I can wait to start a phrase.
 # I can put space in a phrase.
 
