@@ -34,8 +34,8 @@ def func1():
                 if rand == 1:
                     freq2 = freq2 * random.choice([5 * 5/4, 6 * 3/4, 6 * 9/8, 5 * 11/8])
 
-                sine_osc.play_frequencies(stream, .22, random.choice([.90, 1, 1, 1, 1.05]), 1000, 1000,
-                                          freq1
+                sine_osc.play_frequencies(stream, .22, random.choice([.90, 1, 1, 1, 1.05]) / 4, 1000, 1000,
+                                          freq1,
                                           )
                 sine_osc.play_frequencies(stream, .09, .4, 1000, 1000,
                                           freq2 * 5/8,
