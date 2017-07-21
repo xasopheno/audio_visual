@@ -35,49 +35,49 @@ def idea(freq, tempo):
 
 def idea_2(freq, tempo):
     sine_osc.play_frequencies(stream, tempo, .09, 500000, 800000,
-                              freq /4 - 2,
-                              freq /4 - 2,
-                              freq /4 + 2,
+                              # freq /4 - 2,
+                              # freq /4 - 2,
+                              # freq /4 + 2,
                               freq /2,
                               freq /2 - 2,
                               freq /2 + 2,
                               freq /2 + 2,
                               freq /2 * 3,
                               freq /2 * 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 3/2 - 3.2,
-                              freq * 3/2 + 3.2,
-                              freq * 5/4,
-                              freq * 3/2 - 2,
-                              freq * 9/4 + 2,
-                              freq * 9/2,
-                              freq * 30/8,
-                              freq * 30/8 - 3.2,
-                              freq * 36/8 + 3.2,
-                              freq * 20/4,
-                              freq * 23/4,
-                              freq * 23/4 + 3.2,
-                              freq * 33/8,
-                              freq * 44/8
+                              # freq,
+                              # # freq * 3/2,
+                              # freq * 3/2 - 3.2,
+                              # freq * 3/2 + 3.2,
+                              # freq * 5/4,
+                              # freq * 3/2 - 2,
+                              # freq * 9/4 + 2,
+                              # freq * 9/2,
+                              # freq * 30/8,
+                              # freq * 30/8 - 3.2,
+                              # freq * 36/8 + 3.2,
+                              # freq * 20/4,
+                              # freq * 23/4,
+                              # freq * 23/4 + 3.2,
+                              # freq * 33/8,
+                              # freq * 44/8
                               )
 
 if __name__ == '__main__':
-    time.sleep(50)
-    idea_2(131, 45)
-    time.sleep(20)
-    idea_2(131, 45)
-    time.sleep(60)
-    idea_2(143, 30)
-    time.sleep(20)
-    idea_2(131, 20)
-    time.sleep(20)
+    # time.sleep(50)
+    idea_2(131, 10)
+    # time.sleep(20)
+    idea_2(131, 10)
+    # time.sleep(60)
+    idea_2(143, 10)
+    # time.sleep(20)
+    idea_2(131, 10)
+    # time.sleep(20)
     idea_2(196, 50)
-    time.sleep(10)
+    # time.sleep(10)
     idea_2(131, 45)
-    time.sleep(20)
+    # time.sleep(20)
     idea_2(131, 40)
-    time.sleep(.5)
+    # time.sleep(.5)
 
 # for i in range(4):
 #     freq = 190
