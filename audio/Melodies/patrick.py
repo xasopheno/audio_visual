@@ -1,4 +1,4 @@
-import os.path
+-import os.path
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 
@@ -74,7 +74,7 @@ def sound():
 for j in range(20):
     bass = 100
 
-    for i in range(random.choice([160])):
+    for i in range(160):
         if bass < 100:
             bass = random.choice([150, 120, 100])
         if bass > 250:
