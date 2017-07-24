@@ -33,7 +33,7 @@ class SineOsc:
 
         for freq in freqs:
             wave = [self.wave(freq, length, self.sample_rate)]
-            waveform = (np.concatenate(wave) * volume / 6)
+            waveform = (np.concatenate(wave) * volume / 16)
 
             fade_in = np.arange(0., 1., 1./attack)
             fade_out = np.arange(1., 0., -1./decay)
