@@ -6,8 +6,6 @@ import math
 import os
 # from multiprocessing import Pool
 
-from npgol import iterate
-
 totaltimestart = time.time()
 width = 1920
 height = 1080
