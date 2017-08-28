@@ -24,7 +24,7 @@ def write_frame(frame):
   start = time.time()
   img = np.random.randint(0,2,(1080,1920))
   
-  print 'printing frame:', frame
+  print ('printing frame:', frame)
   
   
   past_image = finalDirectory + str('%04d') % (frame - 1) + '.png'
@@ -32,7 +32,7 @@ def write_frame(frame):
   video_image = videoDirectory + str('%04d') % frame + '.png'
 
   if os.path.exists(past_image):
-    print 'comparing ', past_image, ' to, ', current_image
+    print ('comparing ', past_image, ' to, ', current_image)
     img = iterate_gol(past_image, img, video_image)
 
   print_image(img, frame, start) 
@@ -48,7 +48,6 @@ def iterate_gol(past_image, current_image, video_image):
 
   newImg = iterate(past_image)
   blankImg = np.zeros(past_image.shape, dtype=int)
-  video_image
 
   for yPos in range(0, height):
     for xPos in range(0, width):      
@@ -60,8 +59,8 @@ def iterate_gol(past_image, current_image, video_image):
 def print_image(img, frame, start):
   file_name = finalDirectory + str('%04d') % frame + '.png'
   cv2.imwrite(file_name, img)
-  print 'It took', time.time()-start, 'seconds.'
-  print 'To make', str(file_name)
+  print('It took', time.time()-start, 'seconds.')
+  print('To make', str(file_name))
 
 if __name__ == '__main__':
     check_or_create_directory(finalDirectory) #check if directory exists, if not create
@@ -74,4 +73,4 @@ if __name__ == '__main__':
     cmdBuild = 'ffmpeg -f image2 -r 30 -i %04d.png -c:v libx264 -pix_fmt yuv420p out.mp4'
     os.system(cmdBuild)
 
-print 'It took', time.time()-totaltimestart, 'seconds.'
+print ('It took', time.time()-totaltimestart, 'seconds.')
