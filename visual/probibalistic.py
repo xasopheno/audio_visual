@@ -4,13 +4,14 @@ import random
 import time
 import math
 import os
+from scipy.stats import chi2
 # from multiprocessing import Pool
 
 totaltimestart = time.time()
 width = 1920
 height = 1080
 framesToProduce = 100
-finalDirectory = 'cvart2/'
+finalDirectory = 'cvart/'
 videoDirectory = 'video/'
 
 
@@ -25,6 +26,10 @@ def gaussian_distribution(x, sigma, mu):
     return probability
 
 
+def sine_distribution(x):
+    probability = (math.sin(100000000000000000 * x))/(math.pi * 10)
+    return probability
+
 def euclidean_distance(x0, y0, x1, y1):
     distance = math.sqrt(pow((x0 - x1), 2) + pow((y0 - y1), 2))
     return distance
@@ -37,28 +42,34 @@ def write_frame(frame):
     for yPos in range(0, height):
         for xPos in range(0, width):
            ed = euclidean_distance(width/random.randrange(2, 3), height/random.randrange(2, 3), xPos, yPos)
-           prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,200))
+           prob = sine_distribution(ed)
+           # prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,200))
            rand = random.uniform(0, .005)
            if rand < prob:
-               img[yPos, xPos] = (50 + random.randrange(-20, 0), 90 + random.randrange(-20, 0), 170)
+               img[yPos, xPos] = (230 + random.randrange(-20, 0), 200 + random.randrange(-20, 0), 190)
            else:
-               img[yPos, xPos] = (random.randrange(150, 160),random.randrange(50, 60),random.randrange(130, 140))
+               img[yPos, xPos] = (0, 0, 0)
 
-    for yPos in range(0, height):
-        for xPos in range(0, width):
-            ed = euclidean_distance(width/random.randrange(5, 6), height/random.randrange(5, 6), xPos, yPos)
-            prob = gaussian_distribution(ed, random.randrange(20,50), random.randrange(70,150))
-            rand = random.uniform(0, .005)
-            if rand < prob:
-                img[yPos, xPos] = (160 + random.randrange(-20, 0), 40 + random.randrange(-20, 0), 10)
 
-    for yPos in range(0, height):
-        for xPos in range(0, width):
-            ed = euclidean_distance(1600, 700, xPos, yPos)
-            prob = gaussian_distribution(ed, random.randrange(10,80), random.randrange(60,250))
-            rand = random.uniform(0, .005)
-            if rand < prob:
-                img[yPos, xPos] = (10 + random.randrange(-20, 0), 255 + random.randrange(-20, 0), 210)
+    # for yPos in range(0, height):
+    #     for xPos in range(0, width):
+    #         ed = euclidean_distance(width /2, height /2, xPos, yPos)
+    #         # prob = sine_distribution(ed)
+    #         prob = gaussian_distribution(ed, random.randrange(10,90), random.randrange(30,250))
+    #         rand = random.uniform(0, .005)
+    #         if rand < prob:
+    #             img[yPos, xPos] = (random.randrange(80, 120), random.randrange(70, 120), 150)
+    #
+    #
+    # for yPos in range(0, height):
+    #     for xPos in range(0, width):
+    #         ed = euclidean_distance(width/2, height/2, xPos, yPos)
+    #         # prob = sine_distribution(ed)
+    #         prob = gaussian_distribution(ed, random.randrange(20,70), random.randrange(20,500))
+    #         rand = random.uniform(0, .004)
+    #         if rand < prob:
+    #             img[yPos, xPos] = (random.randrange(20, 40), random.randrange(0, 50), 90)
+
 
     print ('printing frame:', frame)
 
