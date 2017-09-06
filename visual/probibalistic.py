@@ -11,7 +11,7 @@ totaltimestart = time.time()
 width = 1920
 height = 1080
 framesToProduce = 100
-finalDirectory = 'cvart/'
+finalDirectory = 'cvart4/'
 videoDirectory = 'video/'
 
 
@@ -26,29 +26,34 @@ def gaussian_distribution(x, sigma, mu):
     return probability
 
 
-def sine_distribution(x):
-    probability = (math.sin(100000000000000000 * x))/(math.pi * 10)
+def distribution(x, height, width):
+    probability = 0
+    if x != 0:
+        probability = math.atan(1/math.sin(x * 10000 * height/width * 1/frame - height + width))
     return probability
 
+
 def euclidean_distance(x0, y0, x1, y1):
-    distance = math.sqrt(pow((x0 - x1), 2) + pow((y0 - y1), 2))
+    distance = math.sqrt(pow((x0 - x1), 2) + pow(y0 - y1, 2))
     return distance
 
 
 def write_frame(frame):
     start = time.time()
-    img = np.zeros((height,width,3), np.uint8)
+    img = np.zeros((height ,width, 3), np.uint8)
 
     for yPos in range(0, height):
         for xPos in range(0, width):
-           ed = euclidean_distance(width/random.randrange(2, 3), height/random.randrange(2, 3), xPos, yPos)
-           prob = sine_distribution(ed)
-           # prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,200))
-           rand = random.uniform(0, .005)
-           if rand < prob:
-               img[yPos, xPos] = (230 + random.randrange(-20, 0), 200 + random.randrange(-20, 0), 190)
-           else:
-               img[yPos, xPos] = (0, 0, 0)
+            ed = euclidean_distance(width /2 * frame/10, height / 2 * frame/10, xPos, yPos)
+            prob = distribution(ed, height, frame + 1)
+            # prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,200))
+            rand = random.uniform(0, .0045)
+            if rand < prob:
+                img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+            else:
+                img[yPos, xPos] = (255 + math.atan(1/frame+1), 255 - ed/frame, 255 + math.atan(1/frame+1))
+
+
 
 
     # for yPos in range(0, height):

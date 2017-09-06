@@ -30,8 +30,7 @@ def euclidean_distance(x0, y0, x1, y1):
     return distance
 
 
-def process(img, xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundColor):
-    print(xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundColor)
+def process(img, xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundColor, i):
     for yPos in range(0, height):
         for xPos in range(0, width):
             ed = euclidean_distance(xCenter, yCenter, xPos, yPos)
@@ -39,26 +38,30 @@ def process(img, xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundC
             rand = random.uniform(0, threshold)
             if rand < prob:
                 img[yPos, xPos] = thingColor
-            # else:
-            #     img[yPos, xPos] = backgroundColor
+            else:
+                if i == 0:
+                    img[yPos, xPos] = backgroundColor
+
+    print('printed: ', xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundColor)
 
 
 def write_frame(frame):
     start = time.time()
     img = np.zeros((height,width,3), np.uint8)
 
-    for i in range(10):
-        xCenter = width/2
-        yCenter = height/2
-        sigma = random.randrange(10, 100)
-        mu = random.randrange(0,400)
-        threshold = 0.005
-        thingColor = (random.randrange(0, 40) + random.randrange(0, 10),
-                      random.randrange(0, 40) + random.randrange(0, 10),
-                      random.randrange(0, 40) + random.randrange(0, 10))
-        backgroundColor = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
 
-        process(img, xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundColor)
+    xCenter = random.choice([width/2, width * 4/5, width * 1/5, width * 8/9, width * 1/9])
+    yCenter = random.choice([height/2])
+    sigma = random.randrange(10, 100)
+    mu = random.randrange(0,400)
+    threshold = 0.005
+    thingColor = (random.randrange(0, 100) + random.randrange(0, 20),
+                  random.randrange(40, 80) + random.randrange(0, 10),
+                  random.randrange(50, 150) + random.randrange(0, 40))
+    backgroundColor = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
+
+    for i in range(60):
+        process(img, xCenter, yCenter, sigma, mu, threshold, thingColor, backgroundColor, i)
 
     print ('printing frame:', frame)
 
