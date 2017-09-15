@@ -11,7 +11,7 @@ totaltimestart = time.time()
 width = 1920
 height = 1080
 framesToProduce = 100
-finalDirectory = 'cvart4/'
+finalDirectory = 'cvart/'
 videoDirectory = 'video/'
 
 
@@ -26,7 +26,7 @@ def gaussian_distribution(x, sigma, mu):
     return probability
 
 
-def distribution(x, height, width):
+def distribution(x, height, width, frame):
     probability = 0
     if x != 0:
         probability = math.atan(1/math.sin(x * 10000 * height/width * 1/frame - height + width))
@@ -44,16 +44,72 @@ def write_frame(frame):
 
     for yPos in range(0, height):
         for xPos in range(0, width):
-            ed = euclidean_distance(width /2 * frame/10, height / 2 * frame/10, xPos, yPos)
-            prob = distribution(ed, height, frame + 1)
-            # prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,200))
+            ed = euclidean_distance(width / 5, height / 5 , xPos, yPos)
+            dist = distribution(ed, height, width, frame)
+            prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,80))
             rand = random.uniform(0, .0045)
             if rand < prob:
-                img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+                # img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+                img[yPos, xPos] = (70 + random.choice([frame, 20, -20, 10, -10]),
+                                   95 + random.randrange(-30, 30, 2),
+                                   10 + random.randrange(10, 40))
             else:
-                img[yPos, xPos] = (255 + math.atan(1/frame+1), 255 - ed/frame, 255 + math.atan(1/frame+1))
+                img[yPos, xPos] = (50 + random.randrange(0, 20, 2),
+                                   30 + random.randrange(0, 20, 2),
+                                   20 + random.randrange(0, 10))
 
+    print('1')
+    for yPos in range(0, height):
+        for xPos in range(0, width):
+            ed = euclidean_distance(width * 2/3, height * 3/4, xPos, yPos)
+            dist = distribution(ed, height, width, frame)
+            prob = gaussian_distribution(ed, random.randrange(30,70), random.randrange(20,40))
+            rand = random.uniform(0, .0065)
+            if rand < prob:
+                # img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+                img[yPos, xPos] = (100 + random.choice([frame, 20, -20, 10, -10]),
+                                   25 + random.randrange(-30, 30, 2),
+                                   205 + random.randrange(10, 40))
 
+    print('2')
+    for yPos in range(0, height):
+        for xPos in range(0, width):
+            ed = euclidean_distance(width * 2/3, height / 4.5, xPos, yPos)
+            dist = distribution(ed, height, width, frame)
+            prob = gaussian_distribution(ed, random.randrange(30,40), random.randrange(20,60))
+            rand = random.uniform(0, .0055)
+            if rand < prob:
+                # img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+                img[yPos, xPos] = (110 + random.choice([frame, 20, -20, 10, -10]),
+                                   130 + random.randrange(-30, 30, 2),
+                                   110 + random.randrange(10, 40))
+
+    print('3')
+    for yPos in range(0, height):
+        for xPos in range(0, width):
+            ed = euclidean_distance(width * 1/3, height * 1/2, xPos, yPos)
+            dist = distribution(ed, height, width, frame)
+            prob = gaussian_distribution(ed, random.randrange(30,60), random.randrange(50,180))
+            rand = random.uniform(0, .005)
+            if rand < prob:
+                # img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+                img[yPos, xPos] = (40 + random.choice([frame, 20, -20, 10, -10]),
+                                   80 + random.randrange(-30, 30, 2),
+                                   120 + random.randrange(10, 40))
+
+    print('4')
+    for yPos in range(0, height):
+        for xPos in range(0, width):
+            ed = euclidean_distance(width * 1/5, height * 1/5, xPos, yPos)
+            dist = distribution(ed, height, width, frame)
+            prob = gaussian_distribution(ed, random.randrange(30,90), random.randrange(40,90))
+            rand = random.uniform(0, .0045)
+            if rand < prob:
+                # img[yPos, xPos] = (ed - xPos / frame + 1, ed - xPos / frame + 1, ed + xPos / frame + 1)
+                img[yPos, xPos] = (110 + random.choice([frame, 20, -20, 10, -10]),
+                                   17 + random.randrange(-30, 30, 2),
+                                   50 + random.randrange(10, 40))
+    print('5')
 
 
     # for yPos in range(0, height):
@@ -81,6 +137,7 @@ def write_frame(frame):
     print_image(img, frame, start)
 
 
+
 def print_image(img, frame, start):
     file_name = finalDirectory + str('%04d') % frame + '.png'
     cv2.imwrite(file_name, img)
@@ -89,20 +146,14 @@ def print_image(img, frame, start):
 
 
 if __name__ == '__main__':
-    check_or_create_directory(finalDirectory)
-    for frame in range (1, framesToProduce):
-        write_frame(frame)
-    # #
+    # # generate frames
+    # check_or_create_directory(finalDirectory)
+    # for frame in range (1, framesToProduce):
+    #     write_frame(frame)
+
+    # build video
     os.chdir(os.getcwd() + '/' + finalDirectory)
     cmdBuild = 'ffmpeg -f image2 -r 30 -i %04d.png -c:v libx264 -pix_fmt yuv420p out.mp4'
     os.system(cmdBuild)
-
-    # for i in range(1000):
-    #     prob = gaussian_distribution(i, 50, 500)
-    #     rand = random.uniform(0, .01)
-    #     if rand < prob:
-    #         print(1)
-    #     else:
-    #         print(0)
 
 print ('It took', time.time()-totaltimestart, 'seconds.')
