@@ -10,4 +10,5 @@ venv/*
 visual/reversed/*
 audio/Training/training_data/*
 audio/out/final/*
+audio/Training/csv/knn_classifier.pickle
 

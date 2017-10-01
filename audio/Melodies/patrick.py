@@ -1,3 +1,7 @@
+import os.path
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
+
 import random
 import time
 import pyaudio
@@ -45,6 +49,24 @@ for j in range(2):
             bass = 150
         if bass > 250:
             bass = 50
+        vol = random.choice(
+            [ .2, .2, .3, .4,
+             .5, .5, .5,
+             0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) * 3
+        x = random.choice(
+            [1, 1,
+             2, 2, 2,
+             3, 3, 3, 3])
+        if x == 1:
+            patrick(bass, random.choice([.16]), vol / 2)
+        elif x == 2 :
+            patrick_3(50, .16, vol * .2)
+        else:
+            patrick_2(random.choice([70, 60]), .16, vol)
+
+        rand = random.choice(
+            [1, 10, 25, 30,
+             -1, -20, -30, -50, -50, -60, -80, -110])
         vol = random.choice([.5, .3, .4, .5, .5, .5, 0, 0])
         patrick_2(bass, random.choice([.16]), vol)
         rand = random.choice([4, 5, 8, 30, -20, -30, -50,])
