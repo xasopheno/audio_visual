@@ -3,9 +3,9 @@ from __future__ import division
 import random
 from fractions import Fraction
 from random import shuffle
+from Normalizing.StreamGenerator import *
 
-import pyaudio
-
+from Oscillators.sine_osc import SineOsc
 from Oscillators.sine_osc_with_mp3 import SineOscWithMp3
 
 osc = SineOscWithMp3()
@@ -26,7 +26,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
     Increased accuracy of three decimals places might be
     preferable in the context of video.
     """ 
-    print round((frequency1) / (frequency2), 3)
+    print round (frequency1 / frequency2, 3)
     print frequency1, frequency2, Fraction(relationship)
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
@@ -62,9 +62,8 @@ def generate_test_array():
     return freqs
 
 if __name__ == '__main__':
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paFloat32,
-                channels=1, rate=sample_rate, output=2)
+    sg = StreamGenerator()
+    stream = sg.output_stream_generator()
 
     test_freqs = generate_test_array()
 
@@ -82,4 +81,5 @@ if __name__ == '__main__':
         # check_for_relationship(frequency1, frequency2, (11/8), 5)
 
         # time.sleep(.02618)
-    p.close
+    #
+    sg.close_stream(stream)

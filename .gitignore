@@ -8,3 +8,6 @@ visual/video/*
 venv/*
 *.pyc
 visual/reversed/*
+audio/Training/training_data/*
+audio/out/final/*
+

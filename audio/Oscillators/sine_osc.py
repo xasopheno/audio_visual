@@ -17,13 +17,14 @@ class SineOsc:
         factor = float(frequency) * (pi * 2) / rate
         waveform = np.sin(np.arange(length) * factor)
 
-        rounded_waveform = np.round(waveform, 0)
+        rounded_waveform = np.round(waveform, 1)
 
         waveform2 = np.power(waveform, 3)
         waveform3 = np.power(rounded_waveform, 4)
 
-        pre_filtered = np.add(waveform, waveform3)
-        pre_filtered = np.add(pre_filtered, waveform2)
+        # return np.add(waveform, np.add(waveform, waveform2))
+        # pre_filtered = np.add(waveform, waveform3)
+        # pre_filtered = np.add(pre_filtered, waveform2)
 
         # filtered = butter_bandpass_filter(pre_filtered, frequency, 2000, 44100, order=5)
 
@@ -37,9 +38,8 @@ class SineOsc:
         all_tones = []
 
         for freq in freqs:
-            i = freq + 100
             if freq > 1000:
-                volume *= .3
+                volume = volume * .80902
             chunks = [self.wave(freq, length, self.sample_rate)]
 
             if freq < 100:
