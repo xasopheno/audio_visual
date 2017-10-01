@@ -30,6 +30,7 @@ class SineOsc:
 
         # return pre_filtered
         onetwo = np.add(waveform, waveform2)
+
         return np.add(onetwo, waveform3)
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
