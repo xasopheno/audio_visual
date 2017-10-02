@@ -43,8 +43,8 @@ class SineOsc:
                 volume = volume * .80902
             chunks = [self.wave(freq, length, self.sample_rate)]
 
-            if freq < 2000:
-                volume *= .97
+            if freq > 3000:
+                volume *= .92
             # chunks = butter_bandpass_filter(chunks, freq, random.choice([3000, 4000]), 44100, order=5)
             #
             chunk = np.concatenate(chunks) * volume
