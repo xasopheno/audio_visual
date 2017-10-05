@@ -59,47 +59,47 @@ def two(freq, length, vol):
 if __name__ == '__main__':
     tempo = .8
     vol = .5
-    freq = 400
-    # one(freq, tempo * 0.8, vol, 10)
-    # one(freq * 9/8, tempo * 2.2, vol, 20)
-    # one(freq, tempo, vol, 8)
-    # one(freq * 4/3, tempo * 2, vol, 20)
-    # one(freq * 5/3, tempo * 2, vol, 20)
-    # one(freq * 3/2, tempo, vol, 15)
-    # one(freq * 5/4, tempo * 5, vol, 50)
-    # time.sleep(tempo * 2)
-    #
-    # one(freq * 2, tempo * 3, vol, 20)
-    # one(freq * 4/3, tempo * 1, vol, 8)
-    # one(freq * 15/8, tempo * 2, vol, 20)
-    # one(freq * 5/3, tempo * 2, vol, 20)
-    # one(freq * 3/2, tempo * 3, vol, 20)
-    # time.sleep(tempo * 1)
-    #
-    # time.sleep(tempo * 1)
-    # one(freq * 5/3, tempo * 1, vol, 8)
-    # one(freq * 5/4, tempo * .65, vol, 6)
-    # one(freq * 9/8, tempo * .3, vol)
-    # one(freq * 1, tempo * .6, vol, 6)
-    # one(freq * 5/4, tempo * .37, vol, 6)
-    #
-    # one(freq * 4/3, tempo * 1.5, vol, 14)
-    # one(freq * 1, tempo * .5, vol, 5)
-    # one(freq * 5/3, tempo * 1.5, vol, 13)
-    # one(freq * 3/2, tempo * .28, vol)
-    # one(freq * 4/3, tempo * .22, vol, 5)
-    # one(freq * 5/3, tempo * 1.5, vol, 17)
-    # one(freq * 3/2, tempo * .27, vol, 5)
-    # one(freq * 4/3, tempo * .23, vol, 5)
-    # one(freq * 7/6, tempo * .5, vol, 9)
-    # one(freq * 1, tempo * 1.5, vol, 18)
+    freq = 392
+    one(freq, tempo * 0.8, vol, 10)
+    one(freq * 9/8, tempo * 2.2, vol, 20)
+    one(freq, tempo, vol, 8)
+    one(freq * 4/3, tempo * 2, vol, 20)
+    one(freq * 5/3, tempo * 2, vol, 20)
+    one(freq * 3/2, tempo, vol, 15)
+    one(freq * 5/4, tempo * 5, vol, 50)
+    time.sleep(tempo * 2)
 
-    # one(freq * 5/3, tempo * 1, vol, 13)
-    # one(freq * 3/2, tempo * .5, vol, 6)
-    # one(freq * 4/3, tempo * .5, vol, 14)
-    # one(freq * 5/4, tempo * .75, vol, 9)
-    # time.sleep(.25)
-    # one(freq * 1, tempo * 4, vol, 35)
+    one(freq * 2, tempo * 3, vol, 20)
+    one(freq * 4/3, tempo * 1, vol, 8)
+    one(freq * 15/8, tempo * 2, vol, 20)
+    one(freq * 5/3, tempo * 2, vol, 20)
+    one(freq * 3/2, tempo * 3, vol, 20)
+    time.sleep(tempo * 1)
+
+    time.sleep(tempo * 1)
+    one(freq * 5/3, tempo * 1, vol, 8)
+    one(freq * 5/4, tempo * .65, vol, 6)
+    one(freq * 9/8, tempo * .3, vol)
+    one(freq * 1, tempo * .6, vol, 6)
+    one(freq * 5/4, tempo * .37, vol, 6)
+
+    one(freq * 4/3, tempo * 1.5, vol, 14)
+    one(freq * 1, tempo * .5, vol, 5)
+    one(freq * 5/3, tempo * 1.5, vol, 13)
+    one(freq * 3/2, tempo * .28, vol)
+    one(freq * 4/3, tempo * .22, vol, 5)
+    one(freq * 5/3, tempo * 1.5, vol, 17)
+    one(freq * 3/2, tempo * .27, vol, 5)
+    one(freq * 4/3, tempo * .23, vol, 5)
+    one(freq * 7/6, tempo * .5, vol, 9)
+    one(freq * 1, tempo * 1.5, vol, 18)
+
+    one(freq * 5/3, tempo * 1, vol, 13)
+    one(freq * 3/2, tempo * .5, vol, 6)
+    one(freq * 4/3, tempo * .5, vol, 14)
+    one(freq * 5/4, tempo * .75, vol, 9)
+    time.sleep(.25)
+    one(freq * 1, tempo * 4, vol, 35)
 
     one(freq * 1, tempo * .5, vol, 10)
     one(freq * 9/8, tempo * .5, vol, 12)
@@ -114,26 +114,49 @@ if __name__ == '__main__':
     one(freq * 5/4, tempo * 1, vol, 10)
     one(freq * 9/8, tempo * 1, vol, 8)
 
-    # one(freq * 1, tempo * 4, vol, 11)
-    # one(freq * 4/3, tempo * 3, vol, 14)
-    # one(freq * 9/8, tempo * 3, vol, 12)
-    # one(freq * 8/5, tempo * 1.5, vol, 13)
-    # one(freq * 11/8, tempo * 1.5, vol, 13)
-
     freq = freq - (freq * 9/8)
     freq = freq * 3/2
+
     one(freq * 1, tempo * 4, vol, 11)
-    one(freq * 4/3, tempo * 3, vol, 14)
-    one(freq * 3/2, tempo * 3, vol, 13)
+    one(freq * 4/3, tempo * 5, vol, 14)
+    one(freq * 3/2, tempo * 4, vol, 13)
+    one(freq * 1, tempo * 4, vol, 11)
+    print('a')
+    one(freq * 1, tempo * 6, vol, 14)
+    one(freq * 4/3, tempo * 5, vol, 14)
+    one(freq * 1, tempo * 7, vol, 23)
 
-    one(freq * 1, tempo * 5, vol, 11)
-    one(freq * 4/3, tempo * 3, vol, 14)
-    one(freq * 3/2, tempo * 3, vol, 13)
+    print('b')
+    one(freq * 4/3, tempo * 7, vol, 18)
+    one(freq * 1, tempo * 9, vol, 24)
 
-    one(freq * 1, tempo * 5, vol, 11)
-    one(freq * 4/3, tempo * 3, vol, 14)
-    one(freq * 3/2, tempo * 3, vol, 13)
+    print('c')
+    one(freq * 4/3, tempo * 7, vol, 18)
+    one(freq * 4/3, tempo * 7, vol, 22)
+    one(freq * 1, tempo * 6, vol, 23)
+    one(freq * 1, tempo * 4, vol, 19)
+    print('d')
+    one(freq * 3/2, tempo * 4, vol, 13)
+    one(freq * 3/2, tempo * 4, vol, 13)
 
     one(freq * 1, tempo * 5, vol, 11)
 
     one(freq * 0, tempo * 5, vol)
+
+
+
+# one(freq * 1, tempo * 5, vol, 15)
+# one(freq * 4/3, tempo * 3, vol, 14)
+# one(freq * 3/2, tempo * 3, vol, 11)
+#
+# one(freq * 1, tempo * 4, vol, 14)
+# one(freq * 4/3, tempo * 3, vol, 14)
+# one(freq * 3/2, tempo * 3, vol, 13)
+#
+# one(freq * 1, tempo * 5, vol, 11)
+# one(freq * 4/3, tempo * 3, vol, 14)
+# one(freq * 3/2, tempo * 3, vol, 13)
+#
+# one(freq * 1, tempo * 5, vol, 11)
+#
+# one(freq * 0, tempo * 5, vol)
