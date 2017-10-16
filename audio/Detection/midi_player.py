@@ -8,8 +8,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.par
 current_path = os.getcwd()
 from Midi.NoteToMidi import sendMidi
 import time
+import re
 
-subdivision = 0.011
+subdivision = 0.05
 last_value = 0
 
 def play_midi(value):
@@ -31,8 +32,14 @@ def play_silence():
 with open('midiOutput.txt', 'r') as f:
     values = f.read().split()
     for value in values:
+        value = value.replace("'", "")
+        value = value.replace(",", "")
         print(value)
-        if int(value) is not 0:
-            play_midi(int(value))
-        else:
-            play_silence()
+
+        try:
+            if int(value) is not 0:
+                play_midi(int(value))
+            else:
+                play_silence()
+        except:
+            print('value was unplayable', value)
