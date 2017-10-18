@@ -10,7 +10,7 @@ from Midi.NoteToMidi import sendMidi
 import time
 import re
 
-subdivision = 0.05
+subdivision = 0.03
 last_value = 0
 
 def play_midi(value):
