@@ -17,7 +17,7 @@ stream = p.open(format=pyaudio.paFloat32,
                 )
 
 
-def one(freq, length, vol, subdivision = 1):
+def one(freq, length, vol, subdivision=1):
     for i in range(subdivision):
         sine_osc.play_frequencies(stream, (length / subdivision) * .95, vol * random.choice([.4, .5, .6, .7, .8, .9, 1, 1 ,1]), 1000, 1000,
                                   freq / 4,
