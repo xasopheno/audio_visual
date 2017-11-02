@@ -18,7 +18,7 @@ class AudioToCSV:
         self.csv_num = 1
         self.csv_file = ''
 
-        self.num_past_freqs = 10
+        self.num_past_freqs = 1
         self.sample_rate = 44100
         self.chunk_size = 700
         self.tolerance = .9
@@ -45,8 +45,11 @@ class AudioToCSV:
     def name_generator(self, audio_filename):
         # print (audio_filename)
 
-        note_number = re.search(r"num=\s*([^\n\r]{2})", str(audio_filename)).group(1)
-        note_name = re.search(r"name=\s*([^\n\r].+?(?=_))", str(audio_filename)).group(1)
+        # note_number = re.search(r"num=\s*([^\n\r]{2})", str(audio_filename)).group(1)
+        # note_name = re.search(r"name=\s*([^\n\r].+?(?=_))", str(audio_filename)).group(1)
+
+        note_number = 'test'
+        note_name = 'test'
 
         # print ('note_num', note_number)
         # print ('csv_num=', self.csv_num)
@@ -55,11 +58,12 @@ class AudioToCSV:
         csv_file_name = \
             self.current_path \
             + self.output_dir \
-            + 'note_name=' + str(note_name) \
-            + '__note_num=' + str(note_number) \
-            + '__csv=' + str(self.csv_num) \
-            + '.csv'
-        # print(csv_file_name)
+            + 'bach.txt'
+            # + 'note_name=' + str(note_name) \
+            # + '__note_num=' + str(note_number) \
+            # + '__csv=' + str(self.csv_num) \
+            # + '.csv'
+        print(csv_file_name)
 
         return note_number, note_name, csv_file_name
 
@@ -86,19 +90,19 @@ class AudioToCSV:
 
             # if confidence < self.confidence_threshold:
             #     pitch = 0
-            if abs(pitch - self.prev_pred) > 1:
-                pitch = 0
+            # if abs(pitch - self.prev_pred) > 1:
+            #     pitch = 0
 
             self.prev_lines.append(pitch)
 
             list_prev_lines = list(self.prev_lines)
-            if list_prev_lines != self.empty_deque:
-                print (list_prev_lines)
-                for value in list_prev_lines:
-                    self.csv_file.write(str(value))
-                    self.csv_file.write(str(','))
-                self.csv_file.write(str(note_number))
-                self.csv_file.write('\n')
+            # if list_prev_lines != self.empty_deque:
+                # print (list_prev_lines)
+            for value in list_prev_lines:
+                self.csv_file.write(str(value))
+                self.csv_file.write(str(' '))
+            # self.csv_file.write(str(note_number))
+                # self.csv_file.write('\n')
 
             if self.play_audio:
                 stream.write(data)
@@ -114,9 +118,9 @@ class AudioToCSV:
 if __name__ == '__main__':
     audio_to_csv = AudioToCSV()
     # for every .wav file in training_data
-    for root, dirs, files in os.walk(audio_to_csv.current_path + '/Training/training_data'):
+    for root, dirs, files in os.walk(audio_to_csv.current_path + '/Training/training_data/rnn'):
         for file in files:
-            if file.endswith(".wav"):
+            if file.endswith(".mp3"):
                 filename = os.path.join(root, file)
                 print (file)
                 audio_to_csv.predict_freq_from_wav(filename)

@@ -26,7 +26,7 @@ class StreamToData:
         self.output_file = open('Detection/output.txt', 'w')
 
         self.volume_threshold = 300
-        self.acceptable_confidence = 0.61
+        self.acceptable_confidence = 0.5
 
         self.past_freq = 0
         self.predicted_frequency = 0
@@ -87,15 +87,17 @@ class Generator:
     def play_midi(self, value):
         sendMidi(value, .01)
 
-    # def play_silence(self):
-    #     # print(0)
-    #     # time.sleep(self.subdivision * 1.0)
+    def play_silence(self):
+        # print(0)
+        time.sleep(self.subdivision * 1.0)
 
     def play_current_value(self):
         self.counter += 1
         print (self.current_value)
-        if self.counter % 3000 == 0:
+        if self.counter % 100 == 0:
             with open("midiOutput.txt", 'a') as myfile:
+                if self.current_value > 90:
+                    self.current_value = 0
                 if self.current_value is not 0 and self.isZero is True:
                     self.isZero = False
                     myfile.write(str(self.current_value) + ' ')
@@ -110,7 +112,7 @@ class Generator:
                     end = time.time()
                     # print('value: ', end - start)
                 else:
-                    self.play_midi(self.current_value)
+                    self.play_silence()
                     end = time.time()
                     # print('_zero: ', end - start)
 
