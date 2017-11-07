@@ -8,107 +8,119 @@ import wave
 
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 
-OUTPUT_DIR = '/Training/csv/'
-THRESHOLD = 1000
-current_path = os.getcwd()
-NUM_PAST_FREQS = 5
-SAMPLERATE = 44100
-CHUNK = 2048
-TOLERANCE = 0.4
-CSV_NUM = 1
-PLAY_AUDIO = False
 
-def predict_freq_from_wav(full_audio_path):
-    print (full_audio_path)
+class AudioToCSV:
+    def __init__(self):
+        self.play_audio = False
 
-    # find note_number
-    note_number = re.search(r"num=\s*([^\n\r]{2})", str(full_audio_path)).group(1)
-    note_name = re.search(r"name=\s*([^\n\r].+?(?=_))", str(full_audio_path)).group(1)
+        self.current_path = os.getcwd()
+        self.output_dir = '/Training/csv/'
+        self.csv_num = 1
+        self.csv_file = ''
 
-    print ('note_num', note_number)
-    print ('csv_num=', CSV_NUM)
+        self.num_past_freqs = 1
+        self.sample_rate = 44100
+        self.chunk_size = 700
+        self.tolerance = .9
+        self.confidence_threshold = .9
 
-    # generate file_name
-    csv_file_name = \
-        current_path \
-        + OUTPUT_DIR \
-        + 'note_name=' + str(note_name) \
-        + '__note_num=' + str(note_number) \
-        + '__csv=' + str(CSV_NUM) \
-        + '.csv'
+        self.p = pyaudio.PyAudio()
+        self.pitch_o = aubio.pitch("yinfft", self.chunk_size * 2, self.chunk_size, self.sample_rate)
+        self.pitch_o.set_unit("midi")
+        self.pitch_o.set_tolerance(self.tolerance)
+        self.audio_file = None
 
-    print(csv_file_name)
+        self.prev_lines, self.empty_deque = self.generate_deque()
+        self.prev_pred = 0
 
-    # if not os.path.isfile(csv_file_name):
-    #     csv_file = open(csv_file_name, 'a')
-    #     for i in range(5):
-    #         csv_file.write('freq_pred' + str(i) + ',')
-    #     csv_file.write('note_number')
-    #     csv_file.write(str('\n'))
-    # else:
-    csv_file = open(csv_file_name, 'a')
+    def generate_deque(self):
+        prev_lines = deque(maxlen=self.num_past_freqs)
 
-    audio_filename = full_audio_path
+        for i in range(self.num_past_freqs):
+            prev_lines.append(0)
+        empty_deque = list(prev_lines)
 
-    p = pyaudio.PyAudio()
+        return prev_lines, empty_deque
 
-    # prepare_aubio
-    s = aubio.source(audio_filename, SAMPLERATE, CHUNK)
+    def name_generator(self, audio_filename):
+        # print (audio_filename)
 
-    pitch_o = aubio.pitch("yinfft", CHUNK, CHUNK, SAMPLERATE)
-    pitch_o.set_unit("Hz")
-    pitch_o.set_tolerance(TOLERANCE)
+        # note_number = re.search(r"num=\s*([^\n\r]{2})", str(audio_filename)).group(1)
+        # note_name = re.search(r"name=\s*([^\n\r].+?(?=_))", str(audio_filename)).group(1)
 
-    prev_pred = 0
+        note_number = 'test'
+        note_name = 'test'
 
-    # generate_deque
-    prev_lines = deque(maxlen=NUM_PAST_FREQS)
-    for i in range(NUM_PAST_FREQS):
-        prev_lines.append(0)
-    empty_deque = list(prev_lines)
+        # print ('note_num', note_number)
+        # print ('csv_num=', self.csv_num)
 
-    if PLAY_AUDIO:
-        wf = wave.open(audio_filename)
+        # generate file_name
+        csv_file_name = \
+            self.current_path \
+            + self.output_dir \
+            + 'bach.txt'
+            # + 'note_name=' + str(note_name) \
+            # + '__note_num=' + str(note_number) \
+            # + '__csv=' + str(self.csv_num) \
+            # + '.csv'
+        print(csv_file_name)
 
-        stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                        channels=wf.getnchannels(),
-                        rate=wf.getframerate(),
-                        output=True)
-        data = wf.readframes(CHUNK)
+        return note_number, note_name, csv_file_name
 
-    while True:
-        samples, read = s()
-        pred = pitch_o(samples)[0]
-        pitch = int(round(pred))
-        confidence = pitch_o.get_confidence()
+    def predict_freq_from_wav(self, audio_filename):
+        note_number, note_name, csv_file_name = self.name_generator(audio_filename)
+        self.csv_file = open(csv_file_name, 'a')
+        file_in_aubio = aubio.source(audio_filename, self.sample_rate, self.chunk_size)
 
-        if confidence < 0.5:
-            pitch = 0
-        if abs(pitch - prev_pred) > 100:
-            pitch = 0
-        prev_lines.append(pitch)
-        list_prev_lines = list(prev_lines)
-        if list_prev_lines != empty_deque:
-            print (list_prev_lines)
+        if self.play_audio:
+            self.audio_file = wave.open(audio_filename)
+
+            stream = self.p.open(format=self.p.get_format_from_width(self.audio_file.getsampwidth()),
+                                 channels=self.audio_file.getnchannels(),
+                                 rate=self.audio_file.getframerate(),
+                                 output=True)
+
+            data = self.audio_file.readframes(self.chunk_size)
+
+        while True:
+            samples, chunks_read = file_in_aubio()
+            pred = self.pitch_o(samples)[0]
+            pitch = int(round(pred))
+            confidence = self.pitch_o.get_confidence()
+
+            # if confidence < self.confidence_threshold:
+            #     pitch = 0
+            # if abs(pitch - self.prev_pred) > 1:
+            #     pitch = 0
+
+            self.prev_lines.append(pitch)
+
+            list_prev_lines = list(self.prev_lines)
+            # if list_prev_lines != self.empty_deque:
+                # print (list_prev_lines)
             for value in list_prev_lines:
-                csv_file.write(str(value))
-                csv_file.write(str(','))
-            csv_file.write(str(note_number))
-            csv_file.write('\n')
+                self.csv_file.write(str(value))
+                self.csv_file.write(str(' '))
+            # self.csv_file.write(str(note_number))
+                # self.csv_file.write('\n')
 
-        if PLAY_AUDIO:
-            stream.write(data)
-            data = wf.readframes(CHUNK)
+            if self.play_audio:
+                stream.write(data)
+                data = self.audio_file.readframes(self.chunk_size)
 
-        prev_pred = pred
+            self.prev_pred = pred
 
-        if read < CHUNK:
-            break
+            if chunks_read < self.chunk_size:
+                break
+
+        self.prev_lines, self.empty_deque = self.generate_deque()
 
 if __name__ == '__main__':
+    audio_to_csv = AudioToCSV()
     # for every .wav file in training_data
-    for root, dirs, files in os.walk(current_path + '/Training/training_data'):
+    for root, dirs, files in os.walk(audio_to_csv.current_path + '/Training/training_data/rnn'):
         for file in files:
-            if file.endswith(".wav"):
+            if file.endswith(".mp3"):
                 filename = os.path.join(root, file)
-                predict_freq_from_wav(filename)
+                print (file)
+                audio_to_csv.predict_freq_from_wav(filename)
