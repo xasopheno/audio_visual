@@ -19,11 +19,12 @@ class SineOsc:
         rounded_waveform = np.round(waveform, 0)
 
         waveform2 = np.power(waveform, 3)
-        # waveform3 = np.power(rounded_waveform, 4)/4
+        waveform3 = np.power(rounded_waveform, 4) * random.choice([.9, .8, 1.1, 1, 1.2])
 
         # waveform4 = waveform
+        return np.add(np.add(waveform, waveform2), waveform3)
 
-        return rounded_waveform
+        # return rounded_waveform
 
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
