@@ -52,7 +52,7 @@ def func3():
             freq += 240
 
 def func1():
-    volume = .25
+    volume = .25g
     for i in range(3):
         freq = 600
         length = .1
