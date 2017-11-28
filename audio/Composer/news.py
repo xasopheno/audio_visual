@@ -23,23 +23,36 @@ stream2 = p2.open(format=pyaudio.paFloat32,
 
 def func1():
     print ('func1')
-    for i in range(15):
-        sine_osc.play_frequencies(stream, .1, 1, 1000, 1000,
-                                  200, 300)
-        sine_osc.play_frequencies(stream, .1, 1, 1000, 1000,
-                                  240, 340)
-        sine_osc.play_frequencies(stream, .1, 1, 1000, 1000,
-                                  200, 300)
-        sine_osc.play_frequencies(stream, .2, 1, 1000, 1000,
-                                  240, 340)
-        sine_osc.play_frequencies(stream, .7, 1, 1000, 1000,
-                                  240, 340)
-        sine_osc.play_frequencies(stream, .3, 1, 1000, 1000,
-                                  260, 360)
-        sine_osc.play_frequencies(stream, .8, 1, 1000, 1000,
-                                  0)
+    for k in range(2):
+        for j in range(3):
+            for i in range(80):
+                rand = random.choice([0, 0, 0, 0, 0, 1, 1, 1])
 
+                freq1 = random.randrange(50, 54, 1)
+                freq2 = freq1 * 5/8
 
+                if rand == 1:
+                    freq2 = freq2 * random.choice([5 * 5/4, 6 * 3/4, 6 * 9/8, 5 * 11/8])
+
+                sine_osc.play_frequencies(stream, .22, random.choice([.90, 1, 1, 1, 1.05]) / 4, 1000, 1000,
+                                          freq1,
+                                          )
+                sine_osc.play_frequencies(stream, .09, .4, 1000, 1000,
+                                          freq2 * 5/8,
+                                          )
+
+            for freq in range(10 * 120, 10 * 127):
+                sine_osc.play_frequencies(stream, .11, .2, 100, 100,
+                                          freq,
+                                          freq / 2,
+                                          freq * 11/8,
+                                          freq * 3/4,
+                                          freq / 8,
+                                          freq / 16,
+                                          freq / 32,
+                                          )
+
+        time.sleep(120)
 
 def func2():
     print ('func2')
@@ -70,9 +83,9 @@ if __name__=='__main__':
     mp.set_start_method('spawn')
     p1 = mp.Process(target=func1)
     p1.start()
-    p2 = mp.Process(target=func2)
-    time.sleep(4)
-    p2.start()
-    time.sleep(4)
-    p3 = mp.Process(target=func3)
-    p3.start()
+    # p2 = mp.Process(target=func2)
+    # time.sleep(4)
+    # p2.start()
+    # time.sleep(4)
+    # p3 = mp.Process(target=func3)
+    # p3.start()
