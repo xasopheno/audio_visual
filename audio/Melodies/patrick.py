@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import os.path
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
@@ -9,14 +8,6 @@ import pyaudio
 from Oscillators.sine_osc_patrick import SineOscPatrick
 
 sine_osc = SineOscPatrick()
-=======
-import random
-import time
-import pyaudio
-from Oscillators.sine_osc import SineOsc
-
-sine_osc = SineOsc()
->>>>>>> master
 
 p = pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paFloat32,
@@ -27,12 +18,8 @@ stream = p.open(format=pyaudio.paFloat32,
 
 
 def patrick(freq, length, vol):
-<<<<<<< HEAD
     vol = vol / 2
-    sine_osc.play_frequencies(stream, length, vol * .8, 7000, 2000,
-=======
     sine_osc.play_frequencies(stream, length, vol, 5000, 2000,
->>>>>>> master
                               random.choice([50, 65, 50, 70, 50, 68]),
                               # freq / 3 * 2,
                               freq / 2,
@@ -44,7 +31,6 @@ def patrick(freq, length, vol):
 
 
 def patrick_2(freq, length, vol):
-<<<<<<< HEAD
     vol = vol / 2
 
     sine_osc.play_frequencies(stream, length, vol, 7000, 1800,
@@ -60,15 +46,12 @@ def patrick_3(freq, length, vol):
                               freq,
                               freq * 2,
                               freq /2,
-=======
+                              )
     sine_osc.play_frequencies(stream, length, vol, 2000, 2000,
                               freq,
->>>>>>> master
                               freq * 3/2
                               )
 
-
-<<<<<<< HEAD
 def sound():
     vol = .03
     x = random.choice([4, 3, 2, 3, 4, 5, 4, 5]) * 2
@@ -132,7 +115,6 @@ for j in range(20):
 
     for i in range(4):
         patrick(bass, random.choice([.16]), 0)
-=======
 for j in range(2):
 
     for i in range(80):
@@ -169,7 +151,5 @@ for j in range(2):
 #         patrick(freq, random.choice([.3, .6]), vol /2)
 #
 #     bass = 200
-
->>>>>>> master
 
 time.sleep(.5)
