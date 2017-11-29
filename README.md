@@ -5,6 +5,7 @@ Have a look around and feel free at ping me if you have any questions.
 
 #### visual/golvideo.py
 Generates Conway's Game of Life with Underlying Video
+
 https://vimeo.com/245017515
 
 #### audio/composer.py
@@ -16,5 +17,11 @@ Music composition framework written in python3
 
 #### audio/Detection/StreamToMidi.py
 Microphone to Midi
+
+#### Neural Networks
+`audio/Detection/rnntf.py`
+
+Probabilistic Melody Generator built in Tensorflow
+currently only available in `dm-data-refactor`
 
 
