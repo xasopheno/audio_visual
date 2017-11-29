@@ -135,7 +135,7 @@ if ckpt_file == "":
             print ("batch: ", i, "   loss: ", cst)
 
 
-        if (i % 100) == 0:
+        if (i % 100) == 0 and i > 500:
             new_time = time.time()
             diff = new_time - last_time
             last_time = new_time

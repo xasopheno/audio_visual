@@ -5,7 +5,7 @@ import ast
 def round_down(x):
     return int(math.floor(x / 1000.0)) * 1000 / 100
 
-with open('midiOut.txt', 'r') as f:
+with open('datasets/compressed/second_rounded.txt', 'r') as f:
     counter = 0
     with open("rounded.csv", 'a') as rounded_csv:
         values = f.read().split(' ')
@@ -26,5 +26,8 @@ with open('midiOut.txt', 'r') as f:
             # if midi_num == 0 and length > 3000:
             # token = '|'
 
-            rounded_csv.write(str(counter) + ',' + str(midi_num) + ',' + str(length) + '\n')
+            rounded_csv.write(
+                str(counter) + ',' +
+                '"' + str(midi_num) + '"' + ',' +
+                str(length) + '\n')
             counter += 1

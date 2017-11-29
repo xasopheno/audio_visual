@@ -26,8 +26,8 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
     Increased accuracy of three decimals places might be
     preferable in the context of video.
     """ 
-    print round (frequency1 / frequency2, 3)
-    print frequency1, frequency2, Fraction(relationship)
+    print (round (frequency1 / frequency2, 3))
+    print (frequency1, frequency2, Fraction(relationship))
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
 
