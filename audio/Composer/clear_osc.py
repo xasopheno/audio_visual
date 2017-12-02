@@ -24,7 +24,7 @@ class SineOsc:
 
         return np.add(np.add(waveform, waveform2), np.add(rounded_waveform, waveform3))
 
-        # return waveform
+        return waveform
 
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):

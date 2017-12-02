@@ -1,8 +1,9 @@
+import multiprocessing as mp
 import random
+import time
+
 import pyaudio
 from clear_osc import SineOsc
-import multiprocessing as mp
-import time
 
 sine_osc = SineOsc()
 
@@ -15,7 +16,7 @@ stream = p.open(format=pyaudio.paFloat32,
 
 def func1():
     print('func1')
-    for j in range(60):
+    for j in range(40):
         length = .25
         freq = 50
         if j == 9 or j == 20:
@@ -34,7 +35,7 @@ def func1():
 
 def func2():
     print('func2')
-    for j in range(60):
+    for j in range(40):
         if j == 9 or j == 20:
             time.sleep(1.25)
         length = .25
@@ -65,7 +66,9 @@ def func3():
 
         time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
 
-    for j in range(20):
+    for j in range(25):
+        if j == 10:
+            time.sleep(2)
         length = .07
         freq = random.choice([200, 250, 190, 210, 330, 200, 200, 250, 200, 200, 200])
         for i in range(random.randrange(9, 25, 1)):
@@ -90,7 +93,7 @@ def func4():
     print('func4')
     time.sleep(3)
     for j in range(10):
-        length = 6
+        length = 5
         freq = random.choice([1000, 1040, 1080])
         volume = .04
         sine_osc.play_frequencies(stream, length, volume, 40000, 40000,
@@ -100,17 +103,32 @@ def func4():
                                   freq - 4,
                                   freq + 5,
                                   )
-        freq += random.choice([10, -13, 17, 15, 4, -18])
 
-        time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
+        time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 5)
+
+    for j in range(16):
+        length = 5
+        freq = random.choice([1000, 1040, 1080])
+        volume = .07
+        sine_osc.play_frequencies(stream, length, volume, 40000, 40000,
+                                  freq * 3/2,
+                                  freq * 5/4 * 2,
+                                  freq * 5/4,
+                                  freq * 2,
+                                  freq * 9/8,
+                                  freq * 15/8,
+                                  freq * 11/8
+                                  )
+
+        time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 5)
 
 def func5():
     print('func5')
     time.sleep(3)
     for j in range(10):
-        length = 6
-        freq = random.choice([1000, 1040, 1080]) - 8
-        volume = .02
+        length = 5
+        freq = random.choice([1000, 1040, 1080])
+        volume = .05
         sine_osc.play_frequencies(stream, length, volume, 40000, 50000,
                                   freq / 2 - 3,
                                   freq - 3,
@@ -120,7 +138,27 @@ def func5():
                                   )
         freq += random.choice([10, -13, 17, 15, 4, -18])
 
-        time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
+    for j in range(16):
+        length = 5
+        freq = random.choice([1000, 1040, 1080]) - 8
+        volume = .04
+        sine_osc.play_frequencies(stream, length, volume, 40000, 40000,
+                                  freq / 2 - 3,
+                                  freq - 3,
+                                  freq + 3,
+                                  freq * 3/2 /2,
+                                  freq * 3/2,
+                                  freq * 5/4 * 2,
+                                  freq * 5/4,
+                                  freq * 2,
+                                  freq * 9/8,
+                                  freq * 15/8,
+                                  freq * 11/8,
+                                  )
+
+        time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 5)
+
+
 
 
 if __name__=='__main__':
@@ -131,7 +169,7 @@ if __name__=='__main__':
     p4.start()
     p5 = mp.Process(target=func5)
     p5.start()
-    time.sleep(1)
+    time.sleep(.9)
     p2 = mp.Process(target=func2)
     p2.start()
     time.sleep(4)
