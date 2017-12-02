@@ -31,6 +31,9 @@ def func1():
                                       )
         freq += 10
         time.sleep(1)
+    time.sleep(4)
+    p6 = mp.Process(target=func6)
+    p6.start()
 
 
 
@@ -165,7 +168,52 @@ def func5():
         time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
 
 
+def func6():
+    time.sleep(10)
+    for i in range(8):
+        time.sleep(.6)
+        for i in range(5):
+            length = 0.1
+            volume = .3
+            freq = random.choice([600, 650, 680, 690])
+            sine_osc.play_frequencies(stream, length, volume, 1000, 4000,
+                                      freq,
+                                      freq + 2,
+                                      freq,
+                                      freq * 3/2,
+                                      freq * 2,
+                                      freq * 2,
+                                      )
+            freq += random.choice([19, 14, 25, 16, 23, -5, -34, -26, -16])
 
+    for j in range(30):
+        length = .6
+        freq = random.choice([50, 51, 52, 53, 54, 55, 49, 48])
+        volume = .5
+        sine_osc.play_frequencies(stream, length, volume, 1000, 10000,
+                                  freq,
+                                  freq + 2,
+                                  freq,
+                                  freq * 3/2,
+                                  freq * 2,
+                                  freq * 2,
+                                  )
+        for i in range(5):
+            length = 0.1
+            volume = .3
+            freq = random.choice([600, 650, 680, 690])
+            sine_osc.play_frequencies(stream, length, volume, 1000, 4000,
+                                      freq,
+                                      freq + 2,
+                                      freq,
+                                      freq * 3/2,
+                                      freq * 2,
+                                      freq * 2,
+                                      )
+            freq += random.choice([19, 14, 25, 16, 23, -5, -34, -26, -16])
+
+def func7():
+    pass
 
 if __name__=='__main__':
     mp.set_start_method('spawn')
@@ -181,3 +229,5 @@ if __name__=='__main__':
     time.sleep(4)
     p3 = mp.Process(target=func3)
     p3.start()
+    # p6 = mp.Process(target=func6)
+    # p6.start()
