@@ -53,605 +53,605 @@ def func3():
 
 def func1():
     volume = .25
-    for i in range(1):
-        freq = 600
-        length = .1
-        for i in range(5):
-            for i in range(6):
-                sine_osc.play_frequencies(stream, length, volume, 200, 200,
-                                          freq /16,
-                                          freq / 4,
-                                          freq / 4,
-                                          freq / 2,
-                                          freq /8 + 2,
-                                          freq /8 - 3,
-                                          freq * 5/4 / 2 - 50,
-                                          freq * 9/8 * 3 - 29,
-                                          freq * 11/8 * 2 - 30,
-                                          )
-            time.sleep(.5)
-
-    length = 1.2
-    volume = .25
-    freq = 783 /2
-    print ('func1')
-    sine_osc.play_frequencies(stream, length * 1.2, volume * .8, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              )
-    freq = freq * 8/5/2
-    sine_osc.play_frequencies(stream, length * 2, volume * 1.1, 4000, 6000,
-                              freq / 4,
-                              freq /2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    time.sleep(.1)
-
-    freq = freq * 25/24
-    sine_osc.play_frequencies(stream, length * .75, volume, 7000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4,
-                              )
-
-    freq = freq * 9/8
-    sine_osc.play_frequencies(stream, length * .75, volume, 4000, 3000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 15,
-                              )
-
-    freq = freq * 25/24 /2
-    sine_osc.play_frequencies(stream, length * .2, volume * .5, 3000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq * 3/2/2,
-                              freq,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4,
-                              )
-
-    freq = freq * 6/5 * 2
-    sine_osc.play_frequencies(stream, length * 2, volume * 1.3, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 3/2 + 10 * 4,
-                              freq * 22/8 - 4
-                              )
-
-    freq = freq * 9/5 /2
-    sine_osc.play_frequencies(stream, length * .5, volume * .9, 5000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2 + 5,
-                              freq * 5/4,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    freq = freq * 15/8 /2
-    sine_osc.play_frequencies(stream, length * .95, volume * .8, 4000, 8000,
-                              freq / 4,
-                              freq /2 + 2,
-                              freq / 2,
-                              freq,
-                              freq * 5/4,
-                              freq * 7/4,
-                              freq * 3/2 + 4,
-                              freq * 2,
-                              freq * 2+ 3,
-                              )
-
-    time.sleep(1)
-    # ___________________________________
-
-    freq = freq * 45/32 /2
-    sine_osc.play_frequencies(stream, length * 1.4, volume * 1.2, 4000, 1000,
-                              freq /4,
-                              freq /2 + 3,
-                              freq /2,
-                              freq,
-                              freq + 5,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4
-                              )
-
-
-    freq = freq * 45/32
-    sine_osc.play_frequencies(stream, length * 1.7, volume * 1.2, 8000, 5000,
-                              freq /4,
-                              freq /2,
-                              freq /2 + 2,
-                              freq,
-                              freq + 9,
-                              freq - 5,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4,
-                              )
-
-    time.sleep(1)
-
-    freq = freq * 3/2 /2
-    sine_osc.play_frequencies(stream, length * .5, volume * .9, 3000, 1000,
-                              freq,
-                              freq,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5,
-                              freq * 7/6,
-                              freq * 8/5
-                              )
-
-    freq = freq * 45/32
-    sine_osc.play_frequencies(stream, length * .5, volume, 3000, 3000,
-                              freq,
-                              freq,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5,
-                              freq * 7/6,
-                              freq * 8/5
-                              )
-
-    freq = freq * 5/3 /2 + 10
-    sine_osc.play_frequencies(stream, length * 1, volume * .95, 3000, 3000,
-                              freq,
-                              freq,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5,
-                              freq * 7/6 + 3,
-                              freq * 8/5 + 2,
-                              freq * 9/8,
-                              freq * 11/8
-                              )
-
-    freq = freq * 8/5 /2
-    sine_osc.play_frequencies(stream, length * .4, volume * .8, 3000, 3000,
-                              freq,
-                              freq,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5,
-                              freq * 7/6,
-                              freq * 8/5
-                              )
-
-    freq = freq * 5/3 /2
-    sine_osc.play_frequencies(stream, length * .25, volume * .7, 6000, 2000,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5,
-                              freq * 7/6,
-                              freq * 8/5
-                              )
-
-    freq = freq * 9/8
-    sine_osc.play_frequencies(stream, length * .3, volume, 3000, 5000,
-                              freq /4,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    freq = freq * 6/5
-    sine_osc.play_frequencies(stream, length, volume, 4000, 5000,
-                          freq /4,
-                          freq /2 + 6,
-                          freq,
-                          freq * 2,
-                          freq + 2,
-                          )
-
-    time.sleep(.2)
-
-    freq = freq * 9/8
+    # for i in range(1):
+    #     freq = 600
+    #     length = .1
+    #     for i in range(5):
+    #         for i in range(6):
+    #             sine_osc.play_frequencies(stream, length, volume, 200, 200,
+    #                                       freq /16,
+    #                                       freq / 4,
+    #                                       freq / 4,
+    #                                       freq / 2,
+    #                                       freq /8 + 2,
+    #                                       freq /8 - 3,
+    #                                       freq * 5/4 / 2 - 50,
+    #                                       freq * 9/8 * 3 - 29,
+    #                                       freq * 11/8 * 2 - 30,
+    #                                       )
+    #         time.sleep(.5)
+    #
+    # length = 1.2
+    # volume = .25
+    # freq = 783 /2
+    # print ('func1')
+    # sine_osc.play_frequencies(stream, length * 1.2, volume * .8, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    # freq = freq * 8/5/2
+    # sine_osc.play_frequencies(stream, length * 2, volume * 1.1, 4000, 6000,
+    #                           freq / 4,
+    #                           freq /2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # time.sleep(.1)
+    #
+    # freq = freq * 25/24
+    # sine_osc.play_frequencies(stream, length * .75, volume, 7000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4,
+    #                           )
+    #
+    # freq = freq * 9/8
+    # sine_osc.play_frequencies(stream, length * .75, volume, 4000, 3000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 15,
+    #                           )
+    #
+    # freq = freq * 25/24 /2
+    # sine_osc.play_frequencies(stream, length * .2, volume * .5, 3000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq * 3/2/2,
+    #                           freq,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4,
+    #                           )
+    #
+    # freq = freq * 6/5 * 2
+    # sine_osc.play_frequencies(stream, length * 2, volume * 1.3, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 3/2 + 10 * 4,
+    #                           freq * 22/8 - 4
+    #                           )
+    #
+    # freq = freq * 9/5 /2
+    # sine_osc.play_frequencies(stream, length * .5, volume * .9, 5000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2 + 5,
+    #                           freq * 5/4,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # freq = freq * 15/8 /2
+    # sine_osc.play_frequencies(stream, length * .95, volume * .8, 4000, 8000,
+    #                           freq / 4,
+    #                           freq /2 + 2,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 5/4,
+    #                           freq * 7/4,
+    #                           freq * 3/2 + 4,
+    #                           freq * 2,
+    #                           freq * 2+ 3,
+    #                           )
+    #
+    # time.sleep(1)
+    # # ___________________________________
+    #
+    # freq = freq * 45/32 /2
+    # sine_osc.play_frequencies(stream, length * 1.4, volume * 1.2, 4000, 1000,
+    #                           freq /4,
+    #                           freq /2 + 3,
+    #                           freq /2,
+    #                           freq,
+    #                           freq + 5,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4
+    #                           )
+    #
+    #
+    # freq = freq * 45/32
+    # sine_osc.play_frequencies(stream, length * 1.7, volume * 1.2, 8000, 5000,
+    #                           freq /4,
+    #                           freq /2,
+    #                           freq /2 + 2,
+    #                           freq,
+    #                           freq + 9,
+    #                           freq - 5,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4,
+    #                           )
+    #
+    # time.sleep(1)
+    #
+    # freq = freq * 3/2 /2
+    # sine_osc.play_frequencies(stream, length * .5, volume * .9, 3000, 1000,
+    #                           freq,
+    #                           freq,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5,
+    #                           freq * 7/6,
+    #                           freq * 8/5
+    #                           )
+    #
+    # freq = freq * 45/32
+    # sine_osc.play_frequencies(stream, length * .5, volume, 3000, 3000,
+    #                           freq,
+    #                           freq,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5,
+    #                           freq * 7/6,
+    #                           freq * 8/5
+    #                           )
+    #
+    # freq = freq * 5/3 /2 + 10
+    # sine_osc.play_frequencies(stream, length * 1, volume * .95, 3000, 3000,
+    #                           freq,
+    #                           freq,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5,
+    #                           freq * 7/6 + 3,
+    #                           freq * 8/5 + 2,
+    #                           freq * 9/8,
+    #                           freq * 11/8
+    #                           )
+    #
+    # freq = freq * 8/5 /2
+    # sine_osc.play_frequencies(stream, length * .4, volume * .8, 3000, 3000,
+    #                           freq,
+    #                           freq,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5,
+    #                           freq * 7/6,
+    #                           freq * 8/5
+    #                           )
+    #
+    # freq = freq * 5/3 /2
+    # sine_osc.play_frequencies(stream, length * .25, volume * .7, 6000, 2000,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5,
+    #                           freq * 7/6,
+    #                           freq * 8/5
+    #                           )
+    #
+    # freq = freq * 9/8
+    # sine_osc.play_frequencies(stream, length * .3, volume, 3000, 5000,
+    #                           freq /4,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # freq = freq * 6/5
+    # sine_osc.play_frequencies(stream, length, volume, 4000, 5000,
+    #                       freq /4,
+    #                       freq /2 + 6,
+    #                       freq,
+    #                       freq * 2,
+    #                       freq + 2,
+    #                       )
+    #
+    # time.sleep(.2)
+    #
+    # freq = freq * 9/8
+    # # print(freq)
+    # freq = 350.73
+    # sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # freq = freq * 3/2/2
+    # sine_osc.play_frequencies(stream, length * .3, volume, 2000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # sine_osc.play_frequencies(stream, length * 1.5, volume, 2000, 10000,
+    #                           freq /2,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5 + 3,
+    #                           freq * 5/4 - 2,
+    #                           )
+    #
+    #
+    # time.sleep(2)
+    #
+    # # Second half _________
+    # freq = freq * 5/4 / 2
+    # sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 3,
+    #                           )
+    #
+    # freq = freq * 4/3
+    # sine_osc.play_frequencies(stream, length * .75, volume * 1.1, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 3,
+    #                           )
+    #
+    #
+    # freq = freq * 8/5
+    # sine_osc.play_frequencies(stream, length * 2, volume * 1.2, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 3,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # time.sleep(2)
+    # # _________________________
+    # freq = freq * 3/2
+    # sine_osc.play_frequencies(stream, length * .2, volume * .7, 4000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 7/6,
+    #                           freq * 4,
+    #                           )
+    #
+    # freq = freq * 4/3 /2
+    # sine_osc.play_frequencies(stream, length * 1.5, volume * 1, 4000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4,
+    #                           )
+    #
+    # time.sleep(1)
+    # freq = freq * 25/24
+    # sine_osc.play_frequencies(stream, length * .75, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 3,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # freq = freq * 8/5 /2
+    # sine_osc.play_frequencies(stream, length * .75, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 3,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # freq = freq * 5/4
+    # sine_osc.play_frequencies(stream, length * .3, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 3,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    #
+    # freq = freq * 9/5 /2
+    # sine_osc.play_frequencies(stream, length * 1.5, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 3,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # freq = freq * 45/32 /2
+    # sine_osc.play_frequencies(stream, length * .6, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 3,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # freq = freq * 9/5
+    # sine_osc.play_frequencies(stream, length * 3, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 4,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 3/2 * 3,
+    #                           freq * 3/2 * 3 - 7,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # time.sleep(1)
+    # # _________________________
+    #
+    # freq = freq * 15/8 /2
+    # sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # freq = freq * 3/2 /2
+    # sine_osc.play_frequencies(stream, length * 1, volume, 4000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # freq = freq * 9/5 / 2
+    # sine_osc.play_frequencies(stream, length * .7, volume, 4000, 1000,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           )
+    #
+    # time.sleep(.2)
+    # # _________________________
+    #
+    # freq = freq * 25/24
+    # sine_osc.play_frequencies(stream, length * .7, volume, 4000, 1000,
+    #                           freq /2,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5 + 3,
+    #                           freq * 5/4 - 2,
+    #                           )
+    #
+    #
+    # freq = freq * 9/8
+    # sine_osc.play_frequencies(stream, length * 1.5, volume, 4000, 1000,
+    #                           freq /2,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5 + 3,
+    #                           freq * 5/4 - 2,
+    #                           )
+    # #___________________________
+    # time.sleep(2)
+    #
+    # freq = freq * 25/24 + 10
+    # sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
+    #                           freq /4,
+    #                           freq /2,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5 + 3,
+    #                           freq * 5/4 - 2,
+    #                           )
+    #
+    # freq = freq * 9/8
+    # sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
+    #                           freq /4,
+    #                           freq /2,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5 + 3,
+    #                           freq * 5/4 - 2,
+    #                           )
+    #
+    # freq = freq * 9/8
+    # sine_osc.play_frequencies(stream, length * .8, volume, 4000, 1000,
+    #                           freq /4,
+    #                           freq /2,
+    #                           freq /2 + 6,
+    #                           freq,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 6/5 + 3,
+    #                           freq * 5/4 - 2,
+    #                           )
+    #
+    #
+    #
+    #
+    # freq = freq * 5/3 / 4
+    # sine_osc.play_frequencies(stream, length * .8, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 4,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 3/2 * 3,
+    #                           freq * 3/2 * 3 - 7,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    # freq = freq * 15/8
+    # sine_osc.play_frequencies(stream, length * .8, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 4,
+    #                           freq / 2,
+    #                           freq / 2 + 4,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 3/2 * 3,
+    #                           freq * 3/2 * 3 - 7,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    #
+    # freq = freq * 4/3 /2
+    # sine_osc.play_frequencies(stream, length * 3, volume, 4000, 1000,
+    #                           freq / 4,
+    #                           freq / 4 + 3,
+    #                           freq / 2,
+    #                           freq / 2 + 4,
+    #                           freq,
+    #                           freq * 3/2,
+    #                           freq * 2,
+    #                           freq + 2,
+    #                           freq * 3/2 * 3 - 7,
+    #                           freq * 4 + 2,
+    #                           freq * 4 - 5,
+    #                           )
+    #
+    #
+    # print('improvising')
+    # # ___________________________
+    #
+    # time.sleep(2)
     # print(freq)
-    freq = 350.73
-    sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    freq = freq * 3/2/2
-    sine_osc.play_frequencies(stream, length * .3, volume, 2000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    sine_osc.play_frequencies(stream, length * 1.5, volume, 2000, 10000,
-                              freq /2,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5 + 3,
-                              freq * 5/4 - 2,
-                              )
-
-
-    time.sleep(2)
-
-    # Second half _________
-    freq = freq * 5/4 / 2
-    sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 3,
-                              )
-
-    freq = freq * 4/3
-    sine_osc.play_frequencies(stream, length * .75, volume * 1.1, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 3,
-                              )
-
-
-    freq = freq * 8/5
-    sine_osc.play_frequencies(stream, length * 2, volume * 1.2, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    time.sleep(2)
-    # _________________________
-    freq = freq * 3/2
-    sine_osc.play_frequencies(stream, length * .2, volume * .7, 4000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 7/6,
-                              freq * 4,
-                              )
-
-    freq = freq * 4/3 /2
-    sine_osc.play_frequencies(stream, length * 1.5, volume * 1, 4000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4,
-                              )
-
-    time.sleep(1)
-    freq = freq * 25/24
-    sine_osc.play_frequencies(stream, length * .75, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    freq = freq * 8/5 /2
-    sine_osc.play_frequencies(stream, length * .75, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    freq = freq * 5/4
-    sine_osc.play_frequencies(stream, length * .3, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-
-    freq = freq * 9/5 /2
-    sine_osc.play_frequencies(stream, length * 1.5, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    freq = freq * 45/32 /2
-    sine_osc.play_frequencies(stream, length * .6, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    freq = freq * 9/5
-    sine_osc.play_frequencies(stream, length * 3, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 4,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 3/2 * 3,
-                              freq * 3/2 * 3 - 7,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    time.sleep(1)
-    # _________________________
-
-    freq = freq * 15/8 /2
-    sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    freq = freq * 3/2 /2
-    sine_osc.play_frequencies(stream, length * 1, volume, 4000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    freq = freq * 9/5 / 2
-    sine_osc.play_frequencies(stream, length * .7, volume, 4000, 1000,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              )
-
-    time.sleep(.2)
-    # _________________________
-
-    freq = freq * 25/24
-    sine_osc.play_frequencies(stream, length * .7, volume, 4000, 1000,
-                              freq /2,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5 + 3,
-                              freq * 5/4 - 2,
-                              )
-
-
-    freq = freq * 9/8
-    sine_osc.play_frequencies(stream, length * 1.5, volume, 4000, 1000,
-                              freq /2,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5 + 3,
-                              freq * 5/4 - 2,
-                              )
-    #___________________________
-    time.sleep(2)
-
-    freq = freq * 25/24 + 10
-    sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
-                              freq /4,
-                              freq /2,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5 + 3,
-                              freq * 5/4 - 2,
-                              )
-
-    freq = freq * 9/8
-    sine_osc.play_frequencies(stream, length * .5, volume, 4000, 1000,
-                              freq /4,
-                              freq /2,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5 + 3,
-                              freq * 5/4 - 2,
-                              )
-
-    freq = freq * 9/8
-    sine_osc.play_frequencies(stream, length * .8, volume, 4000, 1000,
-                              freq /4,
-                              freq /2,
-                              freq /2 + 6,
-                              freq,
-                              freq * 2,
-                              freq + 2,
-                              freq * 6/5 + 3,
-                              freq * 5/4 - 2,
-                              )
-
-
-
-
-    freq = freq * 5/3 / 4
-    sine_osc.play_frequencies(stream, length * .8, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 4,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 3/2 * 3,
-                              freq * 3/2 * 3 - 7,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-    freq = freq * 15/8
-    sine_osc.play_frequencies(stream, length * .8, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 4,
-                              freq / 2,
-                              freq / 2 + 4,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 3/2 * 3,
-                              freq * 3/2 * 3 - 7,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-
-    freq = freq * 4/3 /2
-    sine_osc.play_frequencies(stream, length * 3, volume, 4000, 1000,
-                              freq / 4,
-                              freq / 4 + 3,
-                              freq / 2,
-                              freq / 2 + 4,
-                              freq,
-                              freq * 3/2,
-                              freq * 2,
-                              freq + 2,
-                              freq * 3/2 * 3 - 7,
-                              freq * 4 + 2,
-                              freq * 4 - 5,
-                              )
-
-
-    print('improvising')
-    # ___________________________
-
-    time.sleep(2)
-    print(freq)
-    freq = 218
-    for i in range(3):
-        freq = 256
-        p2 = mp.Process(target=func2)
-        p2.start()
-        p3 = mp.Process(target=func3)
-        p3.start()
-        volume += .05
-        sine_osc.play_frequencies(stream, length * 5, volume * .6, 15000, 30000,
-                                  freq /16,
-                                  freq / 4,
-                                  freq / 4,
-                                  freq / 2,
-                                  freq /8 + 2,
-                                  freq /8 - 3,
-                                  freq * 5/4 / 2,
-                                  freq * 9/8 * 3,
-                                  freq * 11/8 * 2,
-                                  )
-
-        sine_osc.play_frequencies(stream, length * 4, volume * .65, 9000, 30000,
-                                  freq /16,
-                                  freq / 4,
-                                  freq / 4,
-                                  freq / 2,
-                                  freq /8 + 2,
-                                  freq /8 - 3,
-                                  freq * 5/4 / 2 - 5,
-                                  freq * 9/8 * 3 - 3,
-                                  freq * 11/8 * 2 - 4,
-                                  )
-
-        freq = freq + 20
-        sine_osc.play_frequencies(stream, length * 4, volume * .7, 9000, 30000,
-                                  freq /16,
-                                  freq / 4,
-                                  freq / 4,
-                                  freq / 2,
-                                  freq /8 + 2,
-                                  freq /8 - 3,
-                                  freq * 5/4 / 2 - 17,
-                                  freq * 9/8 * 3 - 11,
-                                  freq * 11/8 * 2 - 15,
-                                  )
-
-        freq = freq + 25
-        sine_osc.play_frequencies(stream, length * 10, volume * .8, 9000, 20000,
-                                  freq /16,
-                                  freq / 4,
-                                  freq / 4,
-                                  freq / 2,
-                                  freq /8 + 2,
-                                  freq /8 - 3,
-                                  freq * 5/4 / 2 - 50,
-                                  freq * 9/8 * 3 - 29,
-                                  freq * 11/8 * 2 - 30,
-                                  )
-
-        time.sleep(3)
+    # freq = 218
+    # for i in range(3):
+    #     freq = 256
+    #     p2 = mp.Process(target=func2)
+    #     p2.start()
+    #     p3 = mp.Process(target=func3)
+    #     p3.start()
+    #     volume += .05
+    #     sine_osc.play_frequencies(stream, length * 5, volume * .6, 15000, 30000,
+    #                               freq /16,
+    #                               freq / 4,
+    #                               freq / 4,
+    #                               freq / 2,
+    #                               freq /8 + 2,
+    #                               freq /8 - 3,
+    #                               freq * 5/4 / 2,
+    #                               freq * 9/8 * 3,
+    #                               freq * 11/8 * 2,
+    #                               )
+    #
+    #     sine_osc.play_frequencies(stream, length * 4, volume * .65, 9000, 30000,
+    #                               freq /16,
+    #                               freq / 4,
+    #                               freq / 4,
+    #                               freq / 2,
+    #                               freq /8 + 2,
+    #                               freq /8 - 3,
+    #                               freq * 5/4 / 2 - 5,
+    #                               freq * 9/8 * 3 - 3,
+    #                               freq * 11/8 * 2 - 4,
+    #                               )
+    #
+    #     freq = freq + 20
+    #     sine_osc.play_frequencies(stream, length * 4, volume * .7, 9000, 30000,
+    #                               freq /16,
+    #                               freq / 4,
+    #                               freq / 4,
+    #                               freq / 2,
+    #                               freq /8 + 2,
+    #                               freq /8 - 3,
+    #                               freq * 5/4 / 2 - 17,
+    #                               freq * 9/8 * 3 - 11,
+    #                               freq * 11/8 * 2 - 15,
+    #                               )
+    #
+    #     freq = freq + 25
+    #     sine_osc.play_frequencies(stream, length * 10, volume * .8, 9000, 20000,
+    #                               freq /16,
+    #                               freq / 4,
+    #                               freq / 4,
+    #                               freq / 2,
+    #                               freq /8 + 2,
+    #                               freq /8 - 3,
+    #                               freq * 5/4 / 2 - 50,
+    #                               freq * 9/8 * 3 - 29,
+    #                               freq * 11/8 * 2 - 30,
+    #                               )
+    #
+    #     time.sleep(3)
 
     for mess in range(500):
         length = .1
@@ -674,7 +674,7 @@ def func1():
         if mess == 499:
             freq = 630
             volume = .25
-            sine_osc.play_frequencies(stream, 1, volume, 200, 200,
+            sine_osc.play_frequencies(stream, 1.25, volume, 200, 200,
                                       freq /16,
                                       freq / 4,
                                       freq / 4,
@@ -703,6 +703,21 @@ def func1():
                                                   freq * 11/8 * 2 - 30,
                                                   )
                     time.sleep(.5)
+
+            freq = 630
+            volume = .25
+            sine_osc.play_frequencies(stream, 1.25, volume, 200, 200,
+                                      freq /16,
+                                      freq / 4,
+                                      freq / 4,
+                                      freq / 2,
+                                      freq /8 + 2,
+                                      freq /8 - 3,
+                                      freq * 5/4 / 2 - 50,
+                                      freq * 9/8 * 3 - 29,
+                                      freq * 11/8 * 2 - 30,
+                                      )
+
 
         if (mess > 50 and mess < 85) or (mess > 250 and mess < 280) or mess > 595:
             up = random.choice([freq * 25/24, freq * 9/8, freq *15/8 /2])
