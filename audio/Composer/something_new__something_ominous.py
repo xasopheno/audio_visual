@@ -169,12 +169,12 @@ def func5():
 
 
 def func6():
-    time.sleep(10)
+    time.sleep(20)
     for i in range(8):
         time.sleep(.6)
         for i in range(5):
             length = 0.1
-            volume = .3
+            volume = .4
             freq = random.choice([600, 650, 680, 690])
             sine_osc.play_frequencies(stream, length, volume, 1000, 4000,
                                       freq,
@@ -189,7 +189,7 @@ def func6():
     for j in range(30):
         length = .6
         freq = random.choice([50, 51, 52, 53, 54, 55, 49, 48])
-        volume = .5
+        volume = .76
         sine_osc.play_frequencies(stream, length, volume, 1000, 10000,
                                   freq,
                                   freq + 2,
@@ -203,14 +203,24 @@ def func6():
             volume = .3
             freq = random.choice([600, 650, 680, 690])
             sine_osc.play_frequencies(stream, length, volume, 1000, 4000,
-                                      freq,
                                       freq + 2,
                                       freq,
                                       freq * 3/2,
                                       freq * 2,
                                       freq * 2,
+                                      freq * 3 - random.choice([2, 4, 6, 7, 8, 10])
                                       )
             freq += random.choice([19, 14, 25, 16, 23, -5, -34, -26, -16])
+
+    p1 = mp.Process(target=func1)
+    p1.start()
+    time.sleep(.9)
+    p2 = mp.Process(target=func2)
+    p2.start()
+    time.sleep(6)
+    p3 = mp.Process(target=func3)
+    p3.start()
+
 
 def func7():
     pass
