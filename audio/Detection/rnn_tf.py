@@ -81,7 +81,7 @@ data = embed_to_vocab(data_, vocab,
 in_size = out_size = len(vocab)
 lstm_size = 2048 #128s
 num_layers = 2
-batch_size = 40 #128
+batch_size = 20 #128
 time_steps = 10 #50
 
 NUM_TRAIN_BATCHES = 8000
@@ -135,16 +135,16 @@ if ckpt_file == "":
             print ("batch: ", i, "   loss: ", cst)
 
 
-        if (i % 100) == 0 and i > 500:
+        if (i % 100) == 0 and i > 1000:
             new_time = time.time()
             diff = new_time - last_time
             last_time = new_time
 
             print ("batch: ", i, "   loss: ", cst, "   speed: ", (100.0/diff), " batches / s")
 
-            saver.save(sess, "saved/" + ckpt_filename + ".ckpt")
-            subprocess.call("python rnn_tf.py saved/" + ckpt_filename + ".ckpt '[67,18000]'", shell=True)
-            subprocess.call("python Midi/compressed_midi_player.py", shell=True)
+            saver.save(sess, "saved/" + ckpt_filename + '_' + str(i) + ".ckpt")
+            # subprocess.call("python rnn_tf.py saved/" + ckpt_filename + i +".ckpt '[67,18000]'", shell=True)
+            # subprocess.call("python Midi/compressed_midi_player.py", shell=True)
 
     saver.save(sess, "saved/" + ckpt_filename + ".ckpt")
 
