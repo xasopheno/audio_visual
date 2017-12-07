@@ -86,7 +86,7 @@ time_steps = 10 #50
 
 NUM_TRAIN_BATCHES = 8000
 
-LEN_TEST_TEXT = 75 # Number of test characters of text to generate after training the network
+LEN_TEST_TEXT = 500 # Number of test characters of text to generate after training the network
 ckpt_filename = 'model'
 midi_filename = 'midiOut.txt'
 
