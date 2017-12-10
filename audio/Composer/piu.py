@@ -20,6 +20,54 @@ stream2 = p2.open(format=pyaudio.paFloat32,
                   output=1,
                   )
 
+def func2():
+    print('func2')
+    freq = 120
+    length = 1.5
+    sine_osc.play_frequencies(stream, length * 4, 1, 10000, 1000,
+                              freq * 3,
+                              )
+
+    sine_osc.play_frequencies(stream, length, 2, 10000, 1000,
+                              freq * 16/9 /2 * 3
+                              )
+
+    sine_osc.play_frequencies(stream, length * .75, 2, 10000, 1000,
+                              freq * 5/3 /2 * 3
+                              )
+
+    sine_osc.play_frequencies(stream, length * .25, 2, 10000, 1000,
+                              freq * 3/2 /2 * 3
+                              )
+
+    sine_osc.play_frequencies(stream, length * 3, 2, 10000, 1000,
+                              freq * 3/2 /2 * 3
+                              )
+
+    sine_osc.play_frequencies(stream, length * 3, 2, 10000, 1000,
+                              freq * 3/2 /2 * 3
+                              )
+
+
+    sine_osc.play_frequencies(stream, length * 3, 2, 10000, 1000,
+                              freq * 3/2 /2 * 3
+                              )
+
+
+    #
+    # sine_osc.play_frequencies(stream, length, 2, 10000, 1000,
+    #                           freq * 16/9 /2
+    #                           )
+
+    #
+    # freq = freq * 16/9 /2
+    # sine_osc.play_frequencies(stream, length * .75, 2, 10000, 1000,
+    #                           freq * 3,
+    #                           )
+    #
+    # sine_osc.play_frequencies(stream, length * 3, 2, 10000, 1000,
+    #                           freq * 3,
+    #                           )
 
 def func1():
     print ('func1')
@@ -30,7 +78,7 @@ def func1():
                                   freq,
                                   freq * 3/2,
                                   freq * 2 * 5/4,
-                                  freq * 2 * 3/2
+                                  freq * 2 * 3/2,
         )
 
     freq = freq * 9/8
@@ -49,9 +97,6 @@ def func1():
         sine_osc.play_frequencies(stream, length, 1, 1000, 1000,
                                   freq,
                                   freq * 5/4,
-                                  freq * 4/3 * 2,
-                                  freq * 2 * 6/5,
-                                  freq * 2 * 3/2,
                                   freq * 4/3 * 2,
                                   )
 
@@ -197,7 +242,6 @@ def func1():
                               )
 
     sine_osc.play_frequencies(stream, length /2, 1.1, 1000, 1000,
-                              # freq,
                               freq * 5/3,
                               )
 
@@ -230,3 +274,5 @@ if __name__=='__main__':
     mp.set_start_method('spawn')
     p1 = mp.Process(target=func1)
     p1.start()
+    # p2 = mp.Process(target=func2)
+    # p2.start()
