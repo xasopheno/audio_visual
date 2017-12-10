@@ -22,7 +22,7 @@ class SineOsc:
         rounded_waveform = np.round(waveform3, 0)
 
 
-        return np.add(np.add(waveform, waveform2), np.add(rounded_waveform, waveform3))
+        # return np.add(np.add(waveform, waveform2), np.add(rounded_waveform, waveform3))
 
         return waveform
 
