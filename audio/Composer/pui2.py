@@ -181,6 +181,28 @@ def viola():
                               freq * 3/2
                               )
 
+    for i in range(3):
+        osc.play_frequencies(stream, length, 1, 10000, 1000,
+                             freq * 15/8
+                             )
+
+    osc.play_frequencies(stream, length * 3, 1, 10000, 1000,
+                         freq * 2
+                         )
+
+    for i in range(3):
+        osc.play_frequencies(stream, length, 1, 10000, 1000,
+                             freq * 5/3
+                             )
+
+    osc.play_frequencies(stream, length * 3, 1, 10000, 1000,
+                         freq * 3/2
+                         )
+
+    osc.play_frequencies(stream, length * 3, 1, 10000, 1000,
+                         freq * 3/2
+                         )
+
 # ______________________________________
 
 def violino2():
@@ -225,6 +247,69 @@ def violino2():
                               )
 
     # ______________________________________
+
+    for i in range(3):
+        osc.play_frequencies(stream, length, 1, 10000, 1000,
+                             freq * 9/8,
+                             )
+
+    osc.play_frequencies(stream, length * 3, 1, 10000, 1000,
+                         freq * 5/4,
+                         )
+
+    for i in range(3):
+        osc.play_frequencies(stream, length, 1, 10000, 1000,
+                             freq * 15/8 /2,
+                             )
+
+    osc.play_frequencies(stream, length * 3, 1, 10000, 1000,
+                         freq,
+                         )
+
+    osc.play_frequencies(stream, length, 1, 10000, 1000,
+                         freq * 5/4
+                         )
+
+    osc.play_frequencies(stream, length, 1, 10000, 1000,
+                         freq * 4/3
+                         )
+
+    osc.play_frequencies(stream, length, 1, 10000, 1000,
+                         freq * 3/2
+                         )
+
+    osc.play_frequencies(stream, length * 2, 1, 10000, 1000,
+                         freq
+                         )
+
+    osc.play_frequencies(stream, length, 1, 10000, 1000,
+                         freq * 15/8 /2
+                         )
+
+    for i in range(3):
+        osc.play_frequencies(stream, length, 1, 10000, 1000,
+                             freq
+                             )
+
+    osc.play_frequencies(stream, length * 2, 1, 10000, 1000,
+                         freq * 9/8
+                         )
+
+    osc.play_frequencies(stream, length, 1, 10000, 1000,
+                         freq
+                         )
+
+    osc.play_frequencies(stream, length * 2, 1, 10000, 1000,
+                         freq
+                         )
+
+    osc.play_frequencies(stream, length, 1, 10000, 1000,
+                         freq * 15/8
+                         )
+
+    osc.play_frequencies(stream, length * 3, 1, 10000, 1000,
+                         freq
+                         )
 
 def violino1():
     freq = Root * 4
@@ -370,7 +455,7 @@ if __name__=='__main__':
     p1.start()
     p2 = mp.Process(target=viola)
     p2.start()
-    p3 = mp.Process(target=violino2)
-    p3.start()
-    p4 = mp.Process(target=violino1)
-    p4.start()
+    # p3 = mp.Process(target=violino2)
+    # p3.start()
+    # p4 = mp.Process(target=violino1)
+    # p4.start()
