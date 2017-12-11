@@ -12,7 +12,7 @@ stream = p.open(format=pyaudio.paFloat32,
                 )
 
 
-sine_osc.play_frequencies(stream, 2, 1, 200, 200,
-                          400,
-                          )
+sine_osc.play(stream, 2, 1, 200, 200,
+              400,
+              )
 

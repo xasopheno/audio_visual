@@ -25,10 +25,10 @@ def func1():
     print ('func1')
     freq = 10000
     for i in range(10000000000):
-        sine_osc.play_frequencies(stream, .05, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
-                                  freq,
-                                  freq / 1000,
-                                  )
+        sine_osc.play(stream, .05, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
+                      freq,
+                      freq / 1000,
+                      )
         freq += 50
 
 
@@ -36,10 +36,10 @@ def func2():
     print ('func2')
     freq = 10000
     for i in range(10000000000):
-        sine_osc.play_frequencies(stream, .07, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
-                                  freq,
-                                  freq / 100
-                                  )
+        sine_osc.play(stream, .07, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
+                      freq,
+                      freq / 100
+                      )
         freq += 25
 
 
@@ -47,10 +47,10 @@ def func3():
     print ('func3')
     freq = 10000
     for i in range(10000000000):
-        sine_osc.play_frequencies(stream, .09, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
-                                  freq,
-                                  freq / 10000,
-                                  )
+        sine_osc.play(stream, .09, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
+                      freq,
+                      freq / 10000,
+                      )
         freq += 60
 
 
@@ -58,10 +58,10 @@ def func4():
     print ('func4')
     freq = 10000
     for i in range(10000000000):
-        sine_osc.play_frequencies(stream, .11, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
-                                  freq,
-                                  freq + 1,
-                                  )
+        sine_osc.play(stream, .11, random.choice([.90, 1, 1, 1, 1.05]) / 2, 50, 50,
+                      freq,
+                      freq + 1,
+                      )
         freq += 50
 
 

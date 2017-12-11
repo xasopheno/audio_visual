@@ -101,11 +101,11 @@ def func1():
     print ('func1')
     for i in range(timesThroughBach):
         for freq in freqs:
-            sine_osc.play_frequencies(stream, .25, 1, 8000, 1000,
-                                      freq,
-                                      freq * 2,
-                                      freq + 2,
-                                      )
+            sine_osc.play(stream, .25, 1, 8000, 1000,
+                          freq,
+                          freq * 2,
+                          freq + 2,
+                          )
 
 
         if i == timesThroughBach - 1:
@@ -114,33 +114,33 @@ def func1():
 
     for i in range(length):
         for freq in freqs2:
-            sine_osc.play_frequencies(stream, .25, 1, 8000, 1000,
-                                      freq,
-                                      freq * 2,
-                                      freq + 2,
-                                      )
+            sine_osc.play(stream, .25, 1, 8000, 1000,
+                          freq,
+                          freq * 2,
+                          freq + 2,
+                          )
 
 def func2():
     print ('func2')
     for i in range(timesThroughBach):
         for freq in freqs:
-            sine_osc.play_frequencies(stream, .25, 1, 1000, 10000,
-                                      freq * 3/2,
-                                      freq * 3/2 * 2,
-                                      freq * 3/2,
-                                      freq / 2,
-                                      )
+            sine_osc.play(stream, .25, 1, 1000, 10000,
+                          freq * 3 / 2,
+                          freq * 3 / 2 * 2,
+                          freq * 3 / 2,
+                          freq / 2,
+                          )
 
         time.sleep(1.9)
 
     for i in range(length):
         for freq in freqs2:
-            sine_osc.play_frequencies(stream, .25, 1, 1000, 10000,
-                                      freq * 3/2,
-                                      freq * 3/2 * 2,
-                                      freq * 3/2,
-                                      freq / 2,
-                                      )
+            sine_osc.play(stream, .25, 1, 1000, 10000,
+                          freq * 3 / 2,
+                          freq * 3 / 2 * 2,
+                          freq * 3 / 2,
+                          freq / 2,
+                          )
 
 
 if __name__=='__main__':

@@ -62,9 +62,9 @@ if __name__ == '__main__':
     past_freq = 0
     for freq in frequencies:
 
-        osc.play_frequencies(stream2, CHUNKSIZE/RATE, .1, 70, 70,
-                             freq,
-                             )
+        osc.play(stream2, CHUNKSIZE / RATE, .1, 70, 70,
+                 freq,
+                 )
         if freq == 0:
             print ('')
         else:

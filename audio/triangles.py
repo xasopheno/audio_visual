@@ -31,7 +31,7 @@ def check_for_relationship(frequency1, frequency2, relationship, length):
 
     if round((frequency1/frequency2), 3) == relationship or round((frequency2/frequency1), 3) == relationship:
 
-        osc.play_frequencies(
+        osc.play(
                         stream,
                         length,
                         .8,

@@ -25,10 +25,10 @@ def func1():
     print ('func1')
     freq = 400
     for i in range(3):
-        sine_osc.play_frequencies(stream, 1, 1, 500, 500,
-                                  freq,
-                                  freq / 1000,
-                                  )
+        sine_osc.play(stream, 1, 1, 500, 500,
+                      freq,
+                      freq / 1000,
+                      )
         freq += 50
 
 

@@ -17,50 +17,50 @@ stream = p.open(format=pyaudio.paFloat32,
 
 
 def idea(freq, tempo):
-    sine_osc.play_frequencies(stream, tempo, .7, 800, 200,
-                              freq,
-                              freq,
-                              freq * 3/2,
-                              freq * 3/2,
-                              freq * 3/2,
-                              freq * 3/2 + 3,
-                              freq * 3/2 - 3,
-                              freq * 3/2 + 2,
-                              freq * 3/2 - 2,
-                              # freq * 3/2 + 9,
-                              # freq * 3/2 - 9
-                              # )
-                              )
+    sine_osc.play(stream, tempo, .7, 800, 200,
+                  freq,
+                  freq,
+                  freq * 3 / 2,
+                  freq * 3 / 2,
+                  freq * 3 / 2,
+                  freq * 3 / 2 + 3,
+                  freq * 3 / 2 - 3,
+                  freq * 3 / 2 + 2,
+                  freq * 3 / 2 - 2,
+                  # freq * 3/2 + 9,
+                  # freq * 3/2 - 9
+                  # )
+                  )
 
 
 def idea_2(freq, tempo):
-    sine_osc.play_frequencies(stream, tempo, .09, 500000, 800000,
-                              freq /4 - 2,
-                              freq /4 - 2,
-                              freq /4 + 2,
-                              freq /2,
-                              freq /2 - 2,
-                              freq /2 + 2,
-                              freq /2 + 2,
-                              freq /2 * 3,
-                              freq /2 * 3,
-                              freq,
-                              freq * 3/2,
-                              freq * 3/2 - 3.2,
-                              freq * 3/2 + 3.2,
-                              freq * 5/4,
-                              freq * 3/2 - 2,
-                              freq * 9/4 + 2,
-                              freq * 9/2,
-                              freq * 30/8,
-                              freq * 30/8 - 3.2,
-                              freq * 36/8 + 3.2,
-                              freq * 20/4,
-                              freq * 23/4,
-                              freq * 23/4 + 3.2,
-                              freq * 33/8,
-                              freq * 44/8
-                              )
+    sine_osc.play(stream, tempo, .09, 500000, 800000,
+                  freq / 4 - 2,
+                  freq / 4 - 2,
+                  freq / 4 + 2,
+                  freq / 2,
+                  freq / 2 - 2,
+                  freq / 2 + 2,
+                  freq / 2 + 2,
+                  freq / 2 * 3,
+                  freq / 2 * 3,
+                  freq,
+                  freq * 3 / 2,
+                  freq * 3/2 - 3.2,
+                  freq * 3/2 + 3.2,
+                  freq * 5/4,
+                  freq * 3/2 - 2,
+                  freq * 9/4 + 2,
+                  freq * 9/2,
+                  freq * 30/8,
+                  freq * 30/8 - 3.2,
+                  freq * 36/8 + 3.2,
+                  freq * 20/4,
+                  freq * 23/4,
+                  freq * 23/4 + 3.2,
+                  freq * 33/8,
+                  freq * 44/8
+                  )
 
 if __name__ == '__main__':
     # time.sleep(50)

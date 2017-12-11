@@ -100,17 +100,17 @@ class Generator:
         print(bagOfNotes)
         for value in bagOfNotes:
             if value < 2000:
-                self.sine_osc.play_frequencies(self.play_stream, .015, .5, 100, 100,
-                                               # value * 3/4,
+                self.sine_osc.play(self.play_stream, .015, .5, 100, 100,
+                                   # value * 3/4,
                                                # value / 2 + 2,
                                                # value,
                                                # value + 3,
-                                               value * 5/4,
-                                               value * 3/2,
-                                               value * 9/4,
-                                               value * 4,
-                                               # value * 4 - 3,
-                                               )
+                                               value * 5 / 4,
+                                   value * 3 / 2,
+                                   value * 9 / 4,
+                                   value * 4,
+                                   # value * 4 - 3,
+                                   )
 
                 # for value in bagOfNotes:
                 #     if value != 0:

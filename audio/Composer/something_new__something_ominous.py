@@ -23,12 +23,12 @@ def func1():
         if j == 9 or j == 20:
             time.sleep(1.25)
         for i in range(5):
-            sine_osc.play_frequencies(stream, length, 1, 8000, 1000,
-                                      freq,
-                                      freq * 2,
-                                      freq + 1,
-                                      freq + 2,
-                                      )
+            sine_osc.play(stream, length, 1, 8000, 1000,
+                          freq,
+                          freq * 2,
+                          freq + 1,
+                          freq + 2,
+                          )
         freq += 10
         time.sleep(1)
     time.sleep(4)
@@ -46,11 +46,11 @@ def func2():
         length = .25
         freq = 51
         for i in range(5):
-            sine_osc.play_frequencies(stream, length, 1, 8000, 1000,
-                                      freq,
-                                      freq * 2,
-                                      freq + 1,
-                                      )
+            sine_osc.play(stream, length, 1, 8000, 1000,
+                          freq,
+                          freq * 2,
+                          freq + 1,
+                          )
         freq += 10
         time.sleep(1)
 
@@ -62,11 +62,11 @@ def func3():
         freq = random.choice([200, 250, 190, 210, 330, 200, 200, 250, 200, 200, 200])
         for i in range(random.randrange(8, 20, 1)):
             volume = random.choice([.4, .5, .6, .3, .4, .5, .5, .5, .5]) / 1.5
-            sine_osc.play_frequencies(stream, length, volume, 200, 200,
-                                      freq,
-                                      freq * 2,
-                                      freq + 1,
-                                      )
+            sine_osc.play(stream, length, volume, 200, 200,
+                          freq,
+                          freq * 2,
+                          freq + 1,
+                          )
             freq += random.choice([10, -13, 17, 15, 4, -18])
 
         time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
@@ -78,17 +78,17 @@ def func3():
         freq = random.choice([200, 250, 190, 210, 330, 200, 200, 250, 200, 200, 200])
         for i in range(random.randrange(9, 25, 1)):
             volume = random.choice([.4, .5, .6, .3, .4, .5, .5, .5, .5]) / 2
-            sine_osc.play_frequencies(stream, length, volume, 200, 200,
-                                      freq / 2,
-                                      freq,
-                                      freq * 2,
-                                      freq + 1,
-                                      freq * 3/5,
-                                      freq * 2 + 2,
-                                      freq * 9/8,
-                                      freq * 2 - 4,
-                                      freq * 3,
-                                      )
+            sine_osc.play(stream, length, volume, 200, 200,
+                          freq / 2,
+                          freq,
+                          freq * 2,
+                          freq + 1,
+                          freq * 3 / 5,
+                          freq * 2 + 2,
+                          freq * 9 / 8,
+                          freq * 2 - 4,
+                          freq * 3,
+                          )
             freq += random.choice([10, -13, 17, 15, 4, -18, 40, -40,])
 
         time.sleep(random.choice([.5, .7, 1, 1.2, 1.5, .3, 1, 1, .8, .5, .1]) * 2)
@@ -101,13 +101,13 @@ def func4():
         length = 5
         freq = random.choice([1000, 1040, 1080])
         volume = .07
-        sine_osc.play_frequencies(stream, length, volume, 40000, 40000,
-                                  freq / 2 - 3,
-                                  freq - 3,
-                                  freq + 3,
-                                  freq - 4,
-                                  freq + 5,
-                                  )
+        sine_osc.play(stream, length, volume, 40000, 40000,
+                      freq / 2 - 3,
+                      freq - 3,
+                      freq + 3,
+                      freq - 4,
+                      freq + 5,
+                      )
 
         # time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 5)
 
@@ -117,15 +117,15 @@ def func4():
         length = 9
         freq = random.choice([1000, 1040, 1080])
         volume = .11
-        sine_osc.play_frequencies(stream, length, volume, 60000, 70000,
-                                  freq * 3/2,
-                                  freq * 5/4 * 2,
-                                  freq * 5/4,
-                                  freq * 2,
-                                  freq * 9/8,
-                                  freq * 15/8,
-                                  freq * 11/8
-                                  )
+        sine_osc.play(stream, length, volume, 60000, 70000,
+                      freq * 3 / 2,
+                      freq * 5 / 4 * 2,
+                      freq * 5 / 4,
+                      freq * 2,
+                      freq * 9 / 8,
+                      freq * 15 / 8,
+                      freq * 11 / 8
+                      )
 
         time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
 
@@ -136,13 +136,13 @@ def func5():
         length = 5
         freq = random.choice([1000, 1040, 1080])
         volume = .04
-        sine_osc.play_frequencies(stream, length, volume, 70000, 60000,
-                                  freq / 2 - 3,
-                                  freq - 3,
-                                  freq + 3,
-                                  freq - 4,
-                                  freq + 5,
-                                  )
+        sine_osc.play(stream, length, volume, 70000, 60000,
+                      freq / 2 - 3,
+                      freq - 3,
+                      freq + 3,
+                      freq - 4,
+                      freq + 5,
+                      )
         freq += random.choice([10, -13, 17, 15, 4, -18])
 
     for j in range(14):
@@ -151,19 +151,19 @@ def func5():
         length = 10
         freq = random.choice([1000, 1040, 1080]) - 8
         volume = .11
-        sine_osc.play_frequencies(stream, length, volume, 100000, 70000,
-                                  freq / 2 - 3,
-                                  freq - 3,
-                                  freq + 3,
-                                  freq * 3/2 /2,
-                                  freq * 3/2,
-                                  freq * 5/4 * 2,
-                                  freq * 5/4,
-                                  freq * 2,
-                                  freq * 9/8,
-                                  freq * 15/8,
-                                  freq * 11/8,
-                                  )
+        sine_osc.play(stream, length, volume, 100000, 70000,
+                      freq / 2 - 3,
+                      freq - 3,
+                      freq + 3,
+                      freq * 3 / 2 / 2,
+                      freq * 3 / 2,
+                      freq * 5 / 4 * 2,
+                      freq * 5 / 4,
+                      freq * 2,
+                      freq * 9 / 8,
+                      freq * 15 / 8,
+                      freq * 11 / 8,
+                      )
 
         time.sleep(random.choice([.5, .7, 1, 1, .8,]) * 2)
 
@@ -176,40 +176,40 @@ def func6():
             length = 0.1
             volume = .4
             freq = random.choice([600, 650, 680, 690])
-            sine_osc.play_frequencies(stream, length, volume, 1000, 4000,
-                                      freq,
-                                      freq + 2,
-                                      freq,
-                                      freq * 3/2,
-                                      freq * 2,
-                                      freq * 2,
-                                      )
+            sine_osc.play(stream, length, volume, 1000, 4000,
+                          freq,
+                          freq + 2,
+                          freq,
+                          freq * 3 / 2,
+                          freq * 2,
+                          freq * 2,
+                          )
             freq += random.choice([19, 14, 25, 16, 23, -5, -34, -26, -16])
 
     for j in range(30):
         length = .6
         freq = random.choice([50, 51, 52, 53, 54, 55, 49, 48])
         volume = .76
-        sine_osc.play_frequencies(stream, length, volume, 1000, 10000,
-                                  freq,
-                                  freq + 2,
-                                  freq,
-                                  freq * 3/2,
-                                  freq * 2,
-                                  freq * 2,
-                                  )
+        sine_osc.play(stream, length, volume, 1000, 10000,
+                      freq,
+                      freq + 2,
+                      freq,
+                      freq * 3 / 2,
+                      freq * 2,
+                      freq * 2,
+                      )
         for i in range(5):
             length = 0.1
             volume = .3
             freq = random.choice([600, 650, 680, 690])
-            sine_osc.play_frequencies(stream, length, volume, 1000, 4000,
-                                      freq + 2,
-                                      freq,
-                                      freq * 3/2,
-                                      freq * 2,
-                                      freq * 2,
-                                      freq * 3 - random.choice([2, 4, 6, 7, 8, 10])
-                                      )
+            sine_osc.play(stream, length, volume, 1000, 4000,
+                          freq + 2,
+                          freq,
+                          freq * 3 / 2,
+                          freq * 2,
+                          freq * 2,
+                          freq * 3 - random.choice([2, 4, 6, 7, 8, 10])
+                          )
             freq += random.choice([19, 14, 25, 16, 23, -5, -34, -26, -16])
 
     p1 = mp.Process(target=func1)

@@ -33,12 +33,12 @@ class Musician:
         for freq in freqs:
             if freq < 550:
                 print freq
-                self.osc.play_frequencies(self.stream, .2, 1, 500, 500,
-                                          freq / 2,
-                                          freq,
-                                          freq * 3/2,
-                                          freq * 3/4,
-                                          )
+                self.osc.play(self.stream, .2, 1, 500, 500,
+                              freq / 2,
+                              freq,
+                              freq * 3 / 2,
+                              freq * 3 / 4,
+                              )
 
 
 musician = Musician()

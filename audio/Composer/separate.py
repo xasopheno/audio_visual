@@ -20,32 +20,32 @@ def func1():
     print ('func1')
     freq = myFreq
     for i in range(10):
-        sine_osc.play_frequencies(stream, 3, 1, 10000, 15000,
-                                  freq
-                                  )
+        sine_osc.play(stream, 3, 1, 10000, 15000,
+                      freq
+                      )
 
-        sine_osc.play_frequencies(stream, 2, 1, 5000, 5000,
-                                  freq * 5/3
-                                  )
+        sine_osc.play(stream, 2, 1, 5000, 5000,
+                      freq * 5 / 3
+                      )
 
-        sine_osc.play_frequencies(stream, 2, 1, 1000, 2000,
-                                  freq * 5/3
-                                  )
+        sine_osc.play(stream, 2, 1, 1000, 2000,
+                      freq * 5 / 3
+                      )
 
 #
-        sine_osc.play_frequencies(stream, 3, 1, 10000, 15000,
-                                  freq,
-                                  freq * 2
-                                  )
-        sine_osc.play_frequencies(stream, 2, 1, 5000, 10000,
-                                  freq * 8/9,
-                                  freq * 5/3
-                                  )
+        sine_osc.play(stream, 3, 1, 10000, 15000,
+                      freq,
+                      freq * 2
+                      )
+        sine_osc.play(stream, 2, 1, 5000, 10000,
+                      freq * 8 / 9,
+                      freq * 5 / 3
+                      )
 
-        sine_osc.play_frequencies(stream, 2, 1, 5000, 5000,
-                                  freq * 5/3,
-                                  freq * 2,
-                                  )
+        sine_osc.play(stream, 2, 1, 5000, 5000,
+                      freq * 5 / 3,
+                      freq * 2,
+                      )
 
 
 def func2():
@@ -53,36 +53,36 @@ def func2():
     freq = myFreq
     freq = random.choice([freq])
     for i in range(8):
-        sine_osc.play_frequencies(stream, 3, .75, 1000, 20000,
-                                  freq * 2/3,
-                                  freq / 3
-                                  )
+        sine_osc.play(stream, 3, .75, 1000, 20000,
+                      freq * 2 / 3,
+                      freq / 3
+                      )
 
-        sine_osc.play_frequencies(stream, 1, .5, 2000, 20000,
-                                  freq * 3/2,
-                                  freq * 4/3
-                                  )
-        sine_osc.play_frequencies(stream, 2, .5, 5000, 20000,
-                                  freq * 7/4,
-                                  freq * 5/4
-                                  )
+        sine_osc.play(stream, 1, .5, 2000, 20000,
+                      freq * 3 / 2,
+                      freq * 4 / 3
+                      )
+        sine_osc.play(stream, 2, .5, 5000, 20000,
+                      freq * 7 / 4,
+                      freq * 5 / 4
+                      )
 
-        sine_osc.play_frequencies(stream, 1, .75, 10000, 10000,
-                                  freq * 2/3,
-                                  freq / 3
-                                  )
-        sine_osc.play_frequencies(stream, 2, .5, 20000, 10000,
-                                  freq * 5/4
-                                  )
+        sine_osc.play(stream, 1, .75, 10000, 10000,
+                      freq * 2 / 3,
+                      freq / 3
+                      )
+        sine_osc.play(stream, 2, .5, 20000, 10000,
+                      freq * 5 / 4
+                      )
 
 
 def func3():
     print ('func3')
     for i in range(11):
-        sine_osc.play_frequencies(stream, 12, .6, 1000, 1000,
-                                  myFreq / 6,
-                                  myFreq / 6 + 2,
-                                  )
+        sine_osc.play(stream, 12, .6, 1000, 1000,
+                      myFreq / 6,
+                      myFreq / 6 + 2,
+                      )
 
 
 if __name__=='__main__':

@@ -18,22 +18,22 @@ stream = p.open(format=pyaudio.paFloat32,
 
 
 def patrick(freq, length, vol):
-    sine_osc.play_frequencies(stream, length, vol, 5000, 2000,
-                              random.choice([50, 65, 50, 70, 50, 68]),
-                              # freq / 3 * 2,
+    sine_osc.play(stream, length, vol, 5000, 2000,
+                  random.choice([50, 65, 50, 70, 50, 68]),
+                  # freq / 3 * 2,
                               freq / 2,
-                              freq,
-                              freq * 3/2 + 2,
-                              random.choice([freq * 7/4, freq * 10/4]),
-                              random.choice([freq * 4/3, freq * 9/4]),
-                              )
+                  freq,
+                  freq * 3 / 2 + 2,
+                  random.choice([freq * 7/4, freq * 10/4]),
+                  random.choice([freq * 4/3, freq * 9/4]),
+                  )
 
 
 def patrick_2(freq, length, vol):
-    sine_osc.play_frequencies(stream, length, vol, 2000, 2000,
-                              freq,
-                              freq * 3/2
-                              )
+    sine_osc.play(stream, length, vol, 2000, 2000,
+                  freq,
+                  freq * 3 / 2
+                  )
 
 
 for j in range(2):

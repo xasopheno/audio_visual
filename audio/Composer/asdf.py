@@ -21,38 +21,38 @@ def bass():
         length = 10
         freq = 50
         for i in range(5):
-            sine_osc.play_frequencies(stream, length, 1.2, 10000, 10000,
-                                      freq,
-                                      freq * 2,
-                                      freq + 1,
-                                      freq + 2,
-                                      )
+            sine_osc.play(stream, length, 1.2, 10000, 10000,
+                          freq,
+                          freq * 2,
+                          freq + 1,
+                          freq + 2,
+                          )
 
 def one(freq, length, vol, subdivision=1, sleep=0):
     print(freq, length, vol, subdivision)
     for i in range(subdivision):
-        sine_osc.play_frequencies(stream, (length / subdivision) * .95, vol * random.choice([.4, .5, .6, .7, .8, .9, 1, 1 ,1]), 200, 200,
-                                  freq / 16,
-                                  freq / 16,
-                                  freq / 16 + 3,
-                                  freq / 8,
-                                  freq / 8,
-                                  freq / 4,
-                                  freq / 4,
-                                  freq / 4 + 5,
-                                  freq / 2 - 5,
-                                  freq / 2 + 3,
-                                  freq - 2,
-                                  freq * 2 + 2,
-                                  # freq * 4,
-                                  # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 11/8]),
-                                  # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 3/2 / 2]),
-                                  # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 5/4 / 2]),
-                                  # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 5/4 / 2]),
-                                  # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 5/4 / 2]),
-                                  # random.choice([freq * 5/4 * 2, freq * 8/7 * 2, freq * 9/8 * 2, freq * 3/4 * 2, freq * 3/2 * 2, freq * 5/4 * 2]),
-                                  # random.choice([freq * 5/4 * 2, freq * 8/7 * 2, freq * 9/8 * 2, freq * 3/4 * 2, freq * 3/2 * 2, freq * 5/4 * 2]),
-                                  )
+        sine_osc.play(stream, (length / subdivision) * .95, vol * random.choice([.4, .5, .6, .7, .8, .9, 1, 1 , 1]), 200, 200,
+                      freq / 16,
+                      freq / 16,
+                      freq / 16 + 3,
+                      freq / 8,
+                      freq / 8,
+                      freq / 4,
+                      freq / 4,
+                      freq / 4 + 5,
+                      freq / 2 - 5,
+                      freq / 2 + 3,
+                      freq - 2,
+                      freq * 2 + 2,
+                      # freq * 4,
+                      # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 11/8]),
+                      # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 3/2 / 2]),
+                      # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 5/4 / 2]),
+                      # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 5/4 / 2]),
+                      # random.choice([freq * 5/4, freq * 8/7, freq * 9/8, freq * 3/4, freq * 3/2, freq * 5/4 / 2]),
+                      # random.choice([freq * 5/4 * 2, freq * 8/7 * 2, freq * 9/8 * 2, freq * 3/4 * 2, freq * 3/2 * 2, freq * 5/4 * 2]),
+                      # random.choice([freq * 5/4 * 2, freq * 8/7 * 2, freq * 9/8 * 2, freq * 3/4 * 2, freq * 3/2 * 2, freq * 5/4 * 2]),
+                      )
 
     time.sleep(sleep)
 

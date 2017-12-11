@@ -27,7 +27,7 @@ class SineOsc:
         return waveform
 
 
-    def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
+    def play(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
         all_tones = []
         volume = volume
