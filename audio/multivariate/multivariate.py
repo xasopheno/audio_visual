@@ -61,12 +61,18 @@ class _LSTMModel(ts_model.SequentialTimeSeriesModel):
         Args:
           input_statistics: A math_utils.InputStatistics object.
         """
+
+        def lstm_cell():
+            return tf.contrib.rnn.BasicLSTMCell(self._num_units)
+        stacked_lstm = tf.contrib.rnn.MultiRNNCell(
+            [lstm_cell() for _ in range(2)])
+
         super(_LSTMModel, self).initialize_graph(input_statistics=input_statistics)
-        self._lstm_cell = tf.nn.rnn_cell.LSTMCell(num_units=self._num_units)
+        self._lstm_cell = stacked_lstm
         # Create templates so we don't have to worry about variable reuse.
         self._lstm_cell_run = tf.make_template(
             name_="lstm_cell",
-            func_=self._lstm_cell,
+            func_=stacked_lstm,
             create_scope_now_=True)
         # Transforms LSTM output into mean predictions.
         self._predict_from_lstm_output = tf.make_template(
@@ -77,13 +83,110 @@ class _LSTMModel(ts_model.SequentialTimeSeriesModel):
     def get_start_state(self):
         """Return initial state for the time series model."""
         return (
-            # Keeps track of the time associated with this state for error checking.
+            # Keeps track of the time associated with this state for from numpy import concatenate
+        from matplotlib import pyplot
+        from pandas import read_csv
+        from pandas import DataFrame
+        from pandas import concat
+        from sklearn.preprocessing import MinMaxScaler
+        from sklearn.preprocessing import LabelEncoder
+        from sklearn.metrics import mean_squared_error
+        from keras.models import Sequential
+        from keras.layers import Dense
+        from keras.layers import LSTM
+
+            # convert series to supervised learning
+def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
+    n_vars = 1 if type(data) is list else data.shape[1]
+    df = DataFrame(data)
+    cols, names = list(), list()
+    # input sequence (t-n, ... t-1)
+    for i in range(n_in, 0, -1):
+        cols.append(df.shift(i))
+        names += [('var%d(t-%d)' % (j+1, i)) for j in range(n_vars)]
+    # forecast sequence (t, t+1, ... t+n)
+    for i in range(0, n_out):
+        cols.append(df.shift(-i))
+        if i == 0:
+            names += [('var%d(t)' % (j+1)) for j in range(n_vars)]
+        else:
+            names += [('var%d(t+%d)' % (j+1, i)) for j in range(n_vars)]
+    # put it all together
+    agg = concat(cols, axis=1)
+    agg.columns = names
+    # drop rows with NaN values
+    if dropnan:
+        agg.dropna(inplace=True)
+    return agg
+
+# load dataset
+dataset = read_csv('pollution.csv', header=0, index_col=0)
+values = dataset.values
+# integer encode direction
+encoder = LabelEncoder()
+values[:,4] = encoder.fit_transform(values[:,4])
+# ensure all data is float
+values = values.astype('float32')
+# normalize features
+scaler = MinMaxScaler(feature_range=(0, 1))
+scaled = scaler.fit_transform(values)
+# specify the number of lag hours
+n_hours = 3
+n_features = 8
+# frame as supervised learning
+reframed = series_to_supervised(scaled, n_hours, 1)
+print(reframed.shape)
+
+# split into train and test sets
+values = reframed.values
+n_train_hours = 365 * 24
+train = values[:n_train_hours, :]
+test = values[n_train_hours:, :]
+# split into input and outputs
+n_obs = n_hours * n_features
+train_X, train_y = train[:, :n_obs], train[:, -n_features]
+test_X, test_y = test[:, :n_obs], test[:, -n_features]
+print(train_X.shape, len(train_X), train_y.shape)
+# reshape input to be 3D [samples, timesteps, features]
+train_X = train_X.reshape((train_X.shape[0], n_hours, n_features))
+test_X = test_X.reshape((test_X.shape[0], n_hours, n_features))
+print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
+
+# design network
+model = Sequential()
+model.add(LSTM(50, input_shape=(train_X.shape[1], train_X.shape[2])))
+model.add(Dense(1))
+model.compile(loss='mae', optimizer='adam')
+# fit network
+history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2, shuffle=False)
+# plot history
+pyplot.plot(history.history['loss'], label='train')
+pyplot.plot(history.history['val_loss'], label='test')
+pyplot.legend()
+pyplot.show()
+
+# make a prediction
+yhat = model.predict(test_X)
+test_X = test_X.reshape((test_X.shape[0], n_hours*n_features))
+# invert scaling for forecast
+inv_yhat = concatenate((yhat, test_X[:, -7:]), axis=1)
+inv_yhat = scaler.inverse_transform(inv_yhat)
+inv_yhat = inv_yhat[:,0]
+# invert scaling for actual
+test_y = test_y.reshape((len(test_y), 1))
+inv_y = concatenate((test_y, test_X[:, -7:]), axis=1)
+inv_y = scaler.inverse_transform(inv_y)
+inv_y = inv_y[:,0]
+# calculate RMSE
+rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
+print('Test RMSE: %.3f' % rmse)
+error checking.
             tf.zeros([], dtype=tf.int64),
             # The previous observation or prediction.
             tf.zeros([self.num_features], dtype=self.dtype),
             # The state of the RNNCell (batch dimension removed since this parent
             # class will broadcast).
-            [tf.squeeze(state_element, axis=0)
+            [tf.squeeze(state_element, axis=1)
              for state_element
              in self._lstm_cell.zero_state(batch_size=1, dtype=self.dtype)])
 
@@ -122,7 +225,8 @@ class _LSTMModel(ts_model.SequentialTimeSeriesModel):
             transformed_values = self._transform(current_values)
             # Use mean squared error across features for the loss.
             predictions["loss"] = tf.reduce_mean(
-                (prediction - transformed_values) ** 2, axis=-1)
+                (prediction - transformed_values) ** 2 * 10000, axis=-1)
+            print(predictions["loss"])
             # Keep track of the new observation in model state. It won't be run
             # through the LSTM until the next _imputation_step.
             new_state_tuple = (current_times, transformed_values, lstm_state)
@@ -159,20 +263,19 @@ if __name__ == '__main__':
         column_names=((tf.contrib.timeseries.TrainEvalFeatures.TIMES,)
                       + (tf.contrib.timeseries.TrainEvalFeatures.VALUES,) * 2))
     train_input_fn = tf.contrib.timeseries.RandomWindowInputFn(
-        reader, batch_size=32, window_size=128)
+        reader, batch_size=10, window_size=32)
 
     estimator = ts_estimators.TimeSeriesRegressor(
-        model=_LSTMModel(num_features=2, num_units=128),
-        optimizer=tf.train.AdamOptimizer(0.003))
+        model=_LSTMModel(num_features=2, num_units=256),
+        optimizer=tf.train.AdamOptimizer(0.001))
 
-    estimator.train(input_fn=train_input_fn, steps=300)
+    estimator.train(input_fn=train_input_fn, steps=1000)
     evaluation_input_fn = tf.contrib.timeseries.WholeDatasetInputFn(reader)
     evaluation = estimator.evaluate(input_fn=evaluation_input_fn, steps=1)
     # Predict starting after the evaluation
-
     (predictions,) = tuple(estimator.predict(
         input_fn=tf.contrib.timeseries.predict_continuation_input_fn(
-            evaluation, steps=500)))
+            evaluation, steps=100)))
 
     observed_times = evaluation["times"][0]
     observed = evaluation["observed"][0, :, :]
@@ -181,8 +284,6 @@ if __name__ == '__main__':
     predicted_times = predictions['times']
     predicted = predictions["mean"]
 
-    print(predicted)
-
     plt.figure(figsize=(15, 5))
     plt.axvline(99, linestyle="dotted", linewidth=4, color='r')
     observed_lines = plt.plot(observed_times, observed, label="observation", color="k")
@@ -190,4 +291,4 @@ if __name__ == '__main__':
     predicted_lines = plt.plot(predicted_times, predicted, label="prediction", color="r")
     plt.legend(handles=[observed_lines[0], evaluated_lines[0], predicted_lines[0]],
                loc="upper left")
-    plt.savefig('predict_result.jpg')
+    plt.savefig('predict_result.png')

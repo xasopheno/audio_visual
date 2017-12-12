@@ -14,14 +14,14 @@ stream = p.open(format=pyaudio.paFloat32,
                 )
 
 
-Root = 130
+Root = 114
 length = 1.5
 
 def bassi():
     freq = Root
     print ('bass')
     volume = 1
-    attack = 10000
+    attack = 1000
     decay = 1000
     for i in range(3):
         osc.play(stream, length, volume, attack, decay,
@@ -143,7 +143,7 @@ def viola():
     freq = Root * 2
     print ('viola')
     volume = 1
-    attack = 10000
+    attack = 1000
     decay = 1000
 
     for i in range(3):
@@ -270,7 +270,7 @@ def violino2():
     freq = Root * 2
     print ('violino2')
     volume = 1
-    attack = 10000
+    attack = 1000
     decay = 1000
     for i in range(3):
         osc.play(stream, length, volume, attack, decay,
@@ -378,7 +378,7 @@ def violino1():
     freq = Root * 4
     print ('violino1')
     volume = 1
-    attack = 10000
+    attack = 1000
     decay = 1000
     osc.play(stream, length * 4, volume, attack, decay,
              freq,
