@@ -17,9 +17,9 @@ stream = p.open(format=pyaudio.paFloat32,
 
 class Opening:
     def __init__(self):
-        self.root = 120
+        self.root = 139
         self.length = 1.5
-        self.volume = .5
+        self.volume = 1
         self.attack = 8000
         self.decay = 1000
     
@@ -341,7 +341,7 @@ class Opening:
                  freq,
                  )
 
-        volume *=2
+        volume *= 2
         osc.play(stream, length, volume, attack, decay,
                  freq * 5 / 4
                  )
@@ -390,7 +390,7 @@ class Opening:
     def violino1(self):
         print ('violino1')
         freq = self.root * 4
-        volume = self.volume
+        volume = self.volume * .8
         length = self.length
         attack = self.attack
         decay = self.decay
@@ -399,7 +399,7 @@ class Opening:
                  )
 
         osc.play(stream, length, volume, attack, decay,
-                 freq * 15 / 8 / 2,
+                 freq * 15/8/2,
                  )
 
 
