@@ -118,7 +118,6 @@ n_train_hours = 365 * 24
 train = values[:n_train_hours, :]
 test = values[n_train_hours:, :]
 # split into input and outputs
-train_X, train_y = train[:, :-1], train[:, -1]
 test_X, test_y = test[:, :-1], test[:, -1]
 # reshape input to be 3D [samples, timesteps, features]
 train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
@@ -127,14 +126,20 @@ print(train_X.shape, train_y.shape, test_X.shape, test_y.shape)
  
 
 visible = Input(shape=(train_X.shape[1], train_X.shape[2]))
-hidden1 = LSTM(50)(visible)
-hidden2 = Dense(50, activation='relu')(hidden1)
-output = Dense(1, activation='sigmoid')(hidden2)
+hidden1 = LSTM(50, return_sequences=True)(visible)
+dropout1 = Dropout(0.5)(hidden1)
+
+hidden2 = LSTM(50, return_sequences=True)(dropout1)
+dropout2 = Dropout(0.5)(hidden2)
+
+hidden2 = LSTM(50, return_sequences=True)(dropout1)
+dropout2 = Dropout(0.5)(hidden2)
+
+hidden3 = LSTM(50)(dropout2)
+output = Dense(1, activation='sigmoid')(hidden3)
+
+
 model = Model(inputs=visible, outputs=output)
-# design network
-#model = Sequential()
-#model.add(LSTM(50, )
-#model.add(Dense(1))
 model.compile(loss='mae', optimizer='adam')
 model.summary()
 # fit network
