@@ -27,7 +27,7 @@ with open('datasets/compressed/second.txt', 'r') as f:
             # token = '|'
 
             rounded_csv.write(
-                str(counter) + ',' +
+                # str(counter) + ',' +
                 str(midi_num) + ',' +
                 str(length) + '\n')
             counter += 1
