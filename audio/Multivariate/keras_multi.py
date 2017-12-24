@@ -61,7 +61,7 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 
 # load dataset
 dataset = read_csv('data/music_data.csv', header=0)
-values1 = dataset.values
+values = dataset.values
 # integer encode direction
 encoder = LabelEncoder()
 values[:, 0] = encoder.fit_transform(values[:, 0])
@@ -76,10 +76,8 @@ scaled = scaler.fit_transform(values)
 n_hours = 3
 n_features = 2
 # frame as supervised learning
-reframed = series_to_supervised(values1, n_hours, 1)
+reframed = series_to_supervised(scaled, n_hours, 1)
 print(reframed.shape)
-
-
 
 # split into train and test sets
 values = reframed.values
@@ -88,14 +86,15 @@ train = values[:n_train_hours, :]
 test = values[n_train_hours:, :]
 # split into input and outputs
 n_obs = n_hours * n_features
-train_X, train_y_notes = train[:, :n_obs:], train[:, -n_features]
-train_y_length = train[:, 0:2], train[:, 1]
 
-test_X, test_y_notes = test[:, 0:2], test[:, 0]
-test_y_length = test[:, 0:2], test[:, 1]
+train_X, train_y_notes = train[:, :n_obs], train[:, -n_features]
+train_y_length = train[:, -n_features -1]
+
+test_X, test_y_notes = test[:, :n_obs], test[:, -n_features]
+test_y_length = test[:, -n_features -1]
 # reshape input to be 3D [samples, timesteps, features]
-train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
-test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
+train_X = train_X.reshape((train_X.shape[0], n_hours, n_features))
+test_X = test_X.reshape((test_X.shape[0], n_hours, n_features))
 print(train_X.shape, train_y_notes.shape, test_X.shape, test_y_notes.shape)
 
 visible = Input(name='input_main', shape=(train_X.shape[1], train_X.shape[2]))
@@ -134,7 +133,7 @@ hidden11 = LSTM(256)(dropout10)
 output_notes = Dense(1, activation='sigmoid', name='output_notes')(hidden11)
 output_length = Dense(1, activation='sigmoid', name='output_length')(hidden11)
 
-model = Model(inputs=[visible], outputs=[output_notes])
+model = Model(inputs=[visible], outputs=[output_notes, output_length])
 
 optimizer = optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 model.compile(loss='mae', optimizer=optimizer)
@@ -145,7 +144,8 @@ history = model.fit(
             {'input_main': train_X},
             {'output_notes': train_y_notes, 'output_length': train_y_length},
             validation_data=({'input_main': test_X},
-                             {'output_notes': test_y_notes, 'output_length': test_y_length}), verbose=2,
+                             {'output_notes': test_y_notes, 'output_length': test_y_length}), 
+            verbose=1,
             shuffle=False,
             epochs=50, batch_size=32)
 
@@ -157,16 +157,16 @@ pyplot.show()
 
 # make a prediction
 yhat = model.predict(test_X)
-test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
+test_X = test_X.reshape((test_X.shape[0], n_hours*n_features))
 # invert scaling for forecast
-inv_yhat = concatenate((yhat, test_X[:, 1:]), axis=1)
+inv_yhat = concatenate((yhat, test_X[:, -7:]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
-inv_yhat = inv_yhat[:, 0]
+inv_yhat = inv_yhat[:,0]
 # invert scaling for actual
-test_y_notes = test_y_notes.reshape((len(test_y_notes), 1))
-inv_y = concatenate((test_y_notes, test_X[:, 1:]), axis=1)
+test_y = test_y.reshape((len(test_y), 1))
+inv_y = concatenate((test_y, test_X[:, -7:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
-inv_y = inv_y[:, 0]
+inv_y = inv_y[:,0]
 # calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 print('Test RMSE: %.3f' % rmse)
