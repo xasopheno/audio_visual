@@ -98,18 +98,18 @@ test_X = test_X.reshape((test_X.shape[0], n_hours, n_features))
 print(train_X.shape, train_y_notes.shape, test_X.shape, test_y_notes.shape)
 
 visible = Input(name='input_main', shape=(train_X.shape[1], train_X.shape[2]))
-hidden1 = LSTM(128, return_sequences=True)(visible)
+hidden1 = LSTM(256, return_sequences=True)(visible)
 dropout1 = Dropout(0.5)(hidden1)
 
-hidden2 = LSTM(128, return_sequences=True)(dropout1)
+hidden2 = LSTM(256, return_sequences=True)(dropout1)
 dropout2 = Dropout(0.5)(hidden2)
 
-#hidden3 = LSTM(256, return_sequences=True)(dropout2)
-#dropout3 = Dropout(0.5)(hidden3)
-#
-#hidden4 = LSTM(256, return_sequences=True)(dropout3)
-#dropout4 = Dropout(0.5)(hidden4)
-#
+hidden3 = LSTM(256, return_sequences=True)(dropout2)
+dropout3 = Dropout(0.5)(hidden3)
+
+hidden4 = LSTM(256, return_sequences=True)(dropout3)
+dropout4 = Dropout(0.5)(hidden4)
+
 #hidden5 = LSTM(256, return_sequences=True)(dropout4)
 #dropout5 = Dropout(0.5)(hidden5)
 #
@@ -128,7 +128,7 @@ dropout2 = Dropout(0.5)(hidden2)
 #hidden10 = LSTM(256, return_sequences=True)(dropout9)
 #dropout10 = Dropout(0.5)(hidden10)
 
-hidden11 = LSTM(128)(dropout2)
+hidden11 = LSTM(256)(dropout4)
 
 output_notes = Dense(1, activation='sigmoid', name='output_notes')(hidden11)
 output_length = Dense(1, activation='sigmoid', name='output_length')(hidden11)
@@ -147,7 +147,7 @@ history = model.fit(
                              {'output_notes': test_y_notes, 'output_length': test_y_length}), 
             verbose=2,
             shuffle=False,
-            epochs=50, batch_size=32)
+            epochs=60, batch_size=32)
 
 # plot history
 pyplot.plot(history.history['loss'], label='train')
@@ -163,8 +163,8 @@ inv_yhat = concatenate((yhat, test_X[:, -7:]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:,0]
 # invert scaling for actual
-test_y = test_y.reshape((len(test_y), 1))
-inv_y = concatenate((test_y, test_X[:, -7:]), axis=1)
+test_y = test_y.reshape((len(test_y_notes), 1))
+inv_y = concatenate((test_y_notes, test_X[:, -7:]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:,0]
 # calculate RMSE
