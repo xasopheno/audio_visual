@@ -102,27 +102,27 @@ hidden1 = LSTM(256, return_sequences=True)(visible)
 batchNorm1 = BatchNormalization()(hidden1)
 dropout1 = Dropout(0.5)(batchNorm1)
 
-hidden2 = LSTM(256, return_sequences=True)(dropout1)
-batchNorm2 = BatchNormalization()(hidden2)
-dropout2 = Dropout(0.5)(batchNorm2)
+#hidden2 = LSTM(256, return_sequences=True)(dropout1)
+#batchNorm2 = BatchNormalization()(hidden2)
+#dropout2 = Dropout(0.5)(batchNorm2)
+#
+#hidden3 = LSTM(256, return_sequences=True)(dropout2)
+#batchNorm3 = BatchNormalization()(hidden3)
+#dropout3 = Dropout(0.5)(batchNorm3)
+#
+#hidden4 = LSTM(256, return_sequences=True)(dropout3)
+#batchNorm4 = BatchNormalization()(hidden4)
+#dropout4 = Dropout(0.5)(batchNorm4)
+#
+#hidden5 = LSTM(256, return_sequences=True)(dropout4)
+#batchNorm5 = BatchNormalization()(hidden5)
+#dropout5 = Dropout(0.5)(batchNorm5)
+#
+#hidden6 = LSTM(256, return_sequences=True)(dropout5)
+#batchNorm6 = BatchNormalization()(hidden6)
+#dropout6 = Dropout(0.5)(batchNorm6)
 
-hidden3 = LSTM(256, return_sequences=True)(dropout2)
-batchNorm3 = BatchNormalization()(hidden3)
-dropout3 = Dropout(0.5)(batchNorm3)
-
-hidden4 = LSTM(256, return_sequences=True)(dropout3)
-batchNorm4 = BatchNormalization()(hidden4)
-dropout4 = Dropout(0.5)(batchNorm4)
-
-hidden5 = LSTM(256, return_sequences=True)(dropout4)
-batchNorm5 = BatchNormalization()(hidden5)
-dropout5 = Dropout(0.5)(batchNorm5)
-
-hidden6 = LSTM(256, return_sequences=True)(dropout5)
-batchNorm6 = BatchNormalization()(hidden6)
-dropout6 = Dropout(0.5)(batchNorm6)
-
-hidden11 = LSTM(256)(dropout6)
+hidden11 = LSTM(256)(dropout1)
 
 output_notes = Dense(1, activation='sigmoid', name='output_notes')(hidden11)
 output_length = Dense(1, activation='sigmoid', name='output_length')(hidden11)
@@ -154,12 +154,12 @@ yhat = model.predict(test_X)
 
 test_X = test_X.reshape((test_X.shape[0], n_hours*n_features))
 # invert scaling for forecast
-inv_yhat = concatenate((yhat, test_X[:, -1:]), axis=1)
+inv_yhat = concatenate((yhat, test_X[:, :]), axis=1)
 inv_yhat = scaler.inverse_transform(inv_yhat)
 inv_yhat = inv_yhat[:,0]
 # invert scaling for actual
 test_y = test_y_notes.reshape((len(test_y_notes), 1))
-inv_y = concatenate((test_y_notes, test_X[:, -1:]), axis=1)
+inv_y = concatenate((test_y_notes, test_X[:, :]), axis=1)
 inv_y = scaler.inverse_transform(inv_y)
 inv_y = inv_y[:,0]
 # calculate RMSE
