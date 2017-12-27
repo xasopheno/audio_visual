@@ -1,7 +1,7 @@
 from pandas import read_csv
 from matplotlib import pyplot
 from math import sqrt
-from numpy import concatenate
+from numpy import concatenate, array
 from matplotlib import pyplot
 from pandas import read_csv
 from pandas import DataFrame
@@ -10,10 +10,12 @@ from keras import optimizers
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import mean_squared_error
-from keras.models import Model
+from keras.models import Model, model_from_json
 from keras.layers import Input
 from keras.layers import Dense, Dropout, BatchNormalization
 from keras.layers.recurrent import LSTM
+from keras.utils import to_categorical
+from keras.models import model_from_json
 
 # from keras.utils import plot_model
 
@@ -98,14 +100,14 @@ test_X = test_X.reshape((test_X.shape[0], n_hours, n_features))
 print(train_X.shape, train_y_notes.shape, test_X.shape, test_y_notes.shape)
 
 visible = Input(name='input_main', shape=(train_X.shape[1], train_X.shape[2]))
-hidden1 = LSTM(256, return_sequences=True)(visible)
+hidden1 = LSTM(10, return_sequences=True)(visible)
 batchNorm1 = BatchNormalization()(hidden1)
 dropout1 = Dropout(0.5)(batchNorm1)
 
-#hidden2 = LSTM(256, return_sequences=True)(dropout1)
-#batchNorm2 = BatchNormalization()(hidden2)
-#dropout2 = Dropout(0.5)(batchNorm2)
-#
+hidden2 = LSTM(256, return_sequences=True)(dropout1)
+batchNorm2 = BatchNormalization()(hidden2)
+dropout2 = Dropout(0.5)(batchNorm2)
+
 #hidden3 = LSTM(256, return_sequences=True)(dropout2)
 #batchNorm3 = BatchNormalization()(hidden3)
 #dropout3 = Dropout(0.5)(batchNorm3)
@@ -122,7 +124,7 @@ dropout1 = Dropout(0.5)(batchNorm1)
 #batchNorm6 = BatchNormalization()(hidden6)
 #dropout6 = Dropout(0.5)(batchNorm6)
 
-hidden11 = LSTM(256)(dropout1)
+hidden11 = LSTM(256)(dropout2)
 
 output_notes = Dense(1, activation='sigmoid', name='output_notes')(hidden11)
 output_length = Dense(1, activation='sigmoid', name='output_length')(hidden11)
@@ -141,7 +143,24 @@ history = model.fit(
                              {'output_notes': test_y_notes, 'output_length': test_y_length}), 
             verbose=2,
             shuffle=False,
-            epochs=85, batch_size=32)
+            epochs=150, batch_size=32)
+
+# serialize model to JSON
+model_json = model.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(model_json)
+# serialize weights to HDF5
+model.save_weights("model.h5")
+print("Saved model to disk")
+
+## load json and create model
+#json_file = open('model.json', 'r')
+#loaded_model_json = json_file.read()
+#json_file.close()
+#loaded_model = model_from_json(loaded_model_json)
+## load weights into new model
+#loaded_model.load_weights("model.h5")
+#print("Loaded model from disk")
 
 # plot history
 pyplot.plot(history.history['loss'], label='train')
@@ -151,17 +170,20 @@ pyplot.show()
 
 # make a prediction
 yhat = model.predict(test_X)
-
 test_X = test_X.reshape((test_X.shape[0], n_hours*n_features))
+print('yhat.shape', array(yhat).shape)
+print(yhat[0])
+print('test_X.shape',test_X[:, -10:].shape)
+print(test_X[0])
 # invert scaling for forecast
-inv_yhat = concatenate((yhat, test_X[:, :]), axis=1)
-inv_yhat = scaler.inverse_transform(inv_yhat)
-inv_yhat = inv_yhat[:,0]
-# invert scaling for actual
-test_y = test_y_notes.reshape((len(test_y_notes), 1))
-inv_y = concatenate((test_y_notes, test_X[:, :]), axis=1)
-inv_y = scaler.inverse_transform(inv_y)
-inv_y = inv_y[:,0]
-# calculate RMSE
-rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
-print('Test RMSE: %.3f' % rmse)
+inv_yhat = concatenate((yhat, test_X[:, -10:]), axis=1)
+#inv_yhat = scaler.inverse_transform(inv_yhat)
+#inv_yhat = inv_yhat[:,0]
+## invert scaling for actual
+#test_y = test_y.reshape((len(test_y), 1))
+#inv_y = concatenate((test_y, test_X), axis=1)
+#inv_y = scaler.inverse_transform(inv_y)
+#inv_y = inv_y[:,0]
+## calculate RMSE
+#rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
+#print('Test RMSE: %.3f' % rmse)
