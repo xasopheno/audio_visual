@@ -1,9 +1,7 @@
 from pandas import read_csv
 from matplotlib import pyplot
-from math import sqrt
+import math
 from numpy import concatenate, array
-from matplotlib import pyplot
-from pandas import read_csv
 from pandas import DataFrame
 from pandas import concat
 from keras import optimizers
@@ -16,6 +14,8 @@ from keras.layers import Dense, Dropout, BatchNormalization
 from keras.layers.recurrent import LSTM
 from keras.utils import to_categorical
 from keras.models import model_from_json
+from keras.layers.core import Activation
+from keras.callbacks import ReduceLROnPlateau
 
 # from keras.utils import plot_model
 
@@ -100,22 +100,22 @@ test_X = test_X.reshape((test_X.shape[0], n_hours, n_features))
 print(train_X.shape, train_y_notes.shape, test_X.shape, test_y_notes.shape)
 
 visible = Input(name='input_main', shape=(train_X.shape[1], train_X.shape[2]))
-hidden1 = LSTM(10, return_sequences=True)(visible)
+hidden1 = LSTM(512, return_sequences=True)(visible)
 batchNorm1 = BatchNormalization()(hidden1)
 dropout1 = Dropout(0.5)(batchNorm1)
 
-hidden2 = LSTM(256, return_sequences=True)(dropout1)
+hidden2 = LSTM(512, return_sequences=True)(dropout1)
 batchNorm2 = BatchNormalization()(hidden2)
 dropout2 = Dropout(0.5)(batchNorm2)
 
-#hidden3 = LSTM(256, return_sequences=True)(dropout2)
+#hidden3 = LSTM(512, return_sequences=True)(dropout2)
 #batchNorm3 = BatchNormalization()(hidden3)
 #dropout3 = Dropout(0.5)(batchNorm3)
 #
-#hidden4 = LSTM(256, return_sequences=True)(dropout3)
+#hidden4 = LSTM(512, return_sequences=True)(dropout3)
 #batchNorm4 = BatchNormalization()(hidden4)
 #dropout4 = Dropout(0.5)(batchNorm4)
-#
+
 #hidden5 = LSTM(256, return_sequences=True)(dropout4)
 #batchNorm5 = BatchNormalization()(hidden5)
 #dropout5 = Dropout(0.5)(batchNorm5)
@@ -124,12 +124,18 @@ dropout2 = Dropout(0.5)(batchNorm2)
 #batchNorm6 = BatchNormalization()(hidden6)
 #dropout6 = Dropout(0.5)(batchNorm6)
 
-hidden11 = LSTM(256)(dropout2)
+hidden11 = LSTM(512)(dropout2)
 
 output_notes = Dense(1, activation='sigmoid', name='output_notes')(hidden11)
 output_length = Dense(1, activation='sigmoid', name='output_length')(hidden11)
 
 model = Model(inputs=[visible], outputs=[output_notes, output_length])
+
+# learning rate schedule
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
+                              patience=5, min_lr=0.0001)
+
+callback_list = [reduce_lr]
 
 optimizer = optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 model.compile(loss='mae', optimizer=optimizer)
@@ -143,7 +149,8 @@ history = model.fit(
                              {'output_notes': test_y_notes, 'output_length': test_y_length}), 
             verbose=2,
             shuffle=False,
-            epochs=150, batch_size=32)
+            epochs=50, 
+            batch_size=32)
 
 # serialize model to JSON
 model_json = model.to_json()
@@ -167,16 +174,32 @@ pyplot.plot(history.history['loss'], label='train')
 pyplot.plot(history.history['val_loss'], label='test')
 pyplot.legend()
 pyplot.show()
-
-# make a prediction
-yhat = model.predict(test_X)
-test_X = test_X.reshape((test_X.shape[0], n_hours*n_features))
-print('yhat.shape', array(yhat).shape)
-print(yhat[0])
-print('test_X.shape',test_X[:, -10:].shape)
-print(test_X[0])
-# invert scaling for forecast
-inv_yhat = concatenate((yhat, test_X[:, -10:]), axis=1)
+#
+## make a prediction
+#test_data = 
+#[
+#59,84897,
+#60,25456
+#59,14880
+#62,25820
+#60,21361
+#59,21153
+#60,26320
+#58,20404
+#57,86203
+#59,20645
+#]
+#yhat = model.predict(
+#scaler.transform(test_data)
+#)
+#print(scalar.inverse_transform(test_data))
+#test_X = test_X.reshape((test_X.shape[0], n_hours*n_features))
+#print('yhat.shape', array(yhat).shape)
+#print(yhat[0])
+#print('test_X.shape',test_X[:, -10:].shape)
+#print(test_X[0])
+## invert scaling for forecast
+#inv_yhat = concatenate((yhat, test_X[:, -10:]), axis=1)
 #inv_yhat = scaler.inverse_transform(inv_yhat)
 #inv_yhat = inv_yhat[:,0]
 ## invert scaling for actual
@@ -185,5 +208,5 @@ inv_yhat = concatenate((yhat, test_X[:, -10:]), axis=1)
 #inv_y = scaler.inverse_transform(inv_y)
 #inv_y = inv_y[:,0]
 ## calculate RMSE
-#rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
+#rmse = math.sqrt(mean_squared_error(inv_y, inv_yhat))
 #print('Test RMSE: %.3f' % rmse)

@@ -5,20 +5,14 @@ from collections import deque, Counter
 import aubio
 import os.path
 import asyncio
-import websockets
 import sys
 import random
-from websocket import create_connection
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
 # audio_file = current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav'
 # from Midi.NoteToMidi import sendMidi
 # wf = wave.open(audio_file, 'rb')
 from Oscillators.sine_osc import SineOsc
-
-
-
-
 
 
 class StreamToFrequency:

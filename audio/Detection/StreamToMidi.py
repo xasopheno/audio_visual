@@ -4,10 +4,7 @@ import pyaudio
 from collections import deque, Counter
 import aubio
 import os.path
-import asyncio
-import websockets
 import sys
-from websocket import create_connection
 import time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
@@ -25,7 +22,7 @@ class StreamToFrequency:
 
         self.output_file = open('Detection/output.txt', 'w')
 
-        self.volume_threshold = 300
+        self.volume_threshold = 100
         self.acceptable_confidence = 0.61
 
         self.past_freq = 0
