@@ -13,7 +13,7 @@ from Midi.NoteToMidi import sendMidi
 
 class StreamToFrequency:
     def __init__(self):
-        self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
+        self.pDetection = aubio.pitch("yinfast", 2048, 2048, 44100)
         self.pDetection.set_unit("midi")
         self.pDetection.set_silence(-40)
         self.pDetection.set_tolerance(.99)

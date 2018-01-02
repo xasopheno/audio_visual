@@ -5,9 +5,7 @@ from collections import deque, Counter
 import aubio
 import os.path
 import asyncio
-import websockets
 import sys
-from websocket import create_connection
 import time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
@@ -25,7 +23,7 @@ class StreamToFrequency:
 
         self.output_file = open('Detection/output.txt', 'w')
 
-        self.volume_threshold = 300
+        self.volume_threshold = 0
         self.acceptable_confidence = 0.61
 
         self.past_freq = 0
@@ -43,8 +41,7 @@ class StreamToFrequency:
         volume = round(volume, 6) * 10 ** 5
 
         confidence = self.pDetection.get_confidence()
-
-        if confidence < self.acceptable_confidence or volume < self.volume_threshold:
+        if volume < self.volume_threshold and confidence < self.acceptable_confidence:
             self.predicted_frequency = 0
         else:
             self.predicted_frequency = prediction
@@ -86,27 +83,19 @@ class Generator:
 
 
     def play_midi(self, value):
-        # sendMidi(value, self.subdivision)
+        sendMidi(value, self.subdivision)
         # sendMidi(value + 5/4, .01)
-        # sendMidi(value * 3/2, .01)
-        sendMidi(value, .01)
-        # sendMidi(value * 5/4, .01)
-        # sendMidi(value * 3/2 / 2, .01)
-        # sendMidi(value + 11, .001)
-        # sendMidi(value - 10, 0.001)
-        # sendMidi(value, .001)
-        # sendMidi(value + 6, .001)
-        # sendMidi(value, .001)
+        # sendMidi(value, .01)
 
     def play_silence(self):
         # print(0)
-        time.sleep(self.subdivision * 1.015)
+        time.sleep(self.subdivision * 1.0)
 
 
     def play_set(self, bagOfNotes):
         self.counter += 1
         print (bagOfNotes)
-        if self.counter % 2:
+        if self.counter % 10:
             start = time.time()
             with open("midiOutput.txt", 'a') as myfile:
                 for value in bagOfNotes:
@@ -120,7 +109,7 @@ class Generator:
                         for value in bagOfNotes:
                             myfile.write(str(value) + ' ')
 
-                    if value is not 0:
+                    if value is not 0 and 20 < value < 90:
                         self.play_midi(value)
                         end = time.time()
                         # print('value: ', end - start)

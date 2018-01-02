@@ -18,15 +18,15 @@ from Midi.NoteToMidi import sendMidi
 
 class StreamToData:
     def __init__(self):
-        self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
+        self.pDetection = aubio.pitch("yinfft", 2048, 256, 44100)
         self.pDetection.set_unit("midi")
         self.pDetection.set_silence(-40)
-        self.pDetection.set_tolerance(.99)
+        self.pDetection.set_tolerance(.5)
 
         self.output_file = open('Detection/output.txt', 'w')
 
-        self.volume_threshold = 300
-        self.acceptable_confidence = 0.5
+        self.volume_threshold = 100
+        self.acceptable_confidence = 0.61
 
         self.past_freq = 0
         self.predicted_frequency = 0
@@ -44,13 +44,13 @@ class StreamToData:
 
         confidence = self.pDetection.get_confidence()
 
-        if confidence < self.acceptable_confidence or volume < self.volume_threshold:
-            self.predicted_frequency = 0
-        else:
-            self.predicted_frequency = prediction
+        # if volume < self.volume_threshold:
+        #     self.predicted_frequency = 0
+        # else:
+        self.predicted_frequency = prediction
 
         prediction = round(self.predicted_frequency)
-        # print(prediction)
+        print(prediction)
         self.past_freq = prediction
 
         # self.output_file.write(str(self.predicted_frequency) + '\n')
@@ -85,7 +85,7 @@ class Generator:
             self.play_current_value()
 
     def play_midi(self, value):
-        sendMidi(value, .01)
+        sendMidi(value, .001)
 
     def play_silence(self):
         # print(0)

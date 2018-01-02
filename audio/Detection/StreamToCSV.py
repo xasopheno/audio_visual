@@ -13,14 +13,14 @@ from Midi.NoteToMidi import sendMidi
 
 class StreamToFrequency:
     def __init__(self):
-        self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
+        self.pDetection = aubio.pitch("yinfast", 2048, 2048, 44100)
         self.pDetection.set_unit("midi")
         self.pDetection.set_silence(-40)
         self.pDetection.set_tolerance(.99)
 
         self.output_file = open('Detection/output.txt', 'w')
 
-        self.volume_threshold = 400
+        self.volume_threshold = 500
         self.acceptable_confidence = 0.61
 
         self.past_freq = 0
@@ -43,19 +43,13 @@ class StreamToFrequency:
             self.predicted_frequency = prediction
 
         prediction = round(self.predicted_frequency)
-        # print(prediction)
         self.past_freq = prediction
-
-        # self.output_file.write(str(self.predicted_frequency) + '\n')
-        # self.output_file.flush()
-        # os.fsync(self.output_file.fileno())
 
         return in_data, pyaudio.paContinue
 
 
 class Generator:
     def __init__(self):
-        self.subdivision = 100/44100
         self.isZero = True
         self.sample_counter = 0
         self.note_counter = 1
@@ -75,7 +69,6 @@ class Generator:
         while True:
             pred = self.detector.predicted_frequency
             value = int(round(pred))
-            # self.pred_set.append(value)
             self.play_value(value)
 
     def play_midi(self, value):
@@ -83,33 +76,17 @@ class Generator:
             time.sleep(.00001)
         else:
             sendMidi(value, .00001)
-        # sendMidi(value - 7, .01)
-        # sendMidi(value * 1.5, .001)
 
 
     def play_silence(self):
         print(0)
-        # time.sleep(self.subdivision * 1.0)
 
     def restart_line(self):
         sys.stdout.write('\r')
         sys.stdout.flush()
 
     def play_value(self, value):
-        # self.sample_counter += 1
-        # print(value)
-        # time.sleep(.005)
-
-        # sys.stdout.write(str(self.note_counter))
-        # sys.stdout.flush()
-        # self.restart_line()
-
         with open("midiOutput.txt", 'a') as myfile:
-            # value = max(set(self.pred_set), key=self.pred_set.count)
-            # print(self.pred_set)
-            # print(value)
-            # arg_max = Counter(self.pred_set[0])
-            # print(arg_max)
             if value == self.last_value:
                 self.note_counter += 1
             else:
@@ -117,11 +94,9 @@ class Generator:
                 if self.note_counter < 3000 or self.last_value > 100:
                     stored_value = str(0)
                 print(self.last_value, self.note_counter)
-                # self.play_midi(self.last_value)
+                self.play_midi(self.last_value)
                 myfile.write(stored_value + ',' + str(self.note_counter) + '\n')
                 self.note_counter = 1
-
-                # print(value == self.last_value)
 
             self.last_value = value
 
