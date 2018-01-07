@@ -41,25 +41,25 @@ class StreamToFrequency:
         volume = round(volume, 6) * 10 ** 5
 
         confidence = self.pDetection.get_confidence()
+
+        print("-" * (int(volume / 400)))
+
         if volume < self.volume_threshold and confidence < self.acceptable_confidence:
             self.predicted_frequency = 0
         else:
             self.predicted_frequency = prediction
 
         prediction = round(self.predicted_frequency)
-        # print(prediction)
-        self.past_freq = prediction
 
-        # self.output_file.write(str(self.predicted_frequency) + '\n')
-        # self.output_file.flush()
-        # os.fsync(self.output_file.fileno())
+        self.past_freq = [prediction, volume]
 
         return in_data, pyaudio.paContinue
 
 
 class Generator:
     def __init__(self):
-        self.subdivision = 0.01
+        self.f = 0.07
+        self.subdivision = self.f
         self.isZero = True
         self.counter = 0
         self.set = {0}
@@ -84,18 +84,17 @@ class Generator:
 
     def play_midi(self, value):
         sendMidi(value, self.subdivision)
-        # sendMidi(value + 5/4, .01)
-        # sendMidi(value, .01)
 
     def play_silence(self):
         # print(0)
         time.sleep(self.subdivision * 1.0)
 
 
-    def play_set(self, bagOfNotes):
+    def play_set(self, bagOfNotes) :
         self.counter += 1
-        print (bagOfNotes)
-        if self.counter % 10:
+        print(self.counter)
+        # print (bagOfNotes)
+        if self.counter % 1000:
             start = time.time()
             with open("midiOutput.txt", 'a') as myfile:
                 for value in bagOfNotes:
@@ -109,7 +108,7 @@ class Generator:
                         for value in bagOfNotes:
                             myfile.write(str(value) + ' ')
 
-                    if value is not 0 and 20 < value < 90:
+                    if value is not 0 and 20 < value < 110:
                         self.play_midi(value)
                         end = time.time()
                         # print('value: ', end - start)
