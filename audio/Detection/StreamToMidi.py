@@ -62,6 +62,7 @@ class StreamToFrequency:
 
 class Generator:
     def __init__(self, arguments):
+        self.arguments = arguments
         self.subdivision = 0.07
         self.isZero = True
         self.counter = 0
@@ -84,6 +85,13 @@ class Generator:
             self.set = set(prev_lines)
             self.play_set(self.set)
 
+    def apply_prediction(self):
+        prev_lines = deque(maxlen=1)
+        while True:
+            pred = self.detector.predicted_frequency
+            prev_lines.append(int(round(pred)))
+            self.set = set(prev_lines)
+            self.play_set(self.set)
 
     def play_midi(self, value):
         sendMidi(value, self.subdivision)
@@ -92,14 +100,14 @@ class Generator:
         # print(0)
         time.sleep(self.subdivision * 1.0)
 
-
-    def play_set(self, bagOfNotes) :
+    def play_set(self, bag_of_notes) :
         self.counter += 1
-        # print (bagOfNotes)
+        if self.arguments.display_notes:
+            print (bag_of_notes)
         if self.counter % 1 == 0:
             start = time.time()
             with open("midiOutput.txt", 'a') as myfile:
-                for value in bagOfNotes:
+                for value in bag_of_notes:
                     if value is not 0 and self.isZero is True:
                         self.isZero = False
                         myfile.write('\n' + str(value) + ' ')
@@ -107,7 +115,7 @@ class Generator:
                         myfile.write('\n' + str(value) + ' ')
                         self.isZero = True
                     else:
-                        for value in bagOfNotes:
+                        for value in bag_of_notes:
                             myfile.write(str(value) + ' ')
 
                     if value is not 0 and 20 < value < 110:
