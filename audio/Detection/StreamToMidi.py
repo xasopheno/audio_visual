@@ -1,4 +1,5 @@
 from __future__ import division
+import argparse
 import numpy
 import pyaudio
 from collections import deque, Counter
@@ -15,21 +16,21 @@ from Midi.NoteToMidi import sendMidi
 
 
 class StreamToFrequency:
-    def __init__(self):
+    def __init__(self, show_volume=False):
+        self.show_volume=show_volume
         self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
         self.pDetection.set_unit("midi")
         self.pDetection.set_silence(-40)
-        self.pDetection.set_tolerance(.99)
+        self.pDetection.set_tolerance(.4)
 
         self.output_file = open('Detection/output.txt', 'w')
 
-        self.volume_threshold = 0
-        self.acceptable_confidence = 0.61
+        self.volume_threshold = 60
+        self.acceptable_confidence = 1
 
         self.past_freq = 0
         self.predicted_frequency = 0
         self.set = {0}
-
 
     def callback(self, in_data, frame_count, time_info, status):
         samples = numpy.fromstring(in_data,
@@ -40,11 +41,10 @@ class StreamToFrequency:
         volume = numpy.sum(samples ** 2) / len(samples)
         volume = round(volume, 6) * 10 ** 5
 
-        confidence = self.pDetection.get_confidence()
+        if self.show_volume:
+            self.__display_volume(volume)
 
-        print("-" * (int(volume / 400)))
-
-        if volume < self.volume_threshold and confidence < self.acceptable_confidence:
+        if volume < self.volume_threshold:
             self.predicted_frequency = 0
         else:
             self.predicted_frequency = prediction
@@ -55,15 +55,18 @@ class StreamToFrequency:
 
         return in_data, pyaudio.paContinue
 
+    @staticmethod
+    def __display_volume(self, volume):
+        print(str(volume) + ' ' + "-" * (int(volume / 100)))
+
 
 class Generator:
-    def __init__(self):
-        self.f = 0.07
-        self.subdivision = self.f
+    def __init__(self, arguments):
+        self.subdivision = 0.07
         self.isZero = True
         self.counter = 0
         self.set = {0}
-        self.detector = StreamToFrequency()
+        self.detector = StreamToFrequency(show_volume=arguments.display_volume)
         self.p = pyaudio.   PyAudio()
         self.stream = self.p.open(format=pyaudio.paFloat32,
                                   channels=1,
@@ -92,9 +95,8 @@ class Generator:
 
     def play_set(self, bagOfNotes) :
         self.counter += 1
-        print(self.counter)
         # print (bagOfNotes)
-        if self.counter % 1000:
+        if self.counter % 1 == 0:
             start = time.time()
             with open("midiOutput.txt", 'a') as myfile:
                 for value in bagOfNotes:
@@ -117,6 +119,29 @@ class Generator:
                         end = time.time()
                         # print('_zero: ', end - start)
 
+
+def get_user_options():
+    a = argparse.ArgumentParser()
+    a.add_argument("--volume",
+                   help = "Specify if input volume should be displayed.",
+                   dest = "display_volume",
+                   required=False,
+                   default=False,
+                   type=bool,
+                   nargs=1)
+
+    a.add_argument("--prediction",
+                   help="Specify if midi note prediction should be displayed).",
+                   dest = "display_notes",
+                   required=False,
+                   default=False,
+                   type=bool,
+                   nargs=1)
+
+    return a.parse_args()
+
 if __name__ == '__main__':
-    generator = Generator()
+    args = get_user_options()
+    print('args: ', args)
+    generator = Generator(args)
     generator.generate_set()
