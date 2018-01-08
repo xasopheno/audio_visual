@@ -2,10 +2,8 @@ from __future__ import division
 import argparse
 import numpy
 import pyaudio
-from collections import deque, Counter
 import aubio
 import os.path
-import asyncio
 import sys
 import time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
@@ -30,7 +28,6 @@ class StreamToFrequency:
         self.acceptable_confidence = 1
 
         self.predicted_values = {'note': 0, 'volume': 0}
-        self.set = {0}
 
     def callback(self, in_data, frame_count, time_info, status):
         samples = numpy.fromstring(in_data,
@@ -71,13 +68,15 @@ class StreamToFrequency:
 
         return volume
 
+
 class Generator:
     def __init__(self, arguments):
         self.arguments = arguments
-        self.subdivision = 0.04
+        self.subdivision = 0.1
         self.isZero = True
         self.counter = 0
-        self.set = {0}
+        self.last_note = 0
+        self.volume_array = [0]
         self.detector = StreamToFrequency(show_volume=arguments.display_volume)
         self.p = pyaudio.   PyAudio()
         self.stream = self.p.open(format=pyaudio.paFloat32,
@@ -91,39 +90,45 @@ class Generator:
     def generate_set(self):
         while True:
             pred = self.detector.predicted_values
-            print(pred)
+
+            pred['count'] = self.counter
+            pred['note'] = int(round(pred["note"]))
+            pred['volume'] = int(round(pred["volume"]))
+
+            if self.arguments.display_prediction:
+               print(pred)
             self.play_set(pred)
 
-    def play_midi(self, value, volume):
-        sendMidi(value, self.subdivision, volume)
+    def avg_volume(self):
+        length = len(self.volume_array)
+        total = sum(self.volume_array)
+        avg = total/length
+        return avg
 
-    def play_silence(self):
-        # print(0)
-        time.sleep(self.subdivision * 1.0)
+    def play_midi(self, value, volume):
+        if value == 0:
+            time.sleep(self.subdivision * 1.0)
+        for i in range(2):
+            sendMidi(value, self.subdivision /5, volume)
 
     def play_set(self, predicted_values):
-        note = int(round(predicted_values["note"]))
+        note = predicted_values["note"]
         volume = predicted_values["volume"]
-        self.counter += 1
-        if self.arguments.display_notes:
-            print(note)
-        if self.counter % 1 == 0:
-            with open("midiOutput.txt", 'a') as myfile:
-                # if value is not 0 and self.isZero is True:
-                #     self.isZero = False
-                #     myfile.write('\n' + str(value) + ' ')
-                # elif value is 0 and self.isZero is False:
-                #     myfile.write('\n' + str(value) + ' ')
-                #     self.isZero = True
-                # else:
-                #     for value in bag_of_notes:
-                #         myfile.write(str(value) + ' ')
 
-                if note is not 0 and 20 < note < 110:
-                    self.play_midi(note, volume)
-                else:
-                    self.play_silence()
+        self.play_midi(note, volume)
 
+        # with open("midiOutput.txt", 'a') as myfile:
+        if note == self.last_note:
+            self.counter += 1
+            self.volume_array.append(volume)
+        else:
+            predicted_values["volume"] = self.avg_volume()
+            print(note, self.counter)
+
+            self.volume_array = [0]
+            self.counter = 1
+
+        self.last_note = note
 
 def get_user_options():
     a = argparse.ArgumentParser()
@@ -135,9 +140,9 @@ def get_user_options():
                    type=bool,
                    nargs=1)
 
-    a.add_argument("--notes",
-                   help="Specify if midi note prediction should be displayed).",
-                   dest = "display_notes",
+    a.add_argument("--values",
+                   help="Specify if prediction values should be displayed).",
+                   dest = "display_prediction",
                    required=False,
                    default=False,
                    type=bool,
