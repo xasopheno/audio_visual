@@ -15,7 +15,8 @@ import math
 
 
 class StreamToFrequency:
-    def __init__(self, show_volume=False):
+    def __init__(self, show_volume=False, store=None):
+        self.store = store
         self.show_volume=show_volume
         self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
         self.pDetection.set_unit("midi")
@@ -27,28 +28,23 @@ class StreamToFrequency:
         self.volume_threshold = 6
         self.acceptable_confidence = 1
 
-        self.predicted_values = {'note': 0, 'volume': 0}
 
     def callback(self, in_data, frame_count, time_info, status):
         samples = numpy.fromstring(in_data,
                                    dtype=aubio.float_type)
 
-        prediction = self.pDetection(samples)[0]
+        prediction = int(self.pDetection(samples)[0])
 
         volume = numpy.sum(samples ** 2) / len(samples)
-        volume = self.scale_velocity(volume)
 
-
+        self.store.note = prediction
+        self.store.volume = volume
 
         if self.show_volume:
             self.__display_volume(volume)
 
-        self.predicted_values["volume"] = volume
-
         # if volume < self.volume_threshold:
         #     self.predicted_values["note"] = 0
-        # else:
-        self.predicted_values["note"] = prediction
 
         return in_data, pyaudio.paContinue
 
@@ -69,15 +65,82 @@ class StreamToFrequency:
         return volume
 
 
+class Store:
+    def __init__(self):
+        self.__note = 0
+        self.__volume = 0
+        self.length = 1
+
+        self.volume_array = []
+
+    @property
+    def note(self):
+        return self.__note
+
+    @property
+    def volume(self):
+        return self.__volume
+
+    @note.setter
+    def note(self, note):
+        note = int(note)
+        self.__note = note
+
+    @volume.setter
+    def volume(self, volume):
+        volume = self.scale_volume(volume)
+        volume = int(volume)
+        self.__volume = volume
+
+    @property
+    def values(self):
+        return {
+            "note": self.note,
+            "volume": self.volume,
+            "length": self.length,
+        }
+
+    def inc_length(self):
+        self.length += 1
+
+    @staticmethod
+    def scale_volume(volume):
+        volume = round(volume, 6) * 10 ** 3
+        volume = math.log(volume)
+        volume *= 15
+        if volume > 127:
+            volume = 127
+        if volume < 0:
+            volume = 0
+
+        return volume
+
+    def reset(self):
+        self.length = 1
+        self.volume_array = 0
+    #
+    # def avg_volume(self):
+    #     length = len(self.volume_array)
+    #     if length == 0: length = 1
+    #     total = sum(self.volume_array)
+    #     avg = total/length
+    #     return int(avg)
+
+
+
 class Generator:
-    def __init__(self, arguments):
-        self.arguments = arguments
+    def __init__(self, args=None, store=None):
+        self.arguments = args
         self.subdivision = 0.1
         self.isZero = True
-        self.counter = 0
-        self.last_note = 0
-        self.volume_array = [0]
-        self.detector = StreamToFrequency(show_volume=arguments.display_volume)
+        self.counter = 1
+        self.past_pred = 0
+
+        self.volume_array = []
+
+        self.detector = StreamToFrequency(store=store, show_volume=args.display_volume)
+        self.store = store
+
         self.p = pyaudio.   PyAudio()
         self.stream = self.p.open(format=pyaudio.paFloat32,
                                   channels=1,
@@ -89,44 +152,39 @@ class Generator:
 
     def generate_set(self):
         while True:
-            pred = self.detector.predicted_values
+            pred = self.store.values
 
-            pred['count'] = self.counter
-            pred['note'] = int(round(pred["note"]))
-            pred['volume'] = int(round(pred["volume"]))
+            if self.store.note == self.past_pred:
+                self.store.inc_length()
+            else:
+                self.store.reset()
 
-            if self.arguments.display_prediction:
-               print(pred)
+            self.past_pred = self.store.note
+
+            print(pred)
             self.play_set(pred)
-
-    def avg_volume(self):
-        length = len(self.volume_array)
-        total = sum(self.volume_array)
-        avg = total/length
-        return avg
 
     def play_midi(self, value, volume):
         if value == 0:
             time.sleep(self.subdivision * 1.0)
-        for i in range(2):
-            sendMidi(value, self.subdivision /5, volume)
+        else:
+            for i in range(2):
+                sendMidi(value, self.subdivision /3, volume)
 
     def play_set(self, predicted_values):
         note = predicted_values["note"]
         volume = predicted_values["volume"]
-
         self.play_midi(note, volume)
 
         # with open("midiOutput.txt", 'a') as myfile:
-        if note == self.last_note:
-            self.counter += 1
-            self.volume_array.append(volume)
-        else:
-            predicted_values["volume"] = self.avg_volume()
-            print(note, self.counter)
-
-            self.volume_array = [0]
-            self.counter = 1
+        # if note == self.last_note:
+        #     self.counter += 1
+        # else:
+        #     predicted_values["volume"] = self.avg_volume()
+        #     print(predicted_values)
+        #
+        #     self.volume_array = []
+        #     self.counter = 1
 
         self.last_note = note
 
@@ -153,5 +211,8 @@ def get_user_options():
 if __name__ == '__main__':
     args = get_user_options()
     print('args: ', args)
-    generator = Generator(args)
+
+    store = Store()
+    generator = Generator(args=args, store=store)
+
     generator.generate_set()
