@@ -90,13 +90,14 @@ class Store:
     def volume(self, volume):
         volume = self.scale_volume(volume)
         volume = int(volume)
+        self.volume_array.append(volume)
         self.__volume = volume
 
     @property
     def values(self):
         return {
             "note": self.note,
-            "volume": self.volume,
+            "volume": self.avg_volume(),
             "length": self.length,
         }
 
@@ -117,15 +118,13 @@ class Store:
 
     def reset(self):
         self.length = 1
-        self.volume_array = 0
-    #
-    # def avg_volume(self):
-    #     length = len(self.volume_array)
-    #     if length == 0: length = 1
-    #     total = sum(self.volume_array)
-    #     avg = total/length
-    #     return int(avg)
+        self.volume_array = []
 
+    def avg_volume(self):
+        length = len(self.volume_array)
+        total = sum(self.volume_array)
+        avg = total/length if length else 0
+        return int(avg)
 
 
 class Generator:
@@ -150,7 +149,7 @@ class Generator:
                                   output=False,
                                   stream_callback=self.detector.callback)
 
-    def generate_set(self):
+    def get_store_values(self):
         while True:
             pred = self.store.values
 
@@ -161,8 +160,7 @@ class Generator:
 
             self.past_pred = self.store.note
 
-            print(pred)
-            self.play_set(pred)
+            self.play_value(pred)
 
     def play_midi(self, value, volume):
         if value == 0:
@@ -171,22 +169,12 @@ class Generator:
             for i in range(2):
                 sendMidi(value, self.subdivision /3, volume)
 
-    def play_set(self, predicted_values):
+    def play_value(self, predicted_values):
         note = predicted_values["note"]
         volume = predicted_values["volume"]
+
+        print(predicted_values)
         self.play_midi(note, volume)
-
-        # with open("midiOutput.txt", 'a') as myfile:
-        # if note == self.last_note:
-        #     self.counter += 1
-        # else:
-        #     predicted_values["volume"] = self.avg_volume()
-        #     print(predicted_values)
-        #
-        #     self.volume_array = []
-        #     self.counter = 1
-
-        self.last_note = note
 
 def get_user_options():
     a = argparse.ArgumentParser()
@@ -215,4 +203,4 @@ if __name__ == '__main__':
     store = Store()
     generator = Generator(args=args, store=store)
 
-    generator.generate_set()
+    generator.get_store_values()
