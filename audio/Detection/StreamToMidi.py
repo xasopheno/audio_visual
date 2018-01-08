@@ -13,6 +13,7 @@ current_path = os.getcwd()
 # audio_file = current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav'
 from Midi.NoteToMidi import sendMidi
 # wf = wave.open(audio_file, 'rb')
+import math
 
 
 class StreamToFrequency:
@@ -25,11 +26,10 @@ class StreamToFrequency:
 
         self.output_file = open('Detection/output.txt', 'w')
 
-        self.volume_threshold = 60
+        self.volume_threshold = 6
         self.acceptable_confidence = 1
 
-        self.past_freq = 0
-        self.predicted_frequency = 0
+        self.predicted_values = {'note': 0, 'volume': 0}
         self.set = {0}
 
     def callback(self, in_data, frame_count, time_info, status):
@@ -39,31 +39,42 @@ class StreamToFrequency:
         prediction = self.pDetection(samples)[0]
 
         volume = numpy.sum(samples ** 2) / len(samples)
-        volume = round(volume, 6) * 10 ** 5
+        volume = self.scale_velocity(volume)
+
+
 
         if self.show_volume:
             self.__display_volume(volume)
 
-        if volume < self.volume_threshold:
-            self.predicted_frequency = 0
-        else:
-            self.predicted_frequency = prediction
+        self.predicted_values["volume"] = volume
 
-        prediction = round(self.predicted_frequency)
-
-        self.past_freq = [prediction, volume]
+        # if volume < self.volume_threshold:
+        #     self.predicted_values["note"] = 0
+        # else:
+        self.predicted_values["note"] = prediction
 
         return in_data, pyaudio.paContinue
 
     @staticmethod
-    def __display_volume(self, volume):
+    def __display_volume(volume):
         print(str(volume) + ' ' + "-" * (int(volume / 100)))
 
+    @staticmethod
+    def scale_velocity(volume):
+        volume = round(volume, 6) * 10 ** 3
+        volume = math.log(volume)
+        volume *= 15
+        if volume > 127:
+            volume = 127
+        if volume < 0:
+            volume = 0
+
+        return volume
 
 class Generator:
     def __init__(self, arguments):
         self.arguments = arguments
-        self.subdivision = 0.07
+        self.subdivision = 0.04
         self.isZero = True
         self.counter = 0
         self.set = {0}
@@ -78,54 +89,40 @@ class Generator:
                                   stream_callback=self.detector.callback)
 
     def generate_set(self):
-        prev_lines = deque(maxlen=1)
         while True:
-            pred = self.detector.predicted_frequency
-            prev_lines.append(int(round(pred)))
-            self.set = set(prev_lines)
-            self.play_set(self.set)
+            pred = self.detector.predicted_values
+            print(pred)
+            self.play_set(pred)
 
-    def apply_prediction(self):
-        prev_lines = deque(maxlen=1)
-        while True:
-            pred = self.detector.predicted_frequency
-            prev_lines.append(int(round(pred)))
-            self.set = set(prev_lines)
-            self.play_set(self.set)
-
-    def play_midi(self, value):
-        sendMidi(value, self.subdivision)
+    def play_midi(self, value, volume):
+        sendMidi(value, self.subdivision, volume)
 
     def play_silence(self):
         # print(0)
         time.sleep(self.subdivision * 1.0)
 
-    def play_set(self, bag_of_notes) :
+    def play_set(self, predicted_values):
+        note = int(round(predicted_values["note"]))
+        volume = predicted_values["volume"]
         self.counter += 1
         if self.arguments.display_notes:
-            print (bag_of_notes)
+            print(note)
         if self.counter % 1 == 0:
-            start = time.time()
             with open("midiOutput.txt", 'a') as myfile:
-                for value in bag_of_notes:
-                    if value is not 0 and self.isZero is True:
-                        self.isZero = False
-                        myfile.write('\n' + str(value) + ' ')
-                    elif value is 0 and self.isZero is False:
-                        myfile.write('\n' + str(value) + ' ')
-                        self.isZero = True
-                    else:
-                        for value in bag_of_notes:
-                            myfile.write(str(value) + ' ')
+                # if value is not 0 and self.isZero is True:
+                #     self.isZero = False
+                #     myfile.write('\n' + str(value) + ' ')
+                # elif value is 0 and self.isZero is False:
+                #     myfile.write('\n' + str(value) + ' ')
+                #     self.isZero = True
+                # else:
+                #     for value in bag_of_notes:
+                #         myfile.write(str(value) + ' ')
 
-                    if value is not 0 and 20 < value < 110:
-                        self.play_midi(value)
-                        end = time.time()
-                        # print('value: ', end - start)
-                    else:
-                        self.play_silence()
-                        end = time.time()
-                        # print('_zero: ', end - start)
+                if note is not 0 and 20 < note < 110:
+                    self.play_midi(note, volume)
+                else:
+                    self.play_silence()
 
 
 def get_user_options():
@@ -138,7 +135,7 @@ def get_user_options():
                    type=bool,
                    nargs=1)
 
-    a.add_argument("--prediction",
+    a.add_argument("--notes",
                    help="Specify if midi note prediction should be displayed).",
                    dest = "display_notes",
                    required=False,
