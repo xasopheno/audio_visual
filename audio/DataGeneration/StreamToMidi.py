@@ -9,8 +9,7 @@ import sys
 import time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
-from Midi.NoteToMidi import sendMidi
-
+from Midi.MidiPlayer import MidiPlayer
 
 class StreamToFrequency:
     def __init__(self, show_volume=False, store=None):
@@ -142,6 +141,7 @@ class Generator:
 
         self.detector = StreamToFrequency(store=store, show_volume=args.display_volume)
         self.store = store
+        self.player = MidiPlayer(synth='Volca')
 
         self.p = pyaudio.   PyAudio()
         self.stream = self.p.open(format=pyaudio.paFloat32,
@@ -170,7 +170,7 @@ class Generator:
             time.sleep(self.subdivision * 1.0)
         else:
             for i in range(2):
-                sendMidi(value, self.subdivision /3, volume)
+                self.player.play(value, self.subdivision /3, volume)
 
     def play_value(self, predicted_values):
         note = predicted_values["note"]
