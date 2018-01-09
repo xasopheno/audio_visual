@@ -1,16 +1,16 @@
-from __future__ import division
+import os.path
 import argparse
 import numpy
 import pyaudio
 import math
 import aubio
-import os.path
+import shutil
 import sys
 import time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
 from Midi.NoteToMidi import sendMidi
-import os
+
 
 class StreamToFrequency:
     def __init__(self, show_volume=False, store=None):
@@ -28,8 +28,8 @@ class StreamToFrequency:
         self.acceptable_confidence = 1
 
     def get_screen_width(self):
-        rows, columns = os.popen('stty size', 'r').read().split()
-        return int(columns)
+        width = shutil.get_terminal_size((80, 20)).columns
+        return width
 
     def callback(self, in_data, frame_count, time_info, status):
         samples = numpy.fromstring(in_data,
