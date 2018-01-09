@@ -2,20 +2,19 @@ from __future__ import division
 import argparse
 import numpy
 import pyaudio
+import math
 import aubio
 import os.path
 import sys
 import time
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), os.pardir))
 current_path = os.getcwd()
-# audio_file = current_path + '/Training/training_data/A3/name=A3__num=12__batch=y2017m05d27H21M46S45__2.wav'
 from Midi.NoteToMidi import sendMidi
-# wf = wave.open(audio_file, 'rb')
-import math
-
+import os
 
 class StreamToFrequency:
     def __init__(self, show_volume=False, store=None):
+        self.terminal_width = self.get_screen_width()
         self.store = store
         self.show_volume=show_volume
         self.pDetection = aubio.pitch("yinfft", 2048, 2048, 44100)
@@ -28,6 +27,9 @@ class StreamToFrequency:
         self.volume_threshold = 6
         self.acceptable_confidence = 1
 
+    def get_screen_width(self):
+        rows, columns = os.popen('stty size', 'r').read().split()
+        return int(columns)
 
     def callback(self, in_data, frame_count, time_info, status):
         samples = numpy.fromstring(in_data,
@@ -43,14 +45,14 @@ class StreamToFrequency:
         if self.show_volume:
             self.__display_volume(volume)
 
-        # if volume < self.volume_threshold:
-        #     self.predicted_values["note"] = 0
-
         return in_data, pyaudio.paContinue
 
-    @staticmethod
-    def __display_volume(volume):
-        print(str(volume) + ' ' + "-" * (int(volume / 100)))
+    def __display_volume(self, volume):
+        width = self.terminal_width
+        bar = ' ' + "-" * (int(volume * 100))
+        if len(bar) > width - 20:
+            bar = ' ' + "-" * (width - 20)
+        print(str(volume) + bar)
 
     @staticmethod
     def scale_velocity(volume):
@@ -134,6 +136,7 @@ class Generator:
         self.isZero = True
         self.counter = 1
         self.past_pred = 0
+        self.show_prediction = args.display_prediction
 
         self.volume_array = []
 
@@ -173,8 +176,11 @@ class Generator:
         note = predicted_values["note"]
         volume = predicted_values["volume"]
 
-        print(predicted_values)
+        if self.show_prediction:
+            print(predicted_values)
+
         self.play_midi(note, volume)
+
 
 def get_user_options():
     a = argparse.ArgumentParser()
