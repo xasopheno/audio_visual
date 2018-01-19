@@ -1,6 +1,7 @@
 import time
 import rtmidi
 
+
 class MidiPlayer:
     def __init__(self, synth='Volca'):
         self.synth = synth
