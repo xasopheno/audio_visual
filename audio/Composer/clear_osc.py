@@ -17,21 +17,20 @@ class SineOsc:
         waveform = np.sin(np.arange(length) * factor)
 
         rounded_waveform = np.round(waveform, 0)
+        rounded_waveform2 = np.round(waveform, 1)
 
         waveform2 = np.power(waveform, 3)
-        # waveform3 = np.power(rounded_waveform, 4)/4
+        waveform3 = np.power(rounded_waveform, 4)/4
 
         # waveform4 = waveform
 
-        return rounded_waveform
+        return np.add(rounded_waveform, rounded_waveform2)
 
 
     def play_frequencies(self, stream, length, volume, attack, decay, *freqs):
         """Plays a group of frequencies"""
-        all_tones = []
-        volume = volume
 
-        for freq in freqs:
+        def _create_waveform(freq):
             wave = [self.wave(freq, length, self.sample_rate)]
             waveform = (np.concatenate(wave) * volume / 16)
 
@@ -41,11 +40,14 @@ class SineOsc:
             waveform[:attack] = np.multiply(waveform[:attack], fade_in)
             waveform[-decay:] = np.multiply(waveform[-decay:], fade_out)
 
-            all_tones.append(waveform)
+            return waveform
 
+        all_tones = map(_create_waveform, freqs)
         all_tones = sum(all_tones)
 
         # plt.plot(chunk[])
         # plt.show()
 
         return stream.write(all_tones.astype(np.float32).tostring())
+
+

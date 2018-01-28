@@ -95,7 +95,7 @@ freqs2 = [
         ]
 
 timesThroughBach = 2
-length = 20
+length = 60
 
 def func1():
     print ('func1')
